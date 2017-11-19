@@ -77,10 +77,8 @@ bool validacionNombreYApellido(char cadena[],char *msg){
 	int i;
 	printf("%s",msg);
 	gets(cadena);
-	for(i=0;cadena!=NULL;i++)
+	for(i=0;cadena[i]!=NULL;i++)
 	{
-		if(cadena[i]==NULL)
-			break;
 		if((cadena[i]<65||cadena[i]>90)&&(cadena[i]<97||cadena[i]>122)&&cadena[i]!=32)
 		{
 			printf("_____________________________________________________\nDato Incorrecto !!\nNo puede contener caracteres especiales, ni numeros\nVuelva a ingresar por favor\n_____________________________________________________\n");
@@ -91,29 +89,58 @@ bool validacionNombreYApellido(char cadena[],char *msg){
 	return false;
 }
 bool validacionCelular(char celular[],char *msg){
+	int i;
 	printf("%s",msg);
 	gets(celular);
-	if(strlen(celular)==10&&celular[0]=='0'&&celular[1]=='9'){
+	
+	for(i=0;celular[i]!=NULL;i++)
+	{
+		if(celular[i]<48||celular[i]>57)
+		{
+			printf("_________________________________________________________________________\nNumero de celular incorrecto !!\nVerifique su numero de celular...\nLos dos primeros digitos deben ser 09 y debe tener 10 digitos en total\n_________________________________________________________________________\n");
+			return true;
+			break;
+		}
+	}
+	if(strlen(celular)==10&&celular[0]=='0'&&celular[1]=='9')
+	{
 		return false;
-	}else{
-		printf("_________________________________________________________________________\nNumero de celular incorrecto !!\nVerifique su numero de celular...\nLos dos primeros digitos deben ser 09 y debe tener 10 digitos en total\n_________________________________________________________________________\n");
-		return true;
 	}
 }
 bool validacionNumero(char numero[],char *msg){
 	int i;
 	printf("%s",msg);
 	gets(numero);
-	for(i=0;numero!=NULL;i++)
+	for(i=0;numero[i]!=NULL;i++)
 	{
-		if(numero[i]==NULL)
-			break;
 		if(numero[i]<48||numero[i]>57)
 		{
-			printf("___________________________________________________\nDatos Incorrecto !!\nNo puede contener caracteres especiales, ni letras\nVuelva a ingresar por favor\n___________________________________________________\n");
+			printf("___________________________________________________\nDato Incorrecto !!\nNo puede contener caracteres especiales, ni letras\nVuelva a ingresar por favor\n___________________________________________________\n");
 			return true;
 			break;
 		}
 	}
 	return false;	
 }
+bool validacionEmail(char email[],char *msg){
+	int i;
+	bool arroba=true,com;
+	printf("%s",msg);
+	gets(email);
+	for(i=0;email[i]!=NULL;i++)
+	{
+		if(email[i]==64)
+			arroba=false;
+	}
+	i=strlen(email)-1;
+	if(((email[i]=='m')&&(email[i-1]=='o')&&(email[i-2]=='c')&&(email[i-3]=='.'))||((email[i]=='c')&&(email[i-1]=='e')&&(email[i-2]=='.')))
+		com=false;
+	else
+		com=true;
+						
+	if(arroba||com)
+		printf("_____________________________\nDato Incorrecto !!\nCorreo mal ingresado\nVuelva a ingresar por favor\n_____________________________\n");
+	
+	return arroba||com;
+}
+
