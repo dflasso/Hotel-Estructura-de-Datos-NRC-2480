@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
@@ -135,7 +136,7 @@ bool validacionEmail(char email[]){
 	return arroba||com;
 }
 
-bool validacionEdad(int edad)
+bool validacionEdad(int edad) //validar caracteres
 {
 	if(edad<66&&edad<18)
 	{
@@ -144,5 +145,4 @@ bool validacionEdad(int edad)
 	}
 	return false;
 }
-
 
