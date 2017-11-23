@@ -72,7 +72,7 @@ bool validacionCedula(char Cedula[]){
 
 bool validacionNombreYApellido(char cadena[]){
 	int i;
-	for(i=0;cadena[i]!=NULL;i++)
+	for(i=0;cadena[i]!='\0';i++)
 	{
 		if((cadena[i]<65||cadena[i]>90)&&(cadena[i]<97||cadena[i]>122)&&cadena[i]!=32&&cadena[i]!=-92&&cadena[i]!=-91)
 		{
@@ -86,7 +86,7 @@ bool validacionNombreYApellido(char cadena[]){
 
 bool validacionCelular(char celular[]){
 	int i;
-	for(i=0;celular[i]!=NULL;i++)
+	for(i=0;celular[i]!='\0';i++)
 	{
 		if(celular[i]<48||celular[i]>57||strlen(celular)!=10)
 		{
@@ -103,7 +103,7 @@ bool validacionCelular(char celular[]){
 
 bool validacionNumero(char numero[]){
 	int i;
-	for(i=0;numero[i]!=NULL;i++)
+	for(i=0;numero[i]!='\0';i++)
 	{
 		if(numero[i]<48||numero[i]>57)
 		{
@@ -118,7 +118,7 @@ bool validacionNumero(char numero[]){
 bool validacionEmail(char email[]){
 	int i;
 	bool arroba=true,com;
-	for(i=0;email[i]!=NULL;i++)
+	for(i=0;email[i]!='\0';i++)
 	{
 		if(email[i]==64)
 			arroba=false;

@@ -5,6 +5,7 @@
 typedef struct SCuarto{ ///inf. cuartos
 	bool disponible;
 	float precio;
+	int id;
 	char tipo[20];
 	char descripcion[20];
 	char CI[11];
@@ -54,12 +55,15 @@ typedef struct SMes *Mes;
 void inicio(Mes *);
 void calendarioMes(Dia *,int );
 void hotel();
+void nuevoHuesped(Cliente *);
+void reservarHotel(Cliente *,Mes *);
+int selecDia(int refMes);//imprimer los dias dias del mes provicionalmente
+void menuMes(Cliente *,Mes *);
 void menuVisualizar(Cliente *,Mes *);
 void disponibles(Dia *);
 void ingresoDeCliente(Cliente *);
-
+void apruebaReserva(Mes *,int ,int idCuarto);
 /*Desarollo de Funciones*/
-
 //Inicializacion
 void calendarioMes(Dia &diaActual,int refDia){
 	Dia recorre=diaActual;
@@ -71,16 +75,21 @@ void calendarioMes(Dia &diaActual,int refDia){
 		nuevo->habitacion.cuarto1.precio=15,00;
 		strcpy(nuevo->habitacion.cuarto1.descripcion,"Cama de una plaza y baño");
 		strcpy(nuevo->habitacion.cuarto1.CI,"");
+		nuevo->habitacion.cuarto1.id=1;
+		//cuarto 2
 		nuevo->habitacion.cuarto2.disponible=true;
 		strcpy(nuevo->habitacion.cuarto2.tipo,"Familiar");
 		strcpy(nuevo->habitacion.cuarto2.descripcion,"Cama matrimonial, 2 literas con baño");
 		nuevo->habitacion.cuarto2.precio=25,00;
 		strcpy(nuevo->habitacion.cuarto2.CI,"");
+		nuevo->habitacion.cuarto2.id=2;
+		//cuarto 3
 		nuevo->habitacion.cuarto3.disponible=true;
 		strcpy(nuevo->habitacion.cuarto3.tipo,"Matrimonial");
 		strcpy(nuevo->habitacion.cuarto3.descripcion,"Cama matrimonial y yacusi");
 		nuevo->habitacion.cuarto3.precio=30,00;
 		strcpy(nuevo->habitacion.cuarto3.CI,"");
+		nuevo->habitacion.cuarto3.id=3;
 		diaActual=nuevo;
 		diaActual->siguiente=NULL;
 		diaActual->anterior=NULL;
@@ -139,8 +148,7 @@ void inicio(Mes &mes){
 	}
 }
 //Ingreso de lista cliente
-void ingresoDeCliente(Cliente &Lista)
-{
+void ingresoDeCliente(Cliente &Lista){
 	int cont=1;
 	char edad[100];
 	Cliente Nuevo=new SCliente();
@@ -203,7 +211,82 @@ void ingresoDeCliente(Cliente &Lista)
 	}
 	contadorNodoCliente++;
 }
-
+///ingresos
+int selecDia(int refMes){
+	for(int i=1;i<=dias_del_mes(refMes);i++){
+		printf("\t %d\n",i);
+	}
+	printf("ingrese el dia que desea reservar...\n\t ");
+	scanf("%d",&refMes);
+	return refMes;
+}
+void apruebaReserva(Dia &dia,int diaR,int idCuarto){
+	bool ok=false;
+	Dia aux=dia;
+	system("cls");
+	system("color F0");
+	while(aux!=NULL){
+		if(aux->dia==diaR){
+			switch(idCuarto){
+				case 1:
+					if(aux->habitacion.cuarto1.disponible){
+						aux->habitacion.cuarto1.disponible=false;
+						printf("\nRESERVACION EXITOSA!!!...\n\nAcontinuacion debe ingresar sus datos\n");
+						do
+						{
+							printf("Ingrese su numero de cedula: ");
+							fflush(stdin);
+							gets(aux->habitacion.cuarto1.CI);
+							fflush(stdin);
+						}while(validacionCedula(aux->habitacion.cuarto1.CI));
+						ok=true;
+					}else{
+						printf("\nLo sentimos...\n\nLa habitacion ya se encuentra reservada\n\n");
+					}
+				break;
+				case 2:
+					if(aux->habitacion.cuarto2.disponible){
+						aux->habitacion.cuarto2.disponible=false;
+						printf("\nRESERVACION EXITOSA!!!...\n\nAcontinuacion debe ingresar sus datos\n");
+						do
+						{
+							printf("Ingrese su numero de cedula: ");
+							fflush(stdin);
+							gets(aux->habitacion.cuarto2.CI);
+							fflush(stdin);
+						}while(validacionCedula(aux->habitacion.cuarto2.CI));
+						ok=true;
+					}else{
+						printf("\nLo sentimos...\nLa habitacion ya se encuentra reservada\n\n");
+					}
+				break;
+				case 3:
+					if(aux->habitacion.cuarto3.disponible){
+						aux->habitacion.cuarto2.disponible=false;
+						printf("\nRESERVACION EXITOSA!!!...\nAcontinuacion debe ingresar sus datos\n");
+						do
+						{
+							printf("Ingrese su numero de cedula: ");
+							fflush(stdin);
+							gets(aux->habitacion.cuarto3.CI);
+							fflush(stdin);
+						}while(validacionCedula(aux->habitacion.cuarto3.CI));
+						ok=true;
+					}else{
+						printf("\nLo sentimos...\nLa habitacion ya se encuentra reservada\n\n");
+					}
+				break;
+			}
+		}
+		aux=aux->siguiente;
+	}
+	system("pause");
+	/*if(ok){
+		return aux->habitacion.cuarto1.CI;
+	}else{
+		
+	}*/
+}
 //VISUALIZAR
 void disponibles(Dia &ref){
 	Dia aux=ref;
@@ -211,27 +294,78 @@ void disponibles(Dia &ref){
 	while(aux!=NULL){
 		printf("\nEl dia %d: \n",aux->dia);
 		if(aux->habitacion.cuarto1.disponible){
+			color(10);
 			printf("La habitacion  %s ¡ESTA DISPONIBLE!\n",aux->habitacion.cuarto1.tipo);
 			printf("Tiene  %s\n",aux->habitacion.cuarto1.descripcion);
 			printf("El precio de la habitacion es:%.2f \n",aux->habitacion.cuarto1.precio);
+		}else{
+			color(12);
+			printf("La habitacion  %s ¡ESTA OCUPADA!\n",aux->habitacion.cuarto1.tipo);
 		}
+		printf("\n------------------------------------------------------\n");
 		if(aux->habitacion.cuarto2.disponible){
+			color(10);
 			printf("La habitacion  %s ¡ESTA DISPONIBLE!\n",aux->habitacion.cuarto2.tipo);
 			printf("Tiene  %s\n",aux->habitacion.cuarto2.descripcion);
 			printf("El precio de la habitacion es:%.2f \n",aux->habitacion.cuarto2.precio);
 		}
+		else{
+			color(12);
+			printf("La habitacion  %s ¡ESTA OCUPADA!\n",aux->habitacion.cuarto2.tipo);
+		}
+		printf("\n------------------------------------------------------\n");
 		if(aux->habitacion.cuarto3.disponible){
+			color(10);
 			printf("La habitacion  %s ¡ESTA DISPONIBLE!\n",aux->habitacion.cuarto3.tipo);
 			printf("Tiene  %s\n",aux->habitacion.cuarto3.descripcion);
 			printf("El precio de la habitacion es:%.2f \n",aux->habitacion.cuarto3.precio);
 		}
+		else{
+			color(12);
+			printf("La habitacion  %s ¡ESTA OCUPADA!\n",aux->habitacion.cuarto3.tipo);
+		}
+		printf("\n------------------------------------------------------\n\n");
 		aux=aux->siguiente;
 	}
 	system("pause");
 }
-
-void informacionPersonal(Cliente &Lista)
-{
+void reservarHotel(Cliente &clientes,Mes &mes){
+	int opc=1;
+	int diaR=0; //guarda el dia de la posible reserva
+	int tipoCuarto=0;
+	const char *opciones[]={"Reservar otro dia en este mes","Reservar en otro mes"};
+	const char *opcCuartos[]={"Habitacion simple","Habitacion Familiar","Habitacion Matrimonial"};
+	do{
+		if(opc==1){
+			disponibles(mes->dia);
+			system("cls");
+			printf("\nAcontinuacion se presentara un menu con los dias del mes\n\n");
+			system("pause");
+			diaR=selecDia(mes->numeroMes);
+			tipoCuarto=menu("Eliga el cuarto que desea",opcCuartos,3);
+			apruebaReserva(mes->dia,diaR,tipoCuarto);
+			
+		}
+		opc=menu("Menu de Reservaciones en el mes seleccionado",opciones,2);
+	}while(opc!=2);
+}
+void menuMes(Cliente &clientes,Mes &mes){
+	int opc=0;
+	const char *opciones[]={"Reservar en el mes actual","Reservar en otro mes","Regresar al menu de reservas"};
+	do{
+		opc=menu("Menu de Reservaciones",opciones,3);
+		switch(opc){
+			case 1:
+				reservarHotel(clientes,mes);
+			break;
+			case 2:
+			break;
+			case 3:
+			break;
+		}
+	}while(opc!=3);
+}
+void informacionPersonal(Cliente &Lista){
 	Cliente Aux=new SCliente();
 	Aux=Lista;
 	system("cls");
@@ -256,7 +390,6 @@ void informacionPersonal(Cliente &Lista)
 	    system("pause");
 	}
 }
-
 void menuVisualizar(Cliente &clientes,Mes &mes){
 	int opc=0;
 	const char *opciones[]={"Habitaciones disponibles","Habitaciones ocupadas","Habitaciones reservadas por un cliente","Regresar al menu de reservas"};
@@ -273,7 +406,6 @@ void menuVisualizar(Cliente &clientes,Mes &mes){
 		}
 	}while(opc!=4);
 }
-
 //Funcion principal del programa.
 void hotel(){
 	Mes mes=NULL;
@@ -286,6 +418,7 @@ void hotel(){
 		color(10);
 		switch(opc){
 			case 1:
+				menuMes(clientes,mes);
 				ingresoDeCliente(clientes);
 			break;
 			case 2:
