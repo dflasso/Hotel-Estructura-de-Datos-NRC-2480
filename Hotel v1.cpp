@@ -63,6 +63,10 @@ void menuVisualizar(Cliente *,Mes *);
 void disponibles(Dia *);
 void ingresoDeCliente(Cliente *);
 void apruebaReserva(Mes *,int ,int idCuarto);
+void informacionClienteTotal(Cliente *);
+void informacionClienteEspecifico(Cliente *,int);
+void buscarCI(Cliente *);
+
 /*Desarollo de Funciones*/
 //Inicializacion
 void calendarioMes(Dia &diaActual,int refDia){
@@ -210,6 +214,7 @@ void ingresoDeCliente(Cliente &Lista){
 		Lista=Nuevo;
 	}
 	contadorNodoCliente++;
+	printf("\n");
 }
 ///ingresos
 int selecDia(int refMes){
@@ -364,8 +369,44 @@ void menuMes(Cliente &clientes,Mes &mes){
 			break;
 		}
 	}while(opc!=3);
+	printf("\n");
 }
-void informacionPersonal(Cliente &Lista){
+
+//imprime cierto cliente especifico
+informacionClienteEspecifico(Cliente &Lista, int ubicacion)
+{
+	Cliente Aux=new SCliente();
+	Aux=Lista;
+	int i=1,cont=0;
+	if(Aux == NULL)
+    	printf("No existe elementos en la lista.\n\n");
+    else
+    {
+    	while(Aux!=NULL)
+		{
+			if(ubicacion==cont)
+			{
+				printf("%d) %s\n",ubicacion+1,Aux->cliente.nombre);
+	        	printf("   %s\n",Aux->cliente.apellido);
+	        	printf("   %s\n",Aux->cliente.CI);
+	        	printf("   %s\n",Aux->cliente.email);
+	        	printf("   %s\n",Aux->cliente.celular);
+				break;
+			}
+			else
+			{
+				cont++;
+			}
+			Aux=Aux->siguiente;		
+		}
+	}
+	if(cont==0&&ubicacion!=0)
+		printf("\nNo se ha encontrado al cliente.\n\n");
+}
+
+//imprime toda la lista CLiente
+void informacionClienteTotal(Cliente &Lista)
+{
 	Cliente Aux=new SCliente();
 	Aux=Lista;
 	system("cls");
@@ -387,9 +428,59 @@ void informacionPersonal(Cliente &Lista){
 	        i++;
 	    }
 	    printf("\n");
-	    system("pause");
 	}
 }
+
+//Busca en toda la lista cliente mediante la cedula
+void buscarCI(Cliente &Lista)
+{
+	char buscar[11],editar[11];
+	int cont=0,ubicacion=0;
+	Cliente Aux=new SCliente();
+	Aux=Lista;
+	system("cls");
+	if(Aux == NULL)
+    	printf("No existe elementos en la lista.\n\n");
+    else
+    {
+    	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),14);
+		printf("Buscar.\n\n");
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),15);
+		do
+		{
+			printf("Ingrese el numero de cedula a buscar: ");
+			gets(buscar);
+			fflush(stdin);
+		}while(validacionCedula(buscar));
+		while(Aux!=NULL)
+		{
+			if(strcmp(buscar,Aux->cliente.CI)==0)
+			{
+				printf("\nNumero de cedula encontrado ! ( %s )\n",buscar);
+				do
+				{
+					printf("Ingrese el nuevo numero de cedula: ");
+					gets(editar);
+					fflush(stdin);
+				}while(validacionCedula(editar));
+				strcpy(Aux->cliente.CI,editar);
+				printf("\nCambio Exitoso");
+				cont++;
+				printf("\n\nA continuacion se le va a desplegar sus datos para verificar su modificacion.\nPresione cualquier tecla para continuar. . .\n");
+    			getch();
+    			informacionClienteEspecifico(Lista,ubicacion);
+    			break;
+			}
+			ubicacion++;
+			Aux=Aux->siguiente;
+		}
+		if(cont==0)
+			printf("\nNo se ha encontrado al cliente.\n\n");
+
+	}
+	
+}
+
 void menuVisualizar(Cliente &clientes,Mes &mes){
 	int opc=0;
 	const char *opciones[]={"Habitaciones disponibles","Habitaciones ocupadas","Habitaciones reservadas por un cliente","Regresar al menu de reservas"};
@@ -405,6 +496,7 @@ void menuVisualizar(Cliente &clientes,Mes &mes){
 			break;
 		}
 	}while(opc!=4);
+	printf("\n");
 }
 //Funcion principal del programa.
 void hotel(){
@@ -419,19 +511,26 @@ void hotel(){
 		switch(opc){
 			case 1:
 				menuMes(clientes,mes);
-				ingresoDeCliente(clientes);
+				
 			break;
 			case 2:
-				informacionPersonal(clientes);
+				ingresoDeCliente(clientes);
 			break;
 			case 3:
+				buscarCI(clientes);
 			break;
 			case 4:
+				informacionClienteTotal(clientes);
 			break;
 			case 5:
 				menuVisualizar(clientes,mes);
 			break;
 		}
+	if(opc!=6)
+	{
+		printf("Presione cualquier tecla para volver al menu reservas . . .");
+		getch();
+	}
 	}while(opc!=6);
 }
 int main()
