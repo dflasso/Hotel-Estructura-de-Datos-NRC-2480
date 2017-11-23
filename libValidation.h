@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
@@ -73,9 +72,9 @@ bool validacionCedula(char Cedula[]){
 
 bool validacionNombreYApellido(char cadena[]){
 	int i;
-	for(i=0;cadena[i]!='\0';i++)
+	for(i=0;cadena[i]!=NULL;i++)
 	{
-		if((cadena[i]<65||cadena[i]>90)&&(cadena[i]<97||cadena[i]>122)&&cadena[i]!=32)
+		if((cadena[i]<65||cadena[i]>90)&&(cadena[i]<97||cadena[i]>122)&&cadena[i]!=32&&cadena[i]!=-92&&cadena[i]!=-91)
 		{
 			printf("______________________________________________________\nDato Incorrecto !!\nNo puede contener caracteres especiales, ni numeros\nVuelva a ingresar por favor\n______________________________________________________\n\n");
 			return true;
@@ -136,13 +135,23 @@ bool validacionEmail(char email[]){
 	return arroba||com;
 }
 
-bool validacionEdad(int edad) //validar caracteres
+bool validacionEdad(char edad[])
 {
-	if(edad<66&&edad<18)
+	int edad1;
+	if(validacionNumero(edad))
 	{
-			printf("______________________________________________________________________\nEdad no permitida, tiene que ser mayor a 18 y menor a 66 a%cos de edad.\nVuelva a ingresar por favor\n______________________________________________________________________\n\n",164);
-			return true;
+		return true;
 	}
-	return false;
+	else
+	{	
+		edad1=atoi(edad);
+		if(edad1>66||edad1<18)
+		{
+			printf("______________________________________________________________________\nEdad no permitida, tiene que ser mayor a 18 y menor a 66 a%cos de edad.\nVuelva a ingresar por favor\n______________________________________________________________________\n\n",164);			
+			return true;
+		}
+		return false;
+	}
+	
 }
 
