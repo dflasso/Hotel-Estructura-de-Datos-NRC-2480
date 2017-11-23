@@ -88,7 +88,7 @@ bool validacionCelular(char celular[]){
 	int i;
 	for(i=0;celular[i]!=NULL;i++)
 	{
-		if(celular[i]<48||celular[i]>57)
+		if(celular[i]<48||celular[i]>57||strlen(celular)!=10)
 		{
 			printf("_________________________________________________________________________\nNumero de celular incorrecto !!\nVerifique su numero de celular...\nLos dos primeros digitos deben ser 09 y debe tener 10 digitos en total\n_________________________________________________________________________\n\n");
 			return true;

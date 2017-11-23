@@ -59,6 +59,7 @@ void disponibles(Dia *);
 void ingresoDeCliente(Cliente *);
 
 /*Desarollo de Funciones*/
+
 //Inicializacion
 void calendarioMes(Dia &diaActual,int refDia){
 	Dia recorre=diaActual;
@@ -145,6 +146,7 @@ void ingresoDeCliente(Cliente &Lista)
 	Cliente Nuevo=new SCliente();
 	Cliente Aux;
 	Aux=Lista;
+	system("cls");
 	do
 	{
 		printf("Ingrese el nombre: ");
@@ -227,6 +229,34 @@ void disponibles(Dia &ref){
 	}
 	system("pause");
 }
+
+void informacionPersonal(Cliente &Lista)
+{
+	Cliente Aux=new SCliente();
+	Aux=Lista;
+	system("cls");
+	int i=1;
+	if(Aux == NULL)
+    	printf("No existe elementos en la lista.\n\n");
+    else
+    {
+	    printf("\t\t_______Informacion personal_______\n\n");
+		while(Aux != NULL)
+		{
+			
+	        printf("%d) %s\n",i,Aux->cliente.nombre);
+	        printf("   %s\n",Aux->cliente.apellido);
+	        printf("   %s\n",Aux->cliente.CI);
+	        printf("   %s\n",Aux->cliente.email);
+	        printf("   %s\n",Aux->cliente.celular);
+	        Aux=Aux->siguiente;
+	        i++;
+	    }
+	    printf("\n");
+	    system("pause");
+	}
+}
+
 void menuVisualizar(Cliente &clientes,Mes &mes){
 	int opc=0;
 	const char *opciones[]={"Habitaciones disponibles","Habitaciones ocupadas","Habitaciones reservadas por un cliente","Regresar al menu de reservas"};
@@ -259,6 +289,7 @@ void hotel(){
 				ingresoDeCliente(clientes);
 			break;
 			case 2:
+				informacionPersonal(clientes);
 			break;
 			case 3:
 			break;
