@@ -1047,7 +1047,7 @@ void portada (){
 
     gotoxy(70,32);
 
-    printf("\t\tLOADING PLEASE WAIT...\n");
+    printf("\nLOADING PLEASE WAIT...\n");
     for(int i=0;i<150;i++)
     {
         gotoxy(i,30);
