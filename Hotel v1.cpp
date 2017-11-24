@@ -1,3 +1,4 @@
+#include "libGraphicalInterface.h"
 #include "libHotel.h"
 #include "libValidation.h"
 
@@ -535,6 +536,8 @@ void hotel(){
 }
 int main()
 {
+	AltEnter();
+	caratula();
 	hotel();
 	return 0;
 }
