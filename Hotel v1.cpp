@@ -1,5 +1,5 @@
-#include "libGraphicalInterface.h"
 #include "libHotel.h"
+#include "libGraphicalInterface.h"
 #include "libValidation.h"
 
 /*Declaracion de estructura*/
@@ -537,7 +537,8 @@ void hotel(){
 int main()
 {
 	AltEnter();
-	caratula();
+	portada();
 	hotel();
 	return 0;
 }
+
