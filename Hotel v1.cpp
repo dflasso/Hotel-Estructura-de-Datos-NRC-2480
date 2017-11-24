@@ -70,6 +70,7 @@ void modificarCI(Cliente *);
 void buscarCI(Cliente *);
 
 /*Desarollo de Funciones*/
+
 //Inicializacion
 void calendarioMes(Dia &diaActual,int refDia){
 	Dia recorre=diaActual;
@@ -125,6 +126,7 @@ void calendarioMes(Dia &diaActual,int refDia){
 	}
 	
 }
+
 void inicio(Mes &mes){
 	Mes nuevo=new SMes();
 	Mes recorre=mes;
@@ -153,52 +155,190 @@ void inicio(Mes &mes){
 		nuevo->anterior=recorre;
 	}
 }
-//Ingreso de lista cliente
-void ingresoDeCliente(Cliente &Lista){
-	int cont=1;
-	char edad[100];
-	Cliente Nuevo=new SCliente();
-	Cliente Aux;
+
+//imprime cierto cliente especifico
+informacionClienteEspecifico(Cliente &Lista, int ubicacion)
+{
+	Cliente Aux=new SCliente();
+	Aux=Lista;
+	int i=1,cont=0;
+	if(Aux == NULL)
+    	printf("No existe elementos en la lista.\n\n");
+    else
+    {
+    	while(Aux!=NULL)
+		{
+			if(ubicacion==cont)
+			{
+				printf("%d) %s\n",ubicacion+1,Aux->cliente.nombre);
+	        	printf("   %s\n",Aux->cliente.apellido);
+	        	printf("   %s\n",Aux->cliente.CI);
+	        	printf("   %s\n",Aux->cliente.email);
+	        	printf("   %s\n",Aux->cliente.celular);
+	        	printf("   %d\n",Aux->cliente.edad);
+				break;
+			}
+			else
+			{
+				cont++;
+			}
+			Aux=Aux->siguiente;		
+		}
+	}
+	if(cont==0&&ubicacion!=0)
+		printf("\nNo se ha encontrado al cliente.\n\n");
+}
+
+//imprime toda la lista CLiente
+void informacionClienteTotal(Cliente &Lista)
+{
+	Cliente Aux=new SCliente();
 	Aux=Lista;
 	system("cls");
-	do
-	{
-		printf("Ingrese el nombre: ");
-		gets(Nuevo->cliente.nombre);
-		fflush(stdin);
-	}while(validacionNombreYApellido(Nuevo->cliente.nombre));
-	do
-	{
-		printf("Ingrese el apellido: ");
-		gets(Nuevo->cliente.apellido);
-		fflush(stdin);
-	}while(validacionNombreYApellido(Nuevo->cliente.apellido));
+	int i=1;
+	if(Aux == NULL)
+    	printf("No existe elementos en la lista.\n\n");
+    else
+    {
+	    printf("\t\t_______Informacion personal_______\n\n");
+		while(Aux != NULL)
+		{
+			
+	        printf("%d) %s\n",i,Aux->cliente.nombre);
+	        printf("   %s\n",Aux->cliente.apellido);
+	        printf("   %s\n",Aux->cliente.CI);
+	        printf("   %s\n",Aux->cliente.email);
+	        printf("   %s\n",Aux->cliente.celular);
+	        Aux=Aux->siguiente;
+	        i++;
+	    }
+	    printf("\n");
+	}
+}
+
+//Ingreso de lista cliente
+void ingresoDeCliente(Cliente &Lista){
+	int cont=0;
+	char edad[100],opcion;
+	Cliente Nuevo=new SCliente();
+	Cliente Guia=new SCliente();
+	Cliente Aux;
+	Guia=Aux=Lista;
+	system("cls");
+	//------ ahorita 24/11
 	do
 	{
 		printf("Ingrese su numero de cedula: ");
 		gets(Nuevo->cliente.CI);
 		fflush(stdin);
 	}while(validacionCedula(Nuevo->cliente.CI));
-	do
+	while(Guia!=NULL)
 	{
-		printf("Ingrese su email: ");
-		gets(Nuevo->cliente.email);
-		fflush(stdin);
-	}while(validacionEmail(Nuevo->cliente.email));
-	do
+			if(strcmp(Nuevo->cliente.CI,Guia->cliente.CI)==0)
+			{
+				printf("\nNumero de cedula encontrado ! ( %s )",Nuevo->cliente.CI);
+				printf("\n\nA continuacion se le va a desplegar sus datos para verificar su ingreso.\nPresione cualquier tecla para continuar. . .\n\n");
+    			getch();
+    			informacionClienteEspecifico(Guia,cont);
+    			cont++;
+    			break;
+			}
+			Guia=Guia->siguiente;
+	}
+	if(cont==0)
 	{
-		printf("Ingrese su celular: ");
-		fflush(stdin);
-		gets(Nuevo->cliente.celular);
-	}while(validacionCelular(Nuevo->cliente.celular));
+		do
+		{
+			printf("Ingrese el nombre: ");
+			gets(Nuevo->cliente.nombre);
+			fflush(stdin);
+		}while(validacionNombreYApellido(Nuevo->cliente.nombre));
+		do
+		{
+			printf("Ingrese el apellido: ");
+			gets(Nuevo->cliente.apellido);
+			fflush(stdin);
+		}while(validacionNombreYApellido(Nuevo->cliente.apellido));
+		
+		do
+		{
+			printf("Ingrese su email: ");
+			gets(Nuevo->cliente.email);
+			fflush(stdin);
+		}while(validacionEmail(Nuevo->cliente.email));
+		do
+		{
+			printf("Ingrese su celular: ");
+			fflush(stdin);
+			gets(Nuevo->cliente.celular);
+		}while(validacionCelular(Nuevo->cliente.celular));
+		
+		do
+		{
+			printf("Ingrese su edad: ");
+			scanf("%d",&Nuevo->cliente.edad);
+			fflush(stdin);
+			itoa(Nuevo->cliente.edad,edad,10);
+		}while(validacionEdad(edad));	
+	}
+	else
+	{
+		printf("\ndesea actualizar algun dato, Yes o No (Y/N)?");
+	    opcion=getch();
+	    while(((opcion!='Y')&&(opcion!='y'))&&((opcion!='N')&&(opcion!='n')))
+	    {
+	         printf("\nOpcion incorrecta !!\n");
+	         fflush(stdin);
+	         printf("Ingrese correctamente la opcion Yes o No (Y/N) ");
+	         opcion=getch();
+	    }
+	    if(((opcion!='Y')&&(opcion!='y'))&&((opcion!='N')&&(opcion!='n')))
+	    {
+	    	do
+			{
+				printf("Ingrese el nombre: ");
+				gets(Nuevo->cliente.nombre);
+				fflush(stdin);
+			}while(validacionNombreYApellido(Nuevo->cliente.nombre));
+			do
+			{
+				printf("Ingrese el apellido: ");
+				gets(Nuevo->cliente.apellido);
+				fflush(stdin);
+			}while(validacionNombreYApellido(Nuevo->cliente.apellido));
+			
+			do
+			{
+				printf("Ingrese su email: ");
+				gets(Nuevo->cliente.email);
+				fflush(stdin);
+			}while(validacionEmail(Nuevo->cliente.email));
+			do
+			{
+				printf("Ingrese su celular: ");
+				fflush(stdin);
+				gets(Nuevo->cliente.celular);
+			}while(validacionCelular(Nuevo->cliente.celular));
+			
+			do
+			{
+				printf("Ingrese su edad: ");
+				scanf("%d",&Nuevo->cliente.edad);
+				fflush(stdin);
+				itoa(Nuevo->cliente.edad,edad,10);
+			}while(validacionEdad(edad));	
+		}
+		else
+		{
+			strcpy(Nuevo->cliente.nombre,Guia->cliente.nombre);
+			strcpy(Nuevo->cliente.apellido,Guia->cliente.apellido);
+			strcpy(Nuevo->cliente.email,Guia->cliente.email);
+			strcpy(Nuevo->cliente.celular,Guia->cliente.celular);
+			Nuevo->cliente.edad=Guia->cliente.edad;
+			printf("\n");
+		}
+	}	
 	
-	do
-	{
-		printf("Ingrese su edad: ");
-		scanf("%d",&Nuevo->cliente.edad);
-		fflush(stdin);
-		itoa(Nuevo->cliente.edad,edad,10);
-	}while(validacionEdad(edad));
 	if(Aux!=NULL)
 	{
 		while(Aux->siguiente!=NULL)
@@ -220,6 +360,7 @@ void ingresoDeCliente(Cliente &Lista){
 }
 ///ingresos
 int selecDia(int refMes){
+	
 	for(int i=1;i<=dias_del_mes(refMes);i++){
 		printf("\t %d\n",i);
 	}
@@ -227,6 +368,7 @@ int selecDia(int refMes){
 	scanf("%d",&refMes);
 	return refMes;
 }
+
 void apruebaReserva(Dia &dia,int diaR,int idCuarto){
 	bool ok=false;
 	Dia aux=dia;
@@ -336,6 +478,7 @@ void disponibles(Dia &ref){
 	}
 	system("pause");
 }
+
 void reservarHotel(Cliente &clientes,Mes &mes){
 	int opc=1;
 	int diaR=0; //guarda el dia de la posible reserva
@@ -356,6 +499,7 @@ void reservarHotel(Cliente &clientes,Mes &mes){
 		opc=menu("Menu de Reservaciones en el mes seleccionado",opciones,2);
 	}while(opc!=2);
 }
+
 void menuMes(Cliente &clientes,Mes &mes){
 	int opc=0;
 	const char *opciones[]={"Reservar en el mes actual","Reservar en otro mes","Regresar al menu de reservas"};
@@ -374,69 +518,10 @@ void menuMes(Cliente &clientes,Mes &mes){
 	printf("\n");
 }
 
-//imprime cierto cliente especifico
-informacionClienteEspecifico(Cliente &Lista, int ubicacion)
-{
-	Cliente Aux=new SCliente();
-	Aux=Lista;
-	int i=1,cont=0;
-	if(Aux == NULL)
-    	printf("No existe elementos en la lista.\n\n");
-    else
-    {
-    	while(Aux!=NULL)
-		{
-			if(ubicacion==cont)
-			{
-				printf("%d) %s\n",ubicacion+1,Aux->cliente.nombre);
-	        	printf("   %s\n",Aux->cliente.apellido);
-	        	printf("   %s\n",Aux->cliente.CI);
-	        	printf("   %s\n",Aux->cliente.email);
-	        	printf("   %s\n",Aux->cliente.celular);
-				break;
-			}
-			else
-			{
-				cont++;
-			}
-			Aux=Aux->siguiente;		
-		}
-	}
-	if(cont==0&&ubicacion!=0)
-		printf("\nNo se ha encontrado al cliente.\n\n");
-}
-
-//imprime toda la lista CLiente
-void informacionClienteTotal(Cliente &Lista)
-{
-	Cliente Aux=new SCliente();
-	Aux=Lista;
-	system("cls");
-	int i=1;
-	if(Aux == NULL)
-    	printf("No existe elementos en la lista.\n\n");
-    else
-    {
-	    printf("\t\t_______Informacion personal_______\n\n");
-		while(Aux != NULL)
-		{
-			
-	        printf("%d) %s\n",i,Aux->cliente.nombre);
-	        printf("   %s\n",Aux->cliente.apellido);
-	        printf("   %s\n",Aux->cliente.CI);
-	        printf("   %s\n",Aux->cliente.email);
-	        printf("   %s\n",Aux->cliente.celular);
-	        Aux=Aux->siguiente;
-	        i++;
-	    }
-	    printf("\n");
-	}
-}
-
 //Busca en toda la lista cliente mediante la cedula
 void buscarCI(Cliente &Lista)
 {
-	char buscar[11],editar[11];
+	char buscar[11];
 	int cont=0,ubicacion=0;
 	Cliente Aux=new SCliente();
 	Aux=Lista;
@@ -458,7 +543,7 @@ void buscarCI(Cliente &Lista)
 		{
 			if(strcmp(buscar,Aux->cliente.CI)==0)
 			{
-				printf("\nNumero de cedula encontrado ! ( %s )\n",buscar);
+				printf("\nNumero de cedula encontrado ! ( %s )",buscar);
 				printf("\n\nA continuacion se le va a desplegar sus datos para verificar su busqueda.\nPresione cualquier tecla para continuar. . .\n");
     			getch();
     			informacionClienteEspecifico(Lista,ubicacion);
@@ -474,7 +559,6 @@ void buscarCI(Cliente &Lista)
 	}
 	
 }
-
 
 //Modifica en toda la lista cliente mediante la cedula
 void modificarCI(Cliente &Lista)
@@ -501,7 +585,7 @@ void modificarCI(Cliente &Lista)
 		{
 			if(strcmp(buscar,Aux->cliente.CI)==0)
 			{
-				printf("\nNumero de cedula encontrado ! ( %s )\n",buscar);
+				printf("\nNumero de cedula encontrado ! ( %s )",buscar);
 				do
 				{
 					printf("Ingrese el nuevo numero de cedula: ");
@@ -544,6 +628,7 @@ void menuVisualizar(Cliente &clientes,Mes &mes){
 	}while(opc!=4);
 	printf("\n");
 }
+
 //Funcion principal del programa.
 void hotel(){
 	Mes mes=NULL;
@@ -581,7 +666,7 @@ void hotel(){
 }
 int main()
 {
-	//AltEnter();
+	AltEnter();
 	//portada();
 	hotel();
 	return 0;
