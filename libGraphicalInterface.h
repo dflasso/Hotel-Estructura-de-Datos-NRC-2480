@@ -28,7 +28,7 @@ void portada (){
     char caracter[130];
     system("color 0E");
     FILE *INICIO;
-    INICIO=fopen("INICIO.txt","r");
+    INICIO=fopen("Datos.txt","r");
 
 
          for (int i=1;i<167;i++) 
