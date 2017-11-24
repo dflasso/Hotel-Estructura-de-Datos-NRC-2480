@@ -1061,7 +1061,7 @@ void portada (){
         }
     }
     Beep(262,150);
-    Beep(240,120);
+    Beep(262,150);
     Beep(262,150);
     
     printf("\n\n");
