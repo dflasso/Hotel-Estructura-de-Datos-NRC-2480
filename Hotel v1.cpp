@@ -66,6 +66,7 @@ void ingresoDeCliente(Cliente *);
 void apruebaReserva(Mes *,int ,int idCuarto);
 void informacionClienteTotal(Cliente *);
 void informacionClienteEspecifico(Cliente *,int);
+void modificarCI(Cliente *);
 void buscarCI(Cliente *);
 
 /*Desarollo de Funciones*/
@@ -458,6 +459,49 @@ void buscarCI(Cliente &Lista)
 			if(strcmp(buscar,Aux->cliente.CI)==0)
 			{
 				printf("\nNumero de cedula encontrado ! ( %s )\n",buscar);
+				printf("\n\nA continuacion se le va a desplegar sus datos para verificar su busqueda.\nPresione cualquier tecla para continuar. . .\n");
+    			getch();
+    			informacionClienteEspecifico(Lista,ubicacion);
+    			cont++;
+    			break;
+			}
+			ubicacion++;
+			Aux=Aux->siguiente;
+		}
+		if(cont==0)
+			printf("\nNo se ha encontrado al cliente.\n\n");
+
+	}
+	
+}
+
+
+//Modifica en toda la lista cliente mediante la cedula
+void modificarCI(Cliente &Lista)
+{
+	char buscar[11],editar[11];
+	int cont=0,ubicacion=0;
+	Cliente Aux=new SCliente();
+	Aux=Lista;
+	system("cls");
+	if(Aux == NULL)
+    	printf("No existe elementos en la lista.\n\n");
+    else
+    {
+    	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),14);
+		printf("Modificar.\n\n");
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),15);
+		do
+		{
+			printf("Ingrese el numero de cedula a buscar: ");
+			gets(buscar);
+			fflush(stdin);
+		}while(validacionCedula(buscar));
+		while(Aux!=NULL)
+		{
+			if(strcmp(buscar,Aux->cliente.CI)==0)
+			{
+				printf("\nNumero de cedula encontrado ! ( %s )\n",buscar);
 				do
 				{
 					printf("Ingrese el nuevo numero de cedula: ");
@@ -492,6 +536,7 @@ void menuVisualizar(Cliente &clientes,Mes &mes){
 				disponibles(mes->dia);
 			break;
 			case 2:
+				
 			break;
 			case 3:
 			break;
@@ -536,8 +581,8 @@ void hotel(){
 }
 int main()
 {
-	AltEnter();
-	portada();
+	//AltEnter();
+	//portada();
 	hotel();
 	return 0;
 }
