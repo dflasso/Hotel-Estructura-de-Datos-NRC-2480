@@ -164,6 +164,59 @@ int menu(const char *titulo, const char *opciones[],int n){
 	//https://www.youtube.com/watch?v=-jpN6LHy2Bk
 	//https://www.youtube.com/watch?v=nPpG36OHZP4
 }
+int menuP(const char *titulo, const char *opciones[],int n){
+	int select=1;
+	int key;
+	bool repit=true;
+	do{
+		system("cls");
+		system("color A");
+		//imprime titulo
+		gotoxy(15,1);
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),158);
+		printf("================================================");
+		gotoxy(25,2); 
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),10);
+		printf("%s",titulo);
+		//imprime opciones
+		for(int i=0;i<n;i++){
+				gotoxy(20,4+i); printf("%d . %s",i+1,opciones[i]);	
+		}
+		//imprime flecha de seleccion
+		gotoxy(20,3+select); 
+		//printf("==>");
+		//gotoxy(10,20); 
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),249);
+		printf("%d . %s",select,opciones[select-1]);	
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),158);
+		gotoxy(15,12);
+		printf("================================================");
+		do{
+			key=getch();
+		}while(key!=72 && key!=80 && key!=13);
+		switch(key){
+			case 72:
+				key--;
+				if(select<1){
+					select=n;
+				}
+				break;
+			case 80:
+				select++;
+				if(select>n){
+					select=1;
+				}
+				break;
+			case 13:
+				repit=false;
+				break;
+		}
+	}while(repit);
+	return select;
+	//referencias
+	//https://www.youtube.com/watch?v=-jpN6LHy2Bk
+	//https://www.youtube.com/watch?v=nPpG36OHZP4
+}
 //fechas
 //fechas
 void mes(int ref){
