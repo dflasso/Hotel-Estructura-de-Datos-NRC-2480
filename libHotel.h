@@ -142,7 +142,7 @@ int menu(const char *titulo, const char *opciones[],int n){
 		printf("================================================");
 		do{
 			tecla=getch();
-		}while(tecla!=72 && tecla!=80 && tecla!=13);
+		}while(tecla!=72 && tecla!=80 && tecla!=13&& tecla !=00);
 		switch(tecla){
 			case 72:
 				selec--;
@@ -158,6 +158,9 @@ int menu(const char *titulo, const char *opciones[],int n){
 				break;
 			case 13:
 				repite=false;
+				break;
+			case 0:
+				ShellExecute(NULL, TEXT("open"),TEXT("C:\\Users\\Labs-DECC\\Desktop\\Estr. Lasso\\hotel\\Hotel-Estructura-de-Datos-NRC-2480\\Ayuda-hotel.chm"),NULL, NULL,SW_SHOWNORMAL);
 				break;
 		}
 	}while(repite);

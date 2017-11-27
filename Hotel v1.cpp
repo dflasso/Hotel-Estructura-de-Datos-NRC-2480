@@ -73,6 +73,7 @@ void menuMes(Cliente *,Mes *,FILE *);
 //funciones de visualizacion
 void menuVisualizar(Cliente *,Mes *);
 void disponibles(Dia *);
+void printCuartos(Mes *,char []);
 void printH(Mes *);
 void printC(Cliente *);
 //registro de clientes
@@ -83,7 +84,7 @@ void informacionClienteEspecifico(Cliente *,int);
 //modificacion
 void modificar(Cliente *);
 //busqueda
-void buscarCI(Cliente *);
+void buscarCI(Cliente *,Mes *);
 //eliminar
 void eliminar(FILE *,Cliente *,Mes *);
 void habilitaCuarto(Mes *);
@@ -372,7 +373,34 @@ void eliminar(FILE *archivoHotel,Cliente &clientes,Mes &mes){
 	}while(opc!=3);
 	RecrearFILE(archivoHotel,clientes,mes);
 }
-
+//imprime habitaciones del cliente
+void printCuartos(Mes &mes,char cedula[]){
+	Mes auxMes=mes;
+	Dia auxDia=NULL;
+	printf("\n---------------------------------------\n\tRESERVAS DEL CLIENTE ");
+	while(auxMes!=NULL){
+		auxDia=auxMes->dia;
+		while(auxDia!=NULL){
+			if(strcmp(auxDia->habitacion.cuarto1.CI,cedula)==0){
+				printf("\n\nLa Habitacion:  %s\n",auxDia->habitacion.cuarto1.tipo);
+				printf("Fecha: dia: %d / mes:  %d  /  2017\n",auxDia->dia,auxMes->numeroMes);
+				printf("Costo:  %.2f",auxDia->habitacion.cuarto1.precio);
+			}
+			if(strcmp(auxDia->habitacion.cuarto2.CI,cedula)==0){
+				printf("\n\nLa Habitacion:  %s\n",auxDia->habitacion.cuarto2.tipo);
+				printf("Fecha: dia: %d / mes:  %d  /  2017\n",auxDia->dia,auxMes->numeroMes);
+				printf("Costo:  %.2f",auxDia->habitacion.cuarto2.precio);
+			}
+			if(strcmp(auxDia->habitacion.cuarto3.CI,cedula)==0){
+				printf("\n\nLa Habitacion:  %s\n",auxDia->habitacion.cuarto3.tipo);
+				printf("Fecha: dia: %d / mes:  %d  /  2017\n",auxDia->dia,auxMes->numeroMes);
+				printf("Costo:  %.2f",auxDia->habitacion.cuarto3.precio);
+			}
+			auxDia=auxDia->siguiente;
+		}
+		auxMes=auxMes->siguiente;
+	}
+}
 //imprime cierto cliente especifico
 void informacionClienteEspecifico(Cliente &Lista, int ubicacion){
 	Cliente Aux=new SCliente();
@@ -822,13 +850,15 @@ void menuMes(Cliente &clientes,Mes &mes,FILE *archivoHotel){
 	}while(opc!=3);
 }
 
+
 //Busca en toda la lista cliente mediante la cedula
-void buscarCI(Cliente &Lista){
+void buscarCI(Cliente &Lista,Mes &mes){
 	char buscar[11],editar[11];
 	int cont=0,ubicacion=0;
 	Cliente Aux=new SCliente();
 	Aux=Lista;
 	system("cls");
+	system("color A");
 	if(Aux == NULL)
     	printf("No existe elementos en la lista.\n\n");
     else
@@ -850,6 +880,7 @@ void buscarCI(Cliente &Lista){
 				printf("\n\nA continuacion se le va a desplegar sus datos para verificar su busqueda.\nPresione cualquier tecla para continuar. . .\n");
     			getch();
     			informacionClienteEspecifico(Lista,ubicacion);
+    			printCuartos(mes,Aux->cliente.CI);
     			cont++;
     			break;
 			}
@@ -1087,7 +1118,7 @@ void menuVisualizar(Cliente &clientes,Mes &mes){
 				disponibles(mes->dia);
 			break;
 			case 2:
-				buscarCI(clientes);
+				buscarCI(clientes,mes);
 			break;
 		}
 		if(opc!=3)
@@ -1126,11 +1157,6 @@ void hotel(Mes &mes,Cliente &clientes,FILE *FHotel){
 	bool ceroReservas=true;
 	int opc=0;
 	const char *opciones[]={"Reserva Nueva","Buscar Reserva","Eliminar Reserva","Modificar Reserva","Visualizar reservas","Salir al menu principal"};
-	//inicializacion con el calendario del mes actual
-	inicio(mes,0);
-	//crea el archivo
-	generaFILE(FHotel);
-	system("color A");
 	do{
 		opc=menu("Menu de Reservas",opciones,6);
 		system("color A");
@@ -1144,7 +1170,7 @@ void hotel(Mes &mes,Cliente &clientes,FILE *FHotel){
 				if(ceroReservas){
 					printf("\nError!!!\nAun no se ha hecho ninguna reserva\n");
 				}else{
-					buscarCI(clientes);
+					buscarCI(clientes,mes);
 				}
 			break;
 			case 3: //eliminar
@@ -1172,9 +1198,6 @@ void hotel(Mes &mes,Cliente &clientes,FILE *FHotel){
 			getch();
 		}
 	}while(opc!=6);
-	free(FHotel);
-	free(mes);
-	free(clientes);
 }
 void menuPrincipal(){
 	Mes mes=NULL;
@@ -1182,9 +1205,13 @@ void menuPrincipal(){
 	Cliente clientes=NULL;
 	system("color A");
 	int opc;
-	const char *opciones[]={"Reservacion","Consulta PDF.","Codigo QR","Ayuda.","Salir"};
+	//inicializacion con el calendario del mes actual
+	inicio(mes,0);
+	//crea el archivo
+	generaFILE(FHotel);
+	system("color A");
+	const char *opciones[]={"Reservacion","Consulta PDF.","Codigo QR","Ayuda. o PULSE F1","Salir"};
 	do{
-		opc=0;
 		opc=menu("Menu Principal",opciones,5);
 		system("color A");
 		color(10);
@@ -1202,13 +1229,10 @@ void menuPrincipal(){
 				
 			break;
 		}
-		if(opc!=5)
-		{
-			printf("\n\nPresione cualquier tecla para volver al menu principal . . .");
-			getch();
-		}
 	}while(opc!=5);
-
+	free(FHotel);
+	free(mes);
+	free(clientes);
 
 }
 int main(){

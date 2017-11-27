@@ -6,13 +6,3 @@ En este archivo se encuentra los datos de clientes Hospedados en el presente
 **mail
 **Cedula de Identidad (CI)
 **Cuartos reservados con sus precios y fechas
----------------------------------------------------
-Nueva reservacion:
-Cliente: D  B
-Cedula:  1717309791
-Email:  @.com
-Celular:  
-Edad:  20
-
-Las habitacion:   Cuarto simple
-EL dia: 27/ mes: 11  /  2017
