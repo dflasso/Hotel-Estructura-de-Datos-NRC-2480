@@ -1182,7 +1182,7 @@ void menuPrincipal(){
 	Cliente clientes=NULL;
 	system("color A");
 	int opc;
-	const char *opciones[]={"Reservacion","Consulta","Ayuda","Codigo QR","Salir"};
+	const char *opciones[]={"Reservacion","Consulta PDF.","Codigo QR","Ayuda.","Salir"};
 	do{
 		opc=0;
 		opc=menu("Menu Principal",opciones,5);
@@ -1212,7 +1212,7 @@ void menuPrincipal(){
 
 }
 int main(){
-	//AltEnter();
+	AltEnter();
 	//portada();
 	menuPrincipal();
 	return 0;

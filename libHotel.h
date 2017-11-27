@@ -138,7 +138,7 @@ int menu(const char *titulo, const char *opciones[],int n){
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),249);
 		printf("%d . %s",selec,opciones[selec-1]);	
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),158);
-		gotoxy(15,12);
+		gotoxy(15,14);
 		printf("================================================");
 		do{
 			tecla=getch();

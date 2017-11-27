@@ -1155,7 +1155,7 @@ int mes30(int mes)
 	{
 		system("cls");
 		imprimirMes30();
-		gotoxy(25,1);
+		gotoxy(50,1);
 		switch(mes)
 		{
 		
@@ -1282,7 +1282,7 @@ int mes31(int mes)
 	{
 		system("cls");
 		imprimirMes31();
-		gotoxy(25,1);
+		gotoxy(50,1);
 		switch(mes)
 		{
 		
