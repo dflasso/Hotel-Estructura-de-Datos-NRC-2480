@@ -1,13 +1,14 @@
 #include "libHotel.h"
 #include "libGraphicalInterface.h"
 #include "libValidation.h"
+
 /*Declaracion de estructura*/
 typedef struct SCuarto{ ///inf. cuartos
 	bool disponible;
 	float precio;
 	int id;
 	char tipo[20];
-	char descripcion[20];
+	char descripcion[100];
 	char CI[11];
 }Cuarto;
 
@@ -80,7 +81,7 @@ bool apruebaReserva(Mes *,int ,int ,Cliente *,FILE *);
 void informacionClienteTotal(Cliente *);
 void informacionClienteEspecifico(Cliente *,int);
 //modificacion
-void modificarCI(Cliente *);
+void modificar(Cliente *);
 //busqueda
 void buscarCI(Cliente *);
 //eliminar
@@ -524,7 +525,6 @@ void ingresoDeCliente(Cliente &Lista,char cedula[],FILE *archivoHotel){
 				printf("\n\t\t||  Ingrese su edad:  ");
 				color(10);
 				gets(edad);
-				//scanf("%d",&Nuevo->cliente.edad);
 				fflush(stdin);
 				color(14);
 				printf("\t\t-------------------------------------------------------\n");
@@ -600,7 +600,6 @@ void ingresoDeCliente(Cliente &Lista,char cedula[],FILE *archivoHotel){
 				printf("\n\t\t||  Ingrese su edad:  ");
 				color(10);
 				gets(edad);
-				//scanf("%d",&Nuevo->cliente.edad);
 				fflush(stdin);
 				color(14);
 				printf("\t\t-------------------------------------------------------\n");
@@ -660,7 +659,7 @@ bool apruebaReserva(Dia &dia,int diaR,int idCuarto,Cliente &clientes,FILE *archi
 				case 1:
 					if(aux->habitacion.cuarto1.disponible){
 						aux->habitacion.cuarto1.disponible=false;
-						printf("\nRESERVACION EXITOSA!!!...\n\nAcontinuacion debe ingresar sus datos\n");
+						printf("RESERVACION EXITOSA!!!...\n\nA continuacion debe ingresar sus datos:\n");
 						ingresoDeCliente(clientes,aux->habitacion.cuarto1.CI,archivoHotel);
 						archivoHotel=fopen("Hotel-clientes.txt","a+");
 						fprintf(archivoHotel,"\nLas habitacion:   %s\nEL dia: %d",aux->habitacion.cuarto1.tipo,aux->dia);
@@ -668,14 +667,14 @@ bool apruebaReserva(Dia &dia,int diaR,int idCuarto,Cliente &clientes,FILE *archi
 						ok=true;
 					}else{
 						color(12);
-						printf("\nLo sentimos...\n\nLa habitacion ya se encuentra reservada\n\n");
+						printf("\nLo sentimos...\n\nLa habitacion ya se encuentra reservada.\n\n");
 						system("pause");
 					}
 				break;
 				case 2:
 					if(aux->habitacion.cuarto2.disponible){
 						aux->habitacion.cuarto2.disponible=false;
-						printf("\nRESERVACION EXITOSA!!!...\n\nAcontinuacion debe ingresar sus datos\n");
+						printf("RESERVACION EXITOSA!!!...\n\nA continuacion debe ingresar sus datos\n");
 						ingresoDeCliente(clientes,aux->habitacion.cuarto2.CI,archivoHotel);
 						archivoHotel=fopen("Hotel-clientes.txt","a+");
 						fprintf(archivoHotel,"\nLas habitacion:   %s\nEL dia: %d",aux->habitacion.cuarto2.tipo,aux->dia);
@@ -683,14 +682,14 @@ bool apruebaReserva(Dia &dia,int diaR,int idCuarto,Cliente &clientes,FILE *archi
 						ok=true;
 					}else{
 						color(12);
-						printf("\nLo sentimos...\n\nLa habitacion ya se encuentra reservada\n\n");
+						printf("\nLo sentimos...\n\nLa habitacion ya se encuentra reservada.\n\n");
 						system("pause");
 					}
 				break;
 				case 3:
 					if(aux->habitacion.cuarto3.disponible){
 						aux->habitacion.cuarto3.disponible=false;
-						printf("\nRESERVACION EXITOSA!!!...\nAcontinuacion debe ingresar sus datos\n");
+						printf("RESERVACION EXITOSA!!!...\nA continuacion debe ingresar sus datos\n");
 						ingresoDeCliente(clientes,aux->habitacion.cuarto3.CI,archivoHotel);
 						archivoHotel=fopen("Hotel-clientes.txt","a+");
 						fprintf(archivoHotel,"\nLas habitacion:   %s\nEL dia: %d",aux->habitacion.cuarto3.tipo,aux->dia);
@@ -698,7 +697,7 @@ bool apruebaReserva(Dia &dia,int diaR,int idCuarto,Cliente &clientes,FILE *archi
 						ok=true;
 					}else{
 						color(12);
-						printf("\nLo sentimos...\n\nLa habitacion ya se encuentra reservada\n\n");
+						printf("\nLo sentimos...\n\nLa habitacion ya se encuentra reservada.\n\n");
 						system("pause");
 					}
 				break;
@@ -708,68 +707,65 @@ bool apruebaReserva(Dia &dia,int diaR,int idCuarto,Cliente &clientes,FILE *archi
 	}
 	return ok;
 }
+
 //VISUALIZAR
 void disponibles(Dia &ref){
 	Dia aux=ref;
 	color(10);
 	while(aux!=NULL){
-		printf("\nEl dia %d: \n",aux->dia);
+		printf("\nEl dia %d: \n\n",aux->dia);
 		if(aux->habitacion.cuarto1.disponible){
 			color(10);
-			printf("La habitacion  %s ¡ESTA DISPONIBLE!\n",aux->habitacion.cuarto1.tipo);
-			printf("Tiene  %s\n",aux->habitacion.cuarto1.descripcion);
-			printf("El precio de la habitacion es:%.2f \n",aux->habitacion.cuarto1.precio);
+			printf("%c La habitacion  %s %cESTA DISPONIBLE!\n",175,aux->habitacion.cuarto1.tipo,33);
+			printf("  Tiene  %s\n",aux->habitacion.cuarto1.descripcion);
+			printf("  El precio de la habitacion es: $%.2f \n\n",aux->habitacion.cuarto1.precio);
 		}else{
 			color(12);
-			printf("La habitacion  %s ¡ESTA OCUPADA!\n",aux->habitacion.cuarto1.tipo);
+			printf("%c La habitacion  %s %cESTA OCUPADA!\n\n",175,aux->habitacion.cuarto1.tipo,33);
 		}
-		printf("\n------------------------------------------------------\n");
 		if(aux->habitacion.cuarto2.disponible){
 			color(10);
-			printf("La habitacion  %s ¡ESTA DISPONIBLE!\n",aux->habitacion.cuarto2.tipo);
-			printf("Tiene  %s\n",aux->habitacion.cuarto2.descripcion);
-			printf("El precio de la habitacion es:%.2f \n",aux->habitacion.cuarto2.precio);
+			printf("%c La habitacion  %s %cESTA DISPONIBLE!\n",175,aux->habitacion.cuarto2.tipo,33);
+			printf("  Tiene  %s\n",aux->habitacion.cuarto2.descripcion);
+			printf("  El precio de la habitacion es: $%.2f \n\n",aux->habitacion.cuarto2.precio);
 		}
 		else{
 			color(12);
-			printf("La habitacion  %s ¡ESTA OCUPADA!\n",aux->habitacion.cuarto2.tipo);
+			printf("%c La habitacion  %s %cESTA OCUPADA!\n\n",175,aux->habitacion.cuarto2.tipo,33);
 		}
-		printf("\n------------------------------------------------------\n");
 		if(aux->habitacion.cuarto3.disponible){
 			color(10);
-			printf("La habitacion  %s ¡ESTA DISPONIBLE!\n",aux->habitacion.cuarto3.tipo);
-			printf("Tiene  %s\n",aux->habitacion.cuarto3.descripcion);
-			printf("El precio de la habitacion es:%.2f \n",aux->habitacion.cuarto3.precio);
+			printf("%c La habitacion  %s %cESTA DISPONIBLE!\n",175,aux->habitacion.cuarto3.tipo,33);
+			printf("  Tiene  %s\n",aux->habitacion.cuarto3.descripcion);
+			printf("  El precio de la habitacion es: $%.2f \n\n",aux->habitacion.cuarto3.precio);
 		}
 		else{
 			color(12);
-			printf("La habitacion  %s ¡ESTA OCUPADA!\n",aux->habitacion.cuarto3.tipo);
+			printf("%c La habitacion  %s %cESTA OCUPADA!\n\n",175,aux->habitacion.cuarto3.tipo,33);
 		}
 		printf("\n------------------------------------------------------\n\n");
 		aux=aux->siguiente;
 	}
 	color(10);
-	system("pause");
 }
 void reservarHotel(Cliente &clientes,Mes &mes,FILE *archivoHotel){
 	int opc=1;
 	int diaR=0; //guarda el dia de la posible reserva
 	int tipoCuarto=0;
 	const char *opcCuartos[]={"Habitacion simple","Habitacion Familiar","Habitacion Matrimonial"};
+	system("cls");
 	disponibles(mes->dia);
+	system("pause");
 	system("cls");
 	system("color A");
 	color(10);
-	printf("\nAcontinuacion se presentara un menu con los dias del mes\n\n");
+	printf("A continuacion se presentara un formato de calendario para que pueda escoger el dia: \n\n");
 	system("pause");
 	if(mes->numeroMes==11){
-		diaR=mes30();
-		system("pause");
+		diaR=mes30(mes->numeroMes);
 	}else if(mes->numeroMes==12){
-		diaR=mes31();
-		system("pause");
+		diaR=mes31(mes->numeroMes);
 	}
-	//diaR=selecDia(mes->numeroMes);
 	tipoCuarto=menu("Eliga el cuarto que desea",opcCuartos,3);
 	if(apruebaReserva(mes->dia,diaR,tipoCuarto,clientes,archivoHotel)){
 		archivoHotel=fopen("Hotel-clientes.txt","a+");
@@ -824,9 +820,8 @@ void menuMes(Cliente &clientes,Mes &mes,FILE *archivoHotel){
 			break;
 		}
 	}while(opc!=3);
-	printf("\n");
-	system("pause");
 }
+
 //Busca en toda la lista cliente mediante la cedula
 void buscarCI(Cliente &Lista){
 	char buscar[11],editar[11];
@@ -864,10 +859,12 @@ void buscarCI(Cliente &Lista){
 		if(cont==0)
 			printf("\nNo se ha encontrado al cliente.\n\n");
 	}
-	system("pause");
 }
+
+
+
 //Modifica en toda la lista cliente mediante la cedula
-void modificarCI(Cliente &Lista){
+void modificar(Cliente &Lista){
 	char buscar[11],editar[11];
 	int cont=0,ubicacion=0;
 	Cliente Aux=new SCliente();
@@ -890,38 +887,201 @@ void modificarCI(Cliente &Lista){
 		{
 			if(strcmp(buscar,Aux->cliente.CI)==0)
 			{
-				printf("\nNumero de cedula encontrado ! ( %s )\n",buscar);
-				do
-				{
-					printf("Ingrese el nuevo numero de cedula: ");
-					gets(editar);
-					fflush(stdin);
-				}while(validacionCedula(editar));
-				strcpy(Aux->cliente.CI,editar);
-				printf("\nCambio Exitoso");
+				printf("\nNumero de cedula encontrado ! ( %s )\n\n",buscar);
 				cont++;
-				printf("\n\nA continuacion se le va a desplegar sus datos para verificar su modificacion.\nPresione cualquier tecla para continuar. . .\n");
-    			getch();
-    			informacionClienteEspecifico(Lista,ubicacion);
-    			break;
+				system("pause");
+				system("cls");
+				int opc=0;
+				const char *opciones[]={"Todo","Nombre","Apellido","Cedula de Identidad","Email","Celular","Edad","Salir al menu principal"};
+				do{
+					opc=menu("Modificar",opciones,8);
+					system("color A");
+					color(10);
+					switch(opc)
+					{
+						char edad[100];
+						case 1:
+						{
+							do
+							{
+								color(14);
+								printf("\n\t\t-------------------------------------------------------");
+								printf("\n\t\t||  Ingrese el nombre:  ");
+								color(10);
+								fflush(stdin);
+								gets(Lista->cliente.nombre);
+								fflush(stdin);
+								color(14);
+								printf("\t\t-------------------------------------------------------\n");
+							}while(validacionNombreYApellido(Lista->cliente.nombre));
+							do
+							{
+								color(14);
+								printf("\n\t\t-------------------------------------------------------");
+								printf("\n\t\t||  Ingrese el apellido:  ");
+								color(10);
+								gets(Lista->cliente.apellido);
+								fflush(stdin);
+								color(14);
+								printf("\t\t-------------------------------------------------------\n");
+							}while(validacionNombreYApellido(Lista->cliente.apellido));
+							do
+							{
+								color(14);
+								printf("\n\t\t-------------------------------------------------------");
+								printf("\n\t\t||  Ingrese su email: ");
+								color(10);
+								gets(Lista->cliente.email);
+								fflush(stdin);
+								color(14);
+								printf("\t\t-------------------------------------------------------\n");
+							}while(validacionEmail(Lista->cliente.email));
+							do
+							{
+								color(14);
+								printf("\n\t\t-------------------------------------------------------");
+								printf("\n\t\t||  Ingrese su celular:  ");
+								color(10);
+								fflush(stdin);
+								gets(Lista->cliente.celular);
+								color(14);
+								printf("\t\t-------------------------------------------------------\n");
+							}while(validacionCelular(Lista->cliente.celular));							
+							do
+							{
+								color(14);
+								printf("\n\t\t-------------------------------------------------------");
+								printf("\n\t\t||  Ingrese su edad:  ");
+								color(10);
+								gets(edad);
+								fflush(stdin);
+								color(14);
+								printf("\t\t-------------------------------------------------------\n");
+							}while(validacionEdad(edad));
+							Lista->cliente.edad=atoi(edad);	
+						}
+						break;
+						case 2:
+						{
+							do
+							{
+								color(14);
+								printf("\n\t\t-------------------------------------------------------");
+								printf("\n\t\t||  Ingrese el nombre:  ");
+								color(10);
+								fflush(stdin);
+								gets(Aux->cliente.nombre);
+								fflush(stdin);
+								color(14);
+								printf("\t\t-------------------------------------------------------\n");
+							}while(validacionNombreYApellido(Lista->cliente.nombre));
+						}
+						break;
+						case 3:
+						{
+							do
+							{
+								color(14);
+								printf("\n\t\t-------------------------------------------------------");
+								printf("\n\t\t||  Ingrese el apellido:  ");
+								color(10);
+								gets(Lista->cliente.apellido);
+								fflush(stdin);
+								color(14);
+								printf("\t\t-------------------------------------------------------\n");
+							}while(validacionNombreYApellido(Lista->cliente.apellido));
+						}	
+						break;
+						case 4:
+						{
+							do
+							{
+								color(14);
+								printf("\n\t\t-------------------------------------------------------");
+								printf("\n\t\t||Ingrese su numero de cedula:  ");
+								fflush(stdin);
+								color(10);
+								gets(Lista->cliente.CI);
+								fflush(stdin);
+								color(14);
+								printf("\t\t-------------------------------------------------------\n");
+							}while(validacionCedula(Lista->cliente.CI));	
+						}	
+						break;
+						case 5:
+						{
+							do
+							{
+								color(14);
+								printf("\n\t\t-------------------------------------------------------");
+								printf("\n\t\t||  Ingrese su email: ");
+								color(10);
+								gets(Lista->cliente.email);
+								fflush(stdin);
+								color(14);
+								printf("\t\t-------------------------------------------------------\n");
+							}while(validacionEmail(Lista->cliente.email));
+						}
+						break;
+						case 6:
+						{
+							do
+							{
+								color(14);
+								printf("\n\t\t-------------------------------------------------------");
+								printf("\n\t\t||  Ingrese su celular:  ");
+								color(10);
+								fflush(stdin);
+								gets(Lista->cliente.celular);
+								color(14);
+								printf("\t\t-------------------------------------------------------\n");
+							}while(validacionCelular(Lista->cliente.celular));
+						}
+						break;
+						case 7:
+						{
+							do
+							{
+								color(14);
+								printf("\n\t\t-------------------------------------------------------");
+								printf("\n\t\t||  Ingrese su edad:  ");
+								color(10);
+								gets(edad);
+								fflush(stdin);
+								color(14);
+								printf("\t\t-------------------------------------------------------\n");
+							}while(validacionEdad(edad));
+							Lista->cliente.edad=atoi(edad);		
+						}	
+						break;
+					}
+					if(opc!=8)
+					{
+						printf("\nCambio Exitoso");
+						printf("\n\nA continuacion se le va a desplegar sus datos para verificar su modificacion.\nPresione cualquier tecla para continuar. . .\n");
+		    			getch();
+		    			informacionClienteEspecifico(Lista,ubicacion);
+						printf("\n\nPresione cualquier tecla para volver al Menu Modificar . . .");
+						getch();
+					}
+				}while(opc!=8);					
+    		break;
 			}
 			ubicacion++;
 			Aux=Aux->siguiente;
 		}
 		if(cont==0)
-			printf("\nNo se ha encontrado al cliente.\n\n");
+			printf("\nNo se ha encontrado al cliente.");
 
 	}
 	
 }
-void elimianrClienteCI(Cliente &clientes, Mes &mes){
-	
-}
+
 void menuVisualizar(Cliente &clientes,Mes &mes){
 	int opc=0;
 	const char *opciones[]={"Habitaciones disponibles","Habitaciones reservadas por un cliente","Regresar al menu de reservas"};
 	do{
-		opc=menu("Menu de Visualizaciones",opciones,4);
+		opc=menu("Menu de Visualizaciones",opciones,3);
 		switch(opc){
 			case 1:
 				disponibles(mes->dia);
@@ -930,8 +1090,12 @@ void menuVisualizar(Cliente &clientes,Mes &mes){
 				buscarCI(clientes);
 			break;
 		}
-	}while(opc!=4);
-	printf("\n");
+		if(opc!=3)
+		{
+			printf("\n\nPresione cualquier tecla para volver al Menu Visualizaciones . . .");
+			getch();
+		}
+	}while(opc!=3);
 }
 //Funcion principal del programa.
 //Archivos
@@ -976,10 +1140,9 @@ void hotel(Mes &mes,Cliente &clientes,FILE *FHotel){
 				menuMes(clientes,mes,FHotel);
 				ceroReservas=false;
 			break;
-			case 2:
+			case 2: //Buscar reserva
 				if(ceroReservas){
 					printf("\nError!!!\nAun no se ha hecho ninguna reserva\n");
-					system("pause");
 				}else{
 					buscarCI(clientes);
 				}
@@ -987,25 +1150,26 @@ void hotel(Mes &mes,Cliente &clientes,FILE *FHotel){
 			case 3: //eliminar
 				if(ceroReservas){
 					printf("\nError!!!\nAun no se ha hecho ninguna reserva\n");
-					system("pause");
 				}else{
 					eliminar(FHotel,clientes,mes);
-					system("pause");
-					//
 				}
 			break;
 			case 4: //modificar
 				if(ceroReservas){
 					printf("\nError!!!\nAun no se ha hecho ninguna reserva\n");
-					system("pause");
 				}else{			
 					//informacionClienteTotal(clientes);
-					modificarCI(clientes);
+					modificar(clientes);
 				}
 			break;
 			case 5:
 				menuVisualizar(clientes,mes);
 			break;
+		}
+		if(opc!=6)
+		{
+			printf("\n\nPresione cualquier tecla para volver al Menu Reservas . . .");
+			getch();
 		}
 	}while(opc!=6);
 	free(FHotel);
@@ -1017,10 +1181,11 @@ void menuPrincipal(){
 	FILE *FHotel=NULL;//ARCHIVO DEL HOTEL
 	Cliente clientes=NULL;
 	system("color A");
-	int opc=0;
-	const char *opciones[]={"Reservacion","Backups","Consulta","Ayuda","Codigo QR","Salir"};
+	int opc;
+	const char *opciones[]={"Reservacion","Consulta","Ayuda","Codigo QR","Salir"};
 	do{
-		opc=menu("Menu Principal",opciones,6);
+		opc=0;
+		opc=menu("Menu Principal",opciones,5);
 		system("color A");
 		color(10);
 		switch(opc){
@@ -1036,11 +1201,15 @@ void menuPrincipal(){
 			case 4:
 				
 			break;
-			case 5:
-				
-			break;
 		}
-	}while(opc!=6);
+		if(opc!=5)
+		{
+			printf("\n\nPresione cualquier tecla para volver al menu principal . . .");
+			getch();
+		}
+	}while(opc!=5);
+
+
 }
 int main(){
 	//AltEnter();

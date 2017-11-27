@@ -1144,7 +1144,7 @@ int obtenerDia()
     return tlocal->tm_mday;
 }
 
-int mes30()
+int mes30(int mes)
 {	
 	int tecla,seleccionar=0,x=4,y=3;
 	regreso:
@@ -1155,6 +1155,30 @@ int mes30()
 	{
 		system("cls");
 		imprimirMes30();
+		gotoxy(25,1);
+		switch(mes)
+		{
+		
+			case 2:
+				printf(" - FEBRERO - ");
+			break;
+			
+			case 4:
+				printf(" - ABRIL - ");
+			break;
+			
+			case 6:
+				printf(" - JUNIO - ");
+			break;
+			
+			case 9:
+				printf(" - SEPTIEMBRE - ");
+			break;
+			
+			case 11:
+				printf(" - NOVIEMBRE - ");
+			break;			
+		}
 		gotoxy(x,y);
 		printf("==>");
 		tecla=getch();
@@ -1247,7 +1271,7 @@ int mes30()
 	return seleccionar;
 }
 
-int mes31()
+int mes31(int mes)
 {	
 	int tecla,seleccionar=0,x=4,y=3;
 	regreso:
@@ -1258,6 +1282,39 @@ int mes31()
 	{
 		system("cls");
 		imprimirMes31();
+		gotoxy(25,1);
+		switch(mes)
+		{
+		
+			case 1:
+				printf(" - ENERO - ");
+			break;
+			
+			case 3:
+				printf(" - MARZO - ");
+			break;
+			
+			case 5:
+				printf(" - MAYO - ");
+			break;
+			
+			case 7:
+				printf(" - JULIO - ");
+			break;
+			
+			case 8:
+				printf(" - AGOSTO - ");
+			break;
+			
+			case 10:
+				printf(" - OCTUBRE - ");
+			break;
+			
+			case 12:
+				printf(" - DICIEMBRE - ");
+			break;
+			
+		}
 		gotoxy(x,y);
 		printf("==>");
 		tecla=getch();
