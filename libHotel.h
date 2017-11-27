@@ -115,9 +115,11 @@ int menu(const char *titulo, const char *opciones[],int n){
 	int selec=1;
 	int tecla;
 	bool repite=true;
+	system("color A");
 	do{
 		system("cls");
 		system("color A");
+		color(10);
 		//imprime titulo
 		gotoxy(15,1);
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),158);

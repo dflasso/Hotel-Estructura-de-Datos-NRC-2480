@@ -6,3 +6,13 @@ En este archivo se encuentra los datos de clientes Hospedados en el presente
 **mail
 **Cedula de Identidad (CI)
 **Cuartos reservados con sus precios y fechas
+---------------------------------------------------
+Nueva reservacion:
+Cliente: bryan  rodriguez
+Cedula:  1719151340
+Email:  @.com
+Celular:  0985236541
+Edad:  18
+
+Las habitacion:   Matrimonial
+EL dia: 27/ mes: 12  /  2017

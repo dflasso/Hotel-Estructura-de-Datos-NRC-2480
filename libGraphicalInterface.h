@@ -14,10 +14,16 @@ ESTUDIANTE: BRYAN RODRIGUEZ
 #include <windows.h>
 #include <time.h>
 
+#define TECLA_ARRIBA 72
+#define TECLA_ABAJO 80
+#define TECLA_DERECHA 77
+#define TECLA_IZQUIERDA 75
+#define TECLA_ENTER 13
+
 using namespace std;
 
-
-void color(int a,int b){
+void color(int a,int b)
+{
     int color= (a*16)+b;
     SetConsoleTextAttribute(GetStdHandle (STD_OUTPUT_HANDLE),color);
 }
@@ -28,7 +34,7 @@ void portada (){
     char caracter[130];
     system("color 0E");
     FILE *INICIO;
-    INICIO=fopen("Datos.txt","r");
+    INICIO=fopen("Print/Datos.txt","r");
 
 
          for (int i=1;i<167;i++) 
@@ -1047,7 +1053,7 @@ void portada (){
 
     gotoxy(70,32);
 
-    printf("\nLOADING PLEASE WAIT...\n");
+    printf("\tLOADING PLEASE WAIT...\n");
     for(int i=0;i<150;i++)
     {
         gotoxy(i,30);
@@ -1091,44 +1097,257 @@ void AltEnter(){
     return;
 }
 
+//imprime un mes con 30 dias
+void imprimirMes30()
+{
+	int x=3,y=3;
+    char caracter[130];
+    system("color 0E");
+    FILE *INICIO;
+    INICIO=fopen("Print/Mes 30.txt","r");
 
-/*Declaracion de Funciones*/
-/*
-//Menu Principal del Sistema
-void menuPrincipal(){
-//	Mes mes=NULL;
-//	Cliente clientes=NULL;
-	int opc=0;
-	const char *opciones[]={"Reservacion","Backups","Consulta","Ayuda","Codigo QR","Logo Espe","Salir del programa"};
-	do{
-		opc=menu("Menu Principal",opciones,7);
-		color(16);
-		switch(opc){
-			case 1:
-			Hotel();
-			fflush(stdin);
-				
-			break;
-			case 2:
-			
-				
-			break;
-			case 3:
-			
-			break;
-			case 4:
-			
-			break;
-			case 6:
-				
-			
-			break;
+    while (!feof(INICIO))
+    {
+        fgets(caracter,130,INICIO);
+        gotoxy(x,y);
+		puts(caracter);
+        y++;
+    }
+}
+
+//imprime un mes con 31 dias
+void imprimirMes31()
+{
+	int x=3,y=3;
+    char caracter[130];
+    system("color 0E");
+    FILE *INICIO;
+    INICIO=fopen("Print/Mes 31.txt","r");
+
+    while (!feof(INICIO))
+    {
+        fgets(caracter,130,INICIO);
+        gotoxy(x,y);
+		puts(caracter);
+        y++;
+    }
+    
+}
+
+int obtenerDia()
+{
+	time_t tiempo = time(0);
+    struct tm *tlocal = localtime(&tiempo);
+     char output[128];
+    strftime(output,128,"%d/%m/%y %H:%M:%S",tlocal);
+    
+    return tlocal->tm_mday;
+}
+
+int mes30()
+{	
+	int tecla,seleccionar=0,x=4,y=3;
+	regreso:
+	x=(obtenerDia()%7-1)*16+4;
+	y=(obtenerDia()/7)+3;
+	seleccionar=obtenerDia();
+	do
+	{
+		system("cls");
+		imprimirMes30();
+		gotoxy(x,y);
+		printf("==>");
+		tecla=getch();
+		switch(tecla)
+		{
+			case TECLA_ARRIBA:
+			{
+				y--;
+				if(y==2)
+				{
+					seleccionar=seleccionar+28;
+					y=7;
+				}
+				else
+					seleccionar=seleccionar-7;
+				if(x>35&&y==7)
+				{
+					x=4;
+					y=3;
+					seleccionar=1;
+				}				
+				break;				
+			}
+			case TECLA_ABAJO:
+			{
+				y++;
+				if(y==8)
+				{
+					y=3;
+					seleccionar=seleccionar-28;
+				}
+				else
+					seleccionar=seleccionar+7;
+				if(x>35&&y==7)
+				{
+					x=4;
+					y=3;
+					seleccionar=1;
+				}
+				break;
+			}
+			case TECLA_IZQUIERDA:
+			{
+				x=x-16;
+				if(x<4)
+				{
+					x=100;
+					if(y!=7)
+						seleccionar=seleccionar+6;					
+				}
+				else
+					seleccionar--;	
+				if(x>35&&y==7)
+				{
+					x=20;
+					y=7;
+					seleccionar++;
+				}
+				break;
+			}
+			case TECLA_DERECHA:
+			{
+				x=x+16;
+				if(x>100)
+				{
+					seleccionar=seleccionar-6;
+					x=4;
+				}
+				else
+					seleccionar++;	
+				if(x>35&&y==7)
+				{
+					x=4;
+					y=3;
+					seleccionar=seleccionar-30;	
+				}
+				break;
+			}
+		}
+	}while(tecla!=TECLA_ENTER);
 	
-			case 7:
-			gotoxy(7,15);
-			printf("		Gracias por Confiar en nosotros Vuelva Pronto!!!		Que Tenga un Excelente dia! ");
+	if(seleccionar<obtenerDia())
+	{
+		system("cls");
+		printf("No puede reservar en fechas anteriores a la actual.\nVuelva a elegir por favor.\n");
+		system("pause");
+		goto regreso;
 		
-			break;
-	}
-	}while(opc!=7);
-}*/
+	}	
+	return seleccionar;
+}
+
+int mes31()
+{	
+	int tecla,seleccionar=0,x=4,y=3;
+	regreso:
+	x=(obtenerDia()%7-1)*16+4;
+	y=(obtenerDia()/7)+3;
+	seleccionar=obtenerDia();
+	do
+	{
+		system("cls");
+		imprimirMes31();
+		gotoxy(x,y);
+		printf("==>");
+		tecla=getch();
+		switch(tecla)
+		{
+			case TECLA_ARRIBA:
+			{
+				y--;
+				if(y==2)
+				{
+					seleccionar=seleccionar+28;
+					y=7;
+				}
+				else
+					seleccionar=seleccionar-7;
+				if(x>51&&y==7)
+				{
+					x=4;
+					y=3;
+					seleccionar=1;
+				}				
+				break;				
+			}
+			case TECLA_ABAJO:
+			{
+				y++;
+				if(y==8)
+				{
+					y=3;
+					seleccionar=seleccionar-28;
+				}
+				else
+					seleccionar=seleccionar+7;
+				if(x>51&&y==7)
+				{
+					x=4;
+					y=3;
+					seleccionar=1;
+				}
+				break;
+			}
+			case TECLA_IZQUIERDA:
+			{
+				x=x-16;
+				if(x<4)
+				{
+					x=100;
+					if(y!=7)
+						seleccionar=seleccionar+6;					
+				}
+				else
+					seleccionar--;	
+				if(x>51&&y==7)
+				{
+					x=36;
+					y=7;
+					seleccionar=seleccionar+2;
+				}
+				break;
+			}
+			case TECLA_DERECHA:
+			{
+				x=x+16;
+				if(x>100)
+				{
+					seleccionar=seleccionar-6;
+					x=4;
+				}
+				else
+					seleccionar++;	
+				if(x>51&&y==7)
+				{
+					x=4;
+					y=3;
+					seleccionar=seleccionar-31;	
+				}
+				break;
+			}
+		}
+		
+	}while(tecla!=TECLA_ENTER);
+	
+	if(seleccionar<obtenerDia())
+	{
+		system("cls");
+		printf("No puede reservar en fechas anteriores a la actual.\nVuelva a elegir por favor.\n");
+		system("pause");
+		goto regreso;
+		
+	}		
+	return seleccionar;
+}
+
