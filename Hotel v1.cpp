@@ -1210,9 +1210,9 @@ void menuPrincipal(){
 	//crea el archivo
 	generaFILE(FHotel);
 	system("color A");
-	const char *opciones[]={"Reservacion","Consulta PDF.","Codigo QR","Ayuda. o PULSE F1","Salir"};
+	const char *opciones[]={"Reservacion","Imagen","Consulta PDF.","Codigo QR","Ayuda. o PULSE F1","Salir"};
 	do{
-		opc=menu("Menu Principal",opciones,5);
+		opc=menu("Menu Principal",opciones,6);
 		system("color A");
 		color(10);
 		switch(opc){
@@ -1220,16 +1220,19 @@ void menuPrincipal(){
 				hotel(mes,clientes,FHotel);
 			break;
 			case 2:
-				
+				ShellExecute(NULL, TEXT("open"),TEXT("Extras\\image.exe"),NULL, NULL,SW_SHOWNORMAL);		
 			break;
 			case 3:
-				
+				system("start Extras\\CreatePDF.jar");
 			break;
 			case 4:
-				
+				system("start Extras\\CodigoQR.jar");				
+			break;
+			case 5:
+				ShellExecute(NULL, TEXT("open"),TEXT("Extras\\Ayuda-hotel.chm"),NULL, NULL,SW_SHOWNORMAL);				
 			break;
 		}
-	}while(opc!=5);
+	}while(opc!=6);
 	free(FHotel);
 	free(mes);
 	free(clientes);
