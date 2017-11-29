@@ -1,3 +1,40 @@
+/*	^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+						^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+						^^  *******************************************************************   ^^
+						^^  **                                                               **   ^^
+						^^  **          *******      ******       *******       *******      **   ^^
+						^^  **         **           **           **     **     **            **   ^^
+						^^  **         **           **           **     **     **            **   ^^
+						^^  **         *******       *****       ********      ********      **   ^^
+						^^  **         **                **      **            **            **   ^^
+						^^  **         **                **      **            **            **   ^^
+						^^  **          *******     ******       **             *******      **   ^^
+						^^  **                                                               **   ^^
+						^^  *******************************************************************   ^^
+						^^                                                                        ^^
+						^^              DEPARTAMENTO DE CIENCIAS DE LA COMPUTACION                ^^
+						^^              ------------------------------------------                ^^
+						^^                                                                        ^^
+						^^              INGENIERIA  EN  SISTEMAS  E  INFORMATICA                  ^^
+						^^              ----------------------------------------                  ^^
+						^^                                                                        ^^
+						^^                           ESTRUCTURA DE DATOS                          ^^
+						^^                          ---------------------                         ^^
+						^^                                                                        ^^
+						^^                       PROYECTO DE INVESTIGACION                        ^^
+						^^                      -------------------------                         ^^
+						^^     Integrantes:                                                       ^^
+						^^     ------------                                                       ^^
+						^^     => BORJA DIEGO		                                          ^^
+						^^     => LASSO DANNY		                                          ^^
+						^^     => RODRIGUEZ BRYAN                                                 ^^
+						^^             						                  ^^
+						^^	DOCENTE: ING. FERNANDO SOLIS	                                  ^^
+						^^	FECHA: 2017/11/29		                                  ^^
+						^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+						^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+						
+						
 #include "libHotel.h"
 #include "libGraphicalInterface.h"
 #include "libValidation.h"
@@ -334,7 +371,7 @@ void eliminar(FILE *archivoHotel,Cliente &clientes,Mes &mes){
 			case 1: //un dia
 				do{
 					do{
-						printf("\nIngrese el mes de la reserva\t");
+						printf("\nIngrese el mes de la reserva: ");
 						fflush(stdin);
 						gets(refMes);
 					}while(validacionNumero(refMes));
@@ -811,7 +848,16 @@ void reservarHotel(Cliente &clientes,Mes &mes,FILE *archivoHotel){
 	printf("A continuacion se presentara un formato de calendario para que pueda escoger el dia: \n\n");
 	system("pause");
 	if(mes->numeroMes==11){
+		regreso:
 		diaR=mes30(mes->numeroMes);
+		if(diaR<obtenerDia())
+		{
+			system("cls");
+			printf("No puede reservar en fechas anteriores a la actual.\nVuelva a elegir por favor.\n");
+			system("pause");
+			goto regreso;
+			
+		}
 	}else if(mes->numeroMes==12){
 		diaR=mes31(mes->numeroMes);
 	}
@@ -839,18 +885,22 @@ void menuMes(Cliente &clientes,Mes &mes,FILE *archivoHotel){
 			break;
 			case 2:
 				do{
+					system("cls");
 					valido=false;
-					printf("\nIngrese el mes que desea reservar:\t");
+					printf("\nIngrese el mes que desea reservar (Por ejemplo 1 - Enero): ");
 					gets(numAux);
 					valido=validacionNumero(numAux);
 					refMes=atoi(numAux);
 					if(!valido&&refMes<actual(mesA)){
 						printf("\nError!!!...\nEl numero de mes que ingreso ya paso en el presente a%co\n",164);
+						getch();
 						valido=true;
 					}else if(!valido&&refMes>12){
 						printf("\nError!!!...\nEl numero de mes que ingreso no existe...\nPor favor ingrese un numero entre 1(Enero)-12(Febrero)\n\n");
+						getch();
 						valido=true;
 					}
+					
 				}while(valido);
 				busquedaMes:
 					auxMes=mes;

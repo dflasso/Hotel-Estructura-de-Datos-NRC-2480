@@ -1147,7 +1147,6 @@ int obtenerDia()
 int mes30(int mes)
 {	
 	int tecla,seleccionar=0,x=4,y=3;
-	regreso:
 	x=(obtenerDia()%7-1)*16+4;
 	y=(obtenerDia()/7)+3;
 	seleccionar=obtenerDia();
@@ -1260,21 +1259,12 @@ int mes30(int mes)
 		}
 	}while(tecla!=TECLA_ENTER);
 	
-	if(seleccionar<obtenerDia())
-	{
-		system("cls");
-		printf("No puede reservar en fechas anteriores a la actual.\nVuelva a elegir por favor.\n");
-		system("pause");
-		goto regreso;
-		
-	}	
 	return seleccionar;
 }
 
 int mes31(int mes)
 {	
 	int tecla,seleccionar=0,x=4,y=3;
-	regreso:
 	x=(obtenerDia()%7-1)*16+4;
 	y=(obtenerDia()/7)+3;
 	seleccionar=obtenerDia();
@@ -1396,15 +1386,7 @@ int mes31(int mes)
 		}
 		
 	}while(tecla!=TECLA_ENTER);
-	
-	if(seleccionar<obtenerDia())
-	{
-		system("cls");
-		printf("No puede reservar en fechas anteriores a la actual.\nVuelva a elegir por favor.\n");
-		system("pause");
-		goto regreso;
 		
-	}		
 	return seleccionar;
 }
 
