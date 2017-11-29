@@ -160,7 +160,7 @@ int menu(const char *titulo, const char *opciones[],int n){
 				repite=false;
 				break;
 			case 0:
-				ShellExecute(NULL, TEXT("open"),TEXT("Ayuda-hotel.chm"),NULL, NULL,SW_SHOWNORMAL);
+				ShellExecute(NULL, TEXT("open"),TEXT("Extras\\Ayuda-hotel.chm"),NULL, NULL,SW_SHOWNORMAL);
 				break;
 		}
 	}while(repite);

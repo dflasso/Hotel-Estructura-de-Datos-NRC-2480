@@ -6,3 +6,13 @@ En este archivo se encuentra los datos de clientes Hospedados en el presente
 **mail
 **Cedula de Identidad (CI)
 **Cuartos reservados con sus precios y fechas
+---------------------------------------------------
+Nueva reservacion:
+Cliente: Diego  Borja
+Cedula:  1717309791
+Email:  diego_anddy95@.com
+Celular:  0995711134
+Edad:  22
+
+Las habitacion:   Cuarto simple
+EL dia: 29/ mes: 11  /  2017
