@@ -356,7 +356,7 @@ void RecrearFILE(FILE *archivoHotel,Cliente &clientes,Mes &mes){
 
 void eliminar(FILE *archivoHotel,Cliente &clientes,Mes &mes){
 	int opc=0;
-	const char *opciones[]={"ELIMINAR LA RESERVA DE UN DIA ESPECIFICO","ELIMMINAR TODAS LAS RESERVAS DE UN CLIENTE","SALIR"};
+	const char *opciones[]={"ELIMINAR LA RESERVA DE UN DIA ESPECIFICO","SALIR"};
 	bool noHayMes=true;
 	Mes auxMes;
 	char refMes[20], refDia[20];
@@ -364,7 +364,7 @@ void eliminar(FILE *archivoHotel,Cliente &clientes,Mes &mes){
 	Cliente auxCl=NULL,ant=NULL,pos=NULL;
 	do{
 		auxMes=mes;
-		opc=menu("MENU DE ELIMANCIONES",opciones,3);
+		opc=menu("MENU DE ELIMANCIONES",opciones,2);
 		color(10);
 		auxCl=clientes;
 		switch(opc){
@@ -389,7 +389,7 @@ void eliminar(FILE *archivoHotel,Cliente &clientes,Mes &mes){
 					}
 				}while(noHayMes);
 			break;
-			case 2: //cliente
+			/*case 2: //cliente
 				do{
 					printf("\nIngrese el Numero de Cedula del cliente que sera eliminado del sistema...\t");
 					color(10);
@@ -405,9 +405,9 @@ void eliminar(FILE *archivoHotel,Cliente &clientes,Mes &mes){
 					}
 					auxCl=auxCl->siguiente;
 				}
-			break;
+			break;*/
 		}
-	}while(opc!=3);
+	}while(opc!=2);
 	RecrearFILE(archivoHotel,clientes,mes);
 }
 //imprime habitaciones del cliente
@@ -1312,7 +1312,7 @@ void menuPrincipal(){
 int main(){
 	
 	AltEnter();
-	//portada();
+	portada();
 	menuPrincipal();
 	
 	return 0;
