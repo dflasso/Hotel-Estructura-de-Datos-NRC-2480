@@ -16,3 +16,14 @@ Edad:  22
 
 Las habitacion:   Cuarto simple
 EL dia: 29/ mes: 11  /  2017
+
+---------------------------------------------------
+Nueva reservacion:
+Cliente: D  B
+Cedula:  1717309791
+Email:  @.com
+Celular:  0995711134
+Edad:  30
+
+Las habitacion:   Cuarto simple
+EL dia: 30/ mes: 11  /  2017

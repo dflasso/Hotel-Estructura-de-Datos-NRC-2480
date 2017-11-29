@@ -286,7 +286,7 @@ void RecrearFILE(FILE *archivoHotel,Cliente &clientes,Mes &mes){
 	Cliente auxCliente=clientes;
 	Mes auxMes=mes;
 	Dia auxDia=NULL;
-	archivoHotel=fopen("Hotel-clientes.txt","a+");
+	archivoHotel=fopen("D:\\Hotel-clientes.txt","a+");
 	while(auxCliente!=NULL){
 		fprintf(archivoHotel,"\n---------------------------------------------------\nNueva reservacion:\nCliente: %s  %s\n",auxCliente->cliente.nombre,auxCliente->cliente.apellido);
 		fprintf(archivoHotel,"Cedula:  %s\n",auxCliente->cliente.CI);
@@ -470,7 +470,10 @@ void ingresoDeCliente(Cliente &Lista,char cedula[],FILE *archivoHotel){
 	Cliente Aux;
 	Guia=Aux=Lista;
 	char cedulaAux[20];
-	archivoHotel=fopen("Hotel-clientes.txt","a+");
+	FILE *cliente;
+	cliente=fopen("D:\\Hotel-clientesQR.txt","w");
+	archivoHotel=fopen("D:\\Hotel-clientes.txt","a+");
+	
 	do
 	{
 		color(14);
@@ -522,6 +525,8 @@ void ingresoDeCliente(Cliente &Lista,char cedula[],FILE *archivoHotel){
 			}while(validacionNombreYApellido(Nuevo->cliente.apellido));
 			fprintf(archivoHotel,"\n---------------------------------------------------\nNueva reservacion:\nCliente: %s  %s\n",Nuevo->cliente.nombre,Nuevo->cliente.apellido);
 			fprintf(archivoHotel,"Cedula:  %s\n",Nuevo->cliente.CI);
+			fprintf(cliente,"\n---------------------------------------------------\nNueva reservacion:\nCliente: %s  %s\n",Nuevo->cliente.nombre,Nuevo->cliente.apellido);
+			fprintf(cliente,"Cedula:  %s\n",Nuevo->cliente.CI);
 			do
 			{
 				color(14);
@@ -534,6 +539,7 @@ void ingresoDeCliente(Cliente &Lista,char cedula[],FILE *archivoHotel){
 				printf("\t\t-------------------------------------------------------\n");
 			}while(validacionEmail(Nuevo->cliente.email));
 			fprintf(archivoHotel,"Email:  %s\n",Nuevo->cliente.email);
+			fprintf(cliente,"Email:  %s\n",Nuevo->cliente.email);
 			do
 			{
 				color(14);
@@ -559,6 +565,7 @@ void ingresoDeCliente(Cliente &Lista,char cedula[],FILE *archivoHotel){
 			}while(validacionEdad(edad));
 			Nuevo->cliente.edad=atoi(edad);			
 			fprintf(archivoHotel,"Celular:  %s\nEdad:  %d\n",Nuevo->cliente.celular,Nuevo->cliente.edad);
+			fprintf(cliente,"Celular:  %s\nEdad:  %d\n",Nuevo->cliente.celular,Nuevo->cliente.edad);
 		}else{
 		printf("\ndesea actualizar algun dato, Yes o No (Y/N)?");
 	    opcion=getch();
@@ -597,6 +604,8 @@ void ingresoDeCliente(Cliente &Lista,char cedula[],FILE *archivoHotel){
 			}while(validacionNombreYApellido(Nuevo->cliente.apellido));
 			fprintf(archivoHotel,"\n---------------------------------------------------\nNueva reservacion:\nCliente: %s  %s\n",Nuevo->cliente.nombre,Nuevo->cliente.apellido);
 			fprintf(archivoHotel,"Cedula:  %s\n",Nuevo->cliente.CI);
+			fprintf(cliente,"\n---------------------------------------------------\nNueva reservacion:\nCliente: %s  %s\n",Nuevo->cliente.nombre,Nuevo->cliente.apellido);
+			fprintf(cliente,"Cedula:  %s\n",Nuevo->cliente.CI);
 			do
 			{
 				color(14);
@@ -609,6 +618,7 @@ void ingresoDeCliente(Cliente &Lista,char cedula[],FILE *archivoHotel){
 				printf("\t\t-------------------------------------------------------\n");
 			}while(validacionEmail(Nuevo->cliente.email));
 			fprintf(archivoHotel,"Email:  %s\n",Nuevo->cliente.email);
+			fprintf(cliente,"Email:  %s\n",Nuevo->cliente.email);
 			do
 			{
 				color(14);
@@ -634,12 +644,21 @@ void ingresoDeCliente(Cliente &Lista,char cedula[],FILE *archivoHotel){
 			}while(validacionEdad(edad));
 			Nuevo->cliente.edad=atoi(edad);			
 			fprintf(archivoHotel,"Celular:  %s\nEdad:  %d\n",Nuevo->cliente.celular,Nuevo->cliente.edad);
+			fprintf(cliente,"Celular:  %s\nEdad:  %d\n",Nuevo->cliente.celular,Nuevo->cliente.edad);
 		}else{
 			strcpy(Nuevo->cliente.nombre,Guia->cliente.nombre);
 			strcpy(Nuevo->cliente.apellido,Guia->cliente.apellido);
 			strcpy(Nuevo->cliente.email,Guia->cliente.email);
 			strcpy(Nuevo->cliente.celular,Guia->cliente.celular);
 			Nuevo->cliente.edad=Guia->cliente.edad;
+			fprintf(archivoHotel,"\n---------------------------------------------------\nNueva reservacion:\nCliente: %s  %s\n",Nuevo->cliente.nombre,Nuevo->cliente.apellido);
+			fprintf(archivoHotel,"Cedula:  %s\n",Nuevo->cliente.CI);
+			fprintf(archivoHotel,"Email:  %s\n",Nuevo->cliente.email);
+			fprintf(archivoHotel,"Celular:  %s\nEdad:  %d\n",Nuevo->cliente.celular,Nuevo->cliente.edad);
+			fprintf(cliente,"\n---------------------------------------------------\nNueva reservacion:\nCliente: %s  %s\n",Nuevo->cliente.nombre,Nuevo->cliente.apellido);
+			fprintf(cliente,"Cedula:  %s\n",Nuevo->cliente.CI);
+			fprintf(cliente,"Email:  %s\n",Nuevo->cliente.email);
+			fprintf(cliente,"Celular:  %s\nEdad:  %d\n",Nuevo->cliente.celular,Nuevo->cliente.edad);
 			printf("\n");
 		}
 	}
@@ -664,6 +683,8 @@ void ingresoDeCliente(Cliente &Lista,char cedula[],FILE *archivoHotel){
 		system("pause");
 		strcpy(cedula,Nuevo->cliente.CI);
 	fclose(archivoHotel);
+	fclose(cliente);
+	system("start Extras\\CodigoQR.jar");
 }
 
 //Ingreso de lista cliente
@@ -689,7 +710,7 @@ bool apruebaReserva(Dia &dia,int diaR,int idCuarto,Cliente &clientes,FILE *archi
 						aux->habitacion.cuarto1.disponible=false;
 						printf("RESERVACION EXITOSA!!!...\n\nA continuacion debe ingresar sus datos:\n");
 						ingresoDeCliente(clientes,aux->habitacion.cuarto1.CI,archivoHotel);
-						archivoHotel=fopen("Hotel-clientes.txt","a+");
+						archivoHotel=fopen("D:\\Hotel-clientes.txt","a+");
 						fprintf(archivoHotel,"\nLas habitacion:   %s\nEL dia: %d",aux->habitacion.cuarto1.tipo,aux->dia);
 						fclose(archivoHotel);
 						ok=true;
@@ -704,7 +725,7 @@ bool apruebaReserva(Dia &dia,int diaR,int idCuarto,Cliente &clientes,FILE *archi
 						aux->habitacion.cuarto2.disponible=false;
 						printf("RESERVACION EXITOSA!!!...\n\nA continuacion debe ingresar sus datos\n");
 						ingresoDeCliente(clientes,aux->habitacion.cuarto2.CI,archivoHotel);
-						archivoHotel=fopen("Hotel-clientes.txt","a+");
+						archivoHotel=fopen("D:\\Hotel-clientes.txt","a+");
 						fprintf(archivoHotel,"\nLas habitacion:   %s\nEL dia: %d",aux->habitacion.cuarto2.tipo,aux->dia);
 						fclose(archivoHotel);
 						ok=true;
@@ -719,7 +740,7 @@ bool apruebaReserva(Dia &dia,int diaR,int idCuarto,Cliente &clientes,FILE *archi
 						aux->habitacion.cuarto3.disponible=false;
 						printf("RESERVACION EXITOSA!!!...\nA continuacion debe ingresar sus datos\n");
 						ingresoDeCliente(clientes,aux->habitacion.cuarto3.CI,archivoHotel);
-						archivoHotel=fopen("Hotel-clientes.txt","a+");
+						archivoHotel=fopen("D:\\Hotel-clientes.txt","a+");
 						fprintf(archivoHotel,"\nLas habitacion:   %s\nEL dia: %d",aux->habitacion.cuarto3.tipo,aux->dia);
 						fclose(archivoHotel);
 						ok=true;
@@ -796,7 +817,7 @@ void reservarHotel(Cliente &clientes,Mes &mes,FILE *archivoHotel){
 	}
 	tipoCuarto=menu("Eliga el cuarto que desea",opcCuartos,3);
 	if(apruebaReserva(mes->dia,diaR,tipoCuarto,clientes,archivoHotel)){
-		archivoHotel=fopen("Hotel-clientes.txt","a+");
+		archivoHotel=fopen("D:\\Hotel-clientes.txt","a+");
 		fprintf(archivoHotel,"/ mes: %d  /  2017\n",mes->numeroMes);
 		fclose(archivoHotel);
 	}
@@ -1131,7 +1152,7 @@ void menuVisualizar(Cliente &clientes,Mes &mes){
 //Funcion principal del programa.
 //Archivos
 void generaFILE(FILE *archi){
-	archi=fopen("Hotel-clientes.txt","w+");
+	archi=fopen("D:\\Hotel-clientes.txt","w+");
 	fprintf(archi,"\tClientes reservados en el presente fiscal \n\n");
 	fprintf(archi,"En este archivo se encuentra los datos de clientes Hospedados en el presente \n**Nombre y apellido\n**celular\n**mail");
 	fprintf(archi,"\n**Cedula de Identidad (CI)\n**Cuartos reservados con sus precios y fechas");
@@ -1224,7 +1245,7 @@ void menuPrincipal(){
 			break;
 			case 3:
 				system("start Extras\\CreatePDF.jar");
-			break;
+			break;	
 			case 4:
 				system("start Extras\\CodigoQR.jar");				
 			break;
@@ -1239,9 +1260,11 @@ void menuPrincipal(){
 
 }
 int main(){
+	
 	AltEnter();
 	//portada();
 	menuPrincipal();
+	
 	return 0;
 }
 

@@ -1072,7 +1072,7 @@ void portada (){
     
     printf("\n\n");
     Sleep(700);
-    //system("pause");
+    system("pause");
     system("cls");
     Beep(330,200);
 }
