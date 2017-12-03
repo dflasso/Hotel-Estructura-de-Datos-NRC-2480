@@ -1,11 +1,3 @@
-/*UNIVERSIDAD DE LAS FUERZAS ARMADAS - ESPE
-   			ESTRUCTURA DE DATOS
-		ING. FERNANDO SOLIS
-		TEMA: LIBRERIA PERSONAL
-ESTUDIANTE: BRYAN RODRIGUEZ
-	SEMESTRE OCT 2017 - FEB 2018*/
-
-//librerias
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>

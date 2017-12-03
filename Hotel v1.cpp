@@ -1,4 +1,4 @@
-/*	^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/*						^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 						^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 						^^  *******************************************************************   ^^
 						^^  **                                                               **   ^^
@@ -25,16 +25,15 @@
 						^^                      -------------------------                         ^^
 						^^     Integrantes:                                                       ^^
 						^^     ------------                                                       ^^
-						^^     => BORJA DIEGO		                                          ^^
-						^^     => LASSO DANNY		                                          ^^
+						^^     => BORJA DIEGO		                                              ^^
+						^^     => LASSO DANNY		                                              ^^
 						^^     => RODRIGUEZ BRYAN                                                 ^^
-						^^             						                  ^^
-						^^	DOCENTE: ING. FERNANDO SOLIS	                                  ^^
-						^^	FECHA: 2017/11/29		                                  ^^
+						^^             						                  					  ^^
+						^^	DOCENTE: ING. FERNANDO SOLIS	                                      ^^
+						^^	FECHA DE PRESENTACION: 2017/11/29		                              ^^
 						^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 						^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-						
-						
+								
 #include "libHotel.h"
 #include "libGraphicalInterface.h"
 #include "libValidation.h"
@@ -86,9 +85,8 @@ struct SMes{ //lista de meses del año
 	struct SMes *siguiente;
 	struct SMes *anterior;
 };
-
 typedef struct SMes *Mes;
-//
+
 void printC(Cliente &cl){
 	Cliente aux=cl;
 	while(aux!=NULL){
@@ -96,7 +94,8 @@ void printC(Cliente &cl){
 		aux=aux->siguiente;
 	}
 }
-/*Declaracion de Funciones*/
+
+/*Declaracion de Prototipos*/
 void inicio(Mes *);
 void calendarioMes(Dia *,int );
 //funcion que se desarrolla el programa
@@ -129,7 +128,7 @@ void habilitaCuarto(Mes *);
 void generaFILE(FILE *);
 void RecrearFILE(FILE *,Cliente *,Mes *);
 
-/*Desarollo de Funciones*/
+/*Desarollo de Prototipos*/
 //Inicializacion
 void calendarioMes(Dia &diaActual,int refDia){
 	Dia recorre=diaActual;
@@ -185,6 +184,7 @@ void calendarioMes(Dia &diaActual,int refDia){
 	}
 	
 }
+
 void inicio(Mes &mes,int refMes){
 	Mes nuevo=new SMes();
 	Mes recorre=mes;
@@ -218,6 +218,7 @@ void inicio(Mes &mes,int refMes){
 		nuevo->anterior=recorre;
 	}
 }
+
 //eliminar
 void habilitaCuarto(Dia &dia){
 	Dia auxDia=dia;
@@ -318,6 +319,7 @@ void habilitaCuarto(Dia &dia){
 		auxDia=auxDia->siguiente;
 	}
 }
+
 void RecrearFILE(FILE *archivoHotel,Cliente &clientes,Mes &mes){
 	generaFILE(archivoHotel);
 	Cliente auxCliente=clientes;
@@ -734,6 +736,7 @@ int selecDia(int refMes){
 	scanf("%d",&refMes);
 	return refMes;
 }
+
 bool apruebaReserva(Dia &dia,int diaR,int idCuarto,Cliente &clientes,FILE *archivoHotel){
 	bool ok=false;
 	Dia aux=dia;
@@ -834,6 +837,7 @@ void disponibles(Dia &ref){
 	}
 	color(10);
 }
+
 void reservarHotel(Cliente &clientes,Mes &mes,FILE *archivoHotel){
 	int opc=1;
 	int diaR=0; //guarda el dia de la posible reserva
@@ -869,6 +873,7 @@ void reservarHotel(Cliente &clientes,Mes &mes,FILE *archivoHotel){
 	}
 	printf("\n\n");
 }
+
 void menuMes(Cliente &clientes,Mes &mes,FILE *archivoHotel){
 	int opc=0;
 	int refMes=0;
@@ -921,7 +926,6 @@ void menuMes(Cliente &clientes,Mes &mes,FILE *archivoHotel){
 	}while(opc!=3);
 }
 
-
 //Busca en toda la lista cliente mediante la cedula
 void buscarCI(Cliente &Lista,Mes &mes){
 	char buscar[11],editar[11];
@@ -962,8 +966,6 @@ void buscarCI(Cliente &Lista,Mes &mes){
 			printf("\nNo se ha encontrado al cliente.\n\n");
 	}
 }
-
-
 
 //Modifica en toda la lista cliente mediante la cedula
 void modificar(Cliente &Lista){
@@ -1209,7 +1211,6 @@ void generaFILE(FILE *archi){
 	fclose(archi);
 }
 
-//
 void printH(Mes &mes){
 	Mes aux=mes;
 	Dia auxD=NULL;
@@ -1270,6 +1271,7 @@ void hotel(Mes &mes,Cliente &clientes,FILE *FHotel){
 		}
 	}while(opc!=6);
 }
+
 void menuPrincipal(){
 	Mes mes=NULL;
 	FILE *FHotel=NULL;//ARCHIVO DEL HOTEL
@@ -1297,10 +1299,10 @@ void menuPrincipal(){
 				system("start Extras\\CreatePDF.jar");
 			break;	
 			case 4:
-				system("start Extras\\CodigoQR.jar");				
+				system("start Extras\\CreateCodigoQR.jar");				
 			break;
 			case 5:
-				ShellExecute(NULL, TEXT("open"),TEXT("Extras\\Ayuda-hotel.chm"),NULL, NULL,SW_SHOWNORMAL);				
+				ShellExecute(NULL, TEXT("open"),TEXT("Extras\\Ayuda-Hotel.chm"),NULL, NULL,SW_SHOWNORMAL);				
 			break;
 		}
 	}while(opc!=6);
@@ -1309,6 +1311,7 @@ void menuPrincipal(){
 	free(clientes);
 
 }
+
 int main(){
 	
 	AltEnter();
@@ -1317,4 +1320,3 @@ int main(){
 	
 	return 0;
 }
-

@@ -1,9 +1,7 @@
-
 #include <string.h>
 #include <windows.h>
 #include <stdio.h>
 #include <conio.h>
-
 
 static HWND  hConWnd;
 HWND BCX_Bitmap(char*,HWND=0,int=0,int=0,int=0,int=0,int=0,int=0,int=0,int=0);
@@ -19,7 +17,7 @@ int main()
   hConWnd = GetConsoleWndHandle();
   if (hConWnd)
   {
-	  BCX_Bitmap("espe.bmp",hConWnd,350,350,1,0,0);
+	  BCX_Bitmap("Image.bmp",hConWnd,350,350,1,0,0);
 
     getchar();  
   }
