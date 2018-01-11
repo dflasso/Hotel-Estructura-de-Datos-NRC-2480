@@ -12,12 +12,12 @@ LeftChar=1
 Order=0,1
 Focused=1
 [Editor_0]
-CursorCol=1
+CursorCol=23
 CursorRow=1
 TopLine=1
 LeftChar=1
 [Editor_1]
-CursorCol=14
-CursorRow=40
-TopLine=25
+CursorCol=1
+CursorRow=1
+TopLine=1
 LeftChar=1

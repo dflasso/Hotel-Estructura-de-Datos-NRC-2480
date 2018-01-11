@@ -1,4 +1,3 @@
-
 typedef struct SNodo{
 	char espaniol[20];
 	char ingles[20];
