@@ -1,11 +1,3 @@
-#include <stdio.h>
-#include <iostream>
-#include <stdlib.h>
-#include <string.h>
-#include <conio.h>
-#include <time.h>
-#include <windows.h>
-
 
 typedef struct SNodo{
 	char espaniol[20];
@@ -13,6 +5,7 @@ typedef struct SNodo{
 	struct Pila *siguiente;
 	struct Pila *anterior;
 }*Nodo;
+
 #ifndef LISTA_H
 #define LISTA_H
 class Pila{
@@ -34,10 +27,10 @@ Pila::Pila(){
 }*/
 void Pila::insertar(char linea[])
 {
-	Pila *aux=new Pila();
+	/*Pila *aux=new Pila();
 	char *palabraAux;
 	palabraAux=strtok(linea,";");
-	strcpy(aux->espaniol,palabraAux);
+	//strcpy(aux->espaniol,palabraAux);
 	palabraAux=strtok(linea,";");
 	strcpy(aux->ingles,palabraAux);
 	if(palabras!=NULL){
@@ -50,7 +43,7 @@ void Pila::insertar(char linea[])
 		aux->siguiente=NULL;
 	}
 	printf("%s  ",aux->espaniol);
-	printf("%s  \n",aux->ingles);
+	printf("%s  \n",aux->ingles);*/
 }
 void Pila::generarPila(){
 	FILE *arcPalabras=fopen("palabrasDiccionario.txt","r");
