@@ -1,56 +1,46 @@
-typedef struct SNodo{
-	char espaniol[20];
-	char ingles[20];
-	struct Pila *siguiente;
-	struct Pila *anterior;
-}*Nodo;
-
-#ifndef LISTA_H
-#define LISTA_H
-class Pila{
-	private:
-		Nodo palabras;
-	public:
-		Pila();
-		void generarPila();
-		void insertar(char []);
-		void buscar();
-};
-#endif
-
-Pila::Pila(){
-	palabras=NULL;
-}
-/*void Pila::insertar(char refEspaniol[],char refIngles[]){
-	
-}*/
-void Pila::insertar(char linea[])
+#ifndef NODO_H
+#define NODO_H
+class Nodo
 {
-	/*Pila *aux=new Pila();
-	char *palabraAux;
-	palabraAux=strtok(linea,";");
-	//strcpy(aux->espaniol,palabraAux);
-	palabraAux=strtok(linea,";");
-	strcpy(aux->ingles,palabraAux);
-	if(palabras!=NULL){
-		aux->siguiente=NULL;
-		aux->anterior=NULL;
-		palabras=aux;
-	}else{
-		palabras->siguiente=aux;
-		aux->anterior=palabras;
-		aux->siguiente=NULL;
-	}
-	printf("%s  ",aux->espaniol);
-	printf("%s  \n",aux->ingles);*/
+	private:
+		char espaniol[50];
+		char ingles[50];
+		Nodo* siguienteDireccion;
+	public:
+		void setEspaniol(char[]);
+		char* getEspaniol();
+		void setIngles(char[]);
+		char* getIngles();
+		void setSiguienteDireccion(Nodo*);
+		Nodo* getSiguienteDireccion();
+};
+
+void Nodo::setEspaniol(char espaniol_[50])
+{
+	strcpy(espaniol,espaniol_);
 }
-void Pila::generarPila(){
-	FILE *arcPalabras=fopen("palabrasDiccionario.txt","r");
-	char linea[50];
-	while(!feof(arcPalabras)){
-		fscanf(arcPalabras,"%s",linea);
-		insertar(linea);
-	}
-	fclose(arcPalabras);
+char* Nodo::getEspaniol()
+{
+	return espaniol; 
 }
 
+void Nodo::setIngles(char ingles_[50])
+{
+	strcpy(ingles,ingles_);
+}
+char* Nodo::getIngles()
+{
+	return ingles; 
+}
+
+void Nodo::setSiguienteDireccion(Nodo* siguienteDireccion_)
+{
+	siguienteDireccion=siguienteDireccion_;
+}
+
+Nodo* Nodo::getSiguienteDireccion()
+{
+	return siguienteDireccion;
+}
+
+#endif
