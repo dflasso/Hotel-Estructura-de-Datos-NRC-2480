@@ -6,8 +6,9 @@ int main(int argc, char** argv) {
 	bool flag=true;
 	char *opciones[]={"1) Traductor / Traslater.","2) Imagen.","3) Consulta PDF.","4) Codigo QR.","5) Ayuda o PULSE \"F1\".","6) Backup.","7) Base de Datos (Mongo).","8) Salir / Exit."};
 	Pila *objPalabra=new Pila();
-	
+		
 	AltEnter();
+	ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementBienvenida.exe"),NULL, NULL,SW_SHOWNORMAL);
 	do
 	{
 		opcion=menu("Menu Principal",opciones,8);
@@ -22,9 +23,11 @@ int main(int argc, char** argv) {
 				ShellExecute(NULL, TEXT("open"),TEXT("Extras\\image.exe"),NULL, NULL,SW_SHOWNORMAL);
 				break;
 			case 3:
+				ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementPDF.exe"),NULL, NULL,SW_SHOWNORMAL);
 				system("start Extras\\CreatePDF.jar");
 				break;
 			case 4:
+				ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementQR.exe"),NULL, NULL,SW_SHOWNORMAL);
 				system("start Extras\\CreateCodigoQR.jar");	 //cada que ingrese una palabra generar el qr
 				break;
 			case 5:
@@ -34,9 +37,11 @@ int main(int argc, char** argv) {
 				
 				break;
 			case 7:
+				
 				break;
 			case 8:
-				printf("Gracias por utilizar el sistema.\n\n\n");
+				printf("Gracias por utilizar el traductor.\n\n\n");
+				ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementExit.exe"),NULL, NULL,SW_SHOWNORMAL);
 				flag=false;
 				break;
 		}

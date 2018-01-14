@@ -8,6 +8,7 @@
 #include <fstream>
 #include <string>
 #include <time.h>
+#include <pthread.h>
 
 #define TECLA_ARRIBA 72
 #define TECLA_ABAJO 80
