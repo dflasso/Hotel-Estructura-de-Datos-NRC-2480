@@ -110,3 +110,18 @@ void AltEnter()
                 KEYEVENTF_KEYUP,
                 0);
 }
+
+bool validacionCaracter(char cadena[]){
+	int i;
+	for(i=0;cadena[i]!='\0';i++)
+	{
+		if((cadena[i]<65||cadena[i]>90)&&(cadena[i]<97||cadena[i]>122)&&cadena[i]!=32&&cadena[i]!=-92&&cadena[i]!=-91)
+		{
+			printf("______________________________________________________\nDato Incorrecto !!\nNo puede contener caracteres especiales, ni numeros\nVuelva a ingresar por favor\n______________________________________________________\n\n");
+			return true;
+			break;
+		}	
+	}	
+	return false;
+}
+

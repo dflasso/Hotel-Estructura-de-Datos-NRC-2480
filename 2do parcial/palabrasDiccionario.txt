@@ -1,5 +1,3 @@
-carro;car
-lapiz;pencil
 a;un
 ability;capacidad
 able;poder
@@ -1431,7 +1429,7 @@ yeah
 year
 yes
 yet
-you
+you;tu
 young
 your
 yourself
