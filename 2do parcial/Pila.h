@@ -10,11 +10,24 @@ class Pila{
 			palabras=NULL;
 			contadorNodo=0;
 		}
+		void setPalabras(Nodo*);
+		Nodo* getPalabras();
 		void generarPila();
 		void push(char []);
+		void pop(char []);
 		void buscar(char []);
 		void imprimir();
 };
+
+void Pila::setPalabras(Nodo* palabras_)
+{
+	palabras=palabras_;
+}
+
+Nodo* Pila::getPalabras()
+{
+	return palabras;
+}
 
 void Pila::push(char linea[])
 {
@@ -41,7 +54,7 @@ void Pila::push(char linea[])
 }
 
 void Pila::generarPila(){
-	FILE *archivoPalabras=fopen("palabrasDiccionario.txt","r");
+	FILE *archivoPalabras=fopen("D:\\palabrasDiccionario.txt","r");
 	char linea[50];
 	while(!feof(archivoPalabras)){
 		fscanf(archivoPalabras,"%s",linea);
@@ -65,14 +78,20 @@ void Pila::buscar(char palabra[])
 {
 	Nodo *aux=palabras;
 	int contador=0;
-	
-	
+	FILE *archivoQR, *archivoAG;
+	archivoQR=fopen("D:\\SoloPalabraQR.txt","w");
+	archivoAG=fopen("D:\\Agente.txt","w");
 	while(aux!=NULL)
 	{
 		if(strcmp(palabra,aux->getEspaniol())==0)
 		{
 			printf("\n\tEspa%col\t\t\tIngles\n\n",164);
 			printf(" =>\t%s\t\t\t%s\n\n",aux->getEspaniol(),aux->getIngles());
+			fprintf(archivoQR,"---------------------------------------------------\nPalabra Traducida:\nEspañol: %s - Ingles: %s\n---------------------------------------------------\n",aux->getEspaniol(),aux->getIngles());
+			fprintf(archivoAG,"Español: %s. Ingles: %s",aux->getEspaniol(),aux->getIngles());
+			fclose(archivoAG);
+			fclose(archivoQR);
+			system("start Extras\\CreateCodigoQR.jar");
 			contador++;
 		}
 		aux=aux->getSiguienteDireccion();

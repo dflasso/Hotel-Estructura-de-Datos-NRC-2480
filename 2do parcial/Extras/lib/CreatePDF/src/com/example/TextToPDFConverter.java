@@ -22,13 +22,13 @@ public class TextToPDFConverter {
     public static void main(String[] args) throws Exception {  
  
         // TODO Auto-generated method stub  
-        File file = new File("D:\\Hotel-clientes.txt");
+        File file = new File("D:\\palabrasDiccionario.txt");
  
         if(file.getName().endsWith(".txt")){
  
             if(convertTextToPDF(file)){
                 JOptionPane.showMessageDialog(null, "Se ha generado su PDF","Creacion de PDF",JOptionPane.INFORMATION_MESSAGE);
-                File archivo = new File("D:\\Reservacion.pdf");
+                File archivo = new File("D:\\Diccionario.pdf");
                 Desktop app = Desktop.getDesktop();
                 app.open(archivo);
             }
@@ -49,7 +49,7 @@ public class TextToPDFConverter {
         try {  
  
             Document pdfDoc = new Document();  
-            String output_file =file.getParent()+""+"Reservacion.pdf";  
+            String output_file =file.getParent()+""+"Diccionario.pdf";  
             @SuppressWarnings("unused")
 			PdfWriter writer=PdfWriter.getInstance(pdfDoc,new FileOutputStream(output_file));  
             pdfDoc.open();  

@@ -2,6 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/Usuario/OneDrive - Escuela Politécnica del Ejército/ESPE/Estructuras De Datos/Proyectos/Primer Parcial/Hotel-Estructura-de-Datos-NRC-2480/Extras/lib/itextpdf-5.3.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Usuario/OneDrive - Escuela Politécnica del Ejército/ESPE/Estructuras De Datos/Proyectos-Estructura-de-Datos-NRC-2480/2do parcial/Extras/lib/itextpdf-5.3.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

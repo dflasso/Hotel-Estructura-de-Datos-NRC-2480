@@ -12,7 +12,7 @@ public class AppQR {
 
 	public static void main(String[] args) throws IOException {
 		Generar codigo = new Generar();
-        String qr = "", cadena, archivo = "D:\\Hotel-clientesQR.txt";
+        String qr = "", cadena, archivo = "D:\\SoloPalabraQR.txt";
         try 
         {
             FileReader f = new FileReader(archivo);

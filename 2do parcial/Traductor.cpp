@@ -8,7 +8,8 @@ int main(int argc, char** argv) {
 	char *opciones[]={"1) Traductor / Traslater.","2) Imagen.","3) Consulta PDF.","4) Codigo QR.","5) Ayuda o PULSE \"F1\".","6) Backup.","7) Base de Datos (Mongo).","8) Salir / Exit."};
 	char *opcionesTraductor[]={"1) Traducir.","2) Insertar palabra al diccionario.","3) Eliminar palabra del diccionario.","4) Volver al Menu Principal"};
 	Pila *objPalabra=new Pila();
-		
+	
+	
 	AltEnter();
 	ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementBienvenida.exe"),NULL, NULL,SW_SHOWNORMAL);
 	do
@@ -33,6 +34,7 @@ int main(int argc, char** argv) {
 								gets(palabra);
 								objPalabra->buscar(palabra);
 							}while(validacionCaracter(palabra));
+								
 							break;
 						case 4:
 							flagTraslate=false;
