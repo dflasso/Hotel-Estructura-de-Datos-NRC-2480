@@ -59,7 +59,7 @@ void Pila::push(char linea[])
 }
 
 void Pila::generarPila(){
-	FILE *archivoPalabras=fopen("D:\\palabrasDiccionario.txt","r");
+	FILE *archivoPalabras=fopen("D:\\Traductor\\palabrasDiccionario.txt","r");
 	char linea[50];
 	while(!feof(archivoPalabras)){
 		fscanf(archivoPalabras,"%s",linea);
@@ -85,8 +85,8 @@ void Pila::buscar(char palabra[])
 	Nodo *aux=palabras;
 	int contador=0;
 	FILE *archivoQR, *archivoAG;
-	archivoQR=fopen("D:\\SoloPalabraQR.txt","w");
-	archivoAG=fopen("D:\\Agente.txt","w");
+	archivoQR=fopen("D:\\Traductor\\SoloPalabraQR.txt","w");
+	archivoAG=fopen("D:\\Traductor\\Agente.txt","w");
 	while(aux!=NULL)
 	{
 		if(strcmp(palabra,aux->getEspaniol())==0)
@@ -94,9 +94,10 @@ void Pila::buscar(char palabra[])
 			printf("\n\tEspa%col\t\t\tIngles\n\n",164);
 			printf(" =>\t%s\t\t\t%s\n\n",aux->getEspaniol(),aux->getIngles());
 			fprintf(archivoQR,"---------------------------------------------------\nPalabra Traducida:\nEspañol: %s - Ingles: %s\n---------------------------------------------------\n",aux->getEspaniol(),aux->getIngles());
-			fprintf(archivoAG,"Español: %s. Ingles: %s",aux->getEspaniol(),aux->getIngles());
+			fprintf(archivoAG,"Espaniol: %s.\nIngles: %s",aux->getEspaniol(),aux->getIngles());
 			fclose(archivoAG);
 			fclose(archivoQR);
+			ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementPalabra.exe"),NULL, NULL,SW_SHOWNORMAL);
 			system("start Extras\\CreateCodigoQR.jar");
 			contador++;
 		}
@@ -143,7 +144,7 @@ void Pila::pushNew(char palabraEspaniol[],char palabrasIngles[],int i)
 void Pila::pushNew(char palabraEspaniol[],char palabrasIngles[])
 {
 	Nodo *nuevo=new Nodo();
-	FILE *archivoPalabras=fopen("D:\\palabrasDiccionario.txt","a+");
+	FILE *archivoPalabras=fopen("D:\\Traductor\\palabrasDiccionario.txt","a+");
 	nuevo->setEspaniol(palabraEspaniol);
 	nuevo->setIngles(palabrasIngles);
 	if(contadorNodo==0)
@@ -188,7 +189,7 @@ void Pila::nombreBakcup(char nombre[],int i)
     char output[128];
     char direcion[2000];
     if(i==1){
-    	strcpy(direcion,"rename D:\\nombre.txt ");	
+    	strcpy(direcion,"rename D:\\Traductor\\nombre.txt ");	
 	}else if(i==2){
 		strcpy(direcion,"rename C:\\Users\\RAMIRO BORJA F\\OneDrive - Escuela Politécnica del Ejército\\ESPE\\Estructuras De Datos\\Proyectos-Estructura-de-Datos-NRC-2480\\2do parcial\\nombre.txt ");
 	}
@@ -208,7 +209,7 @@ void Pila::crearBackup(char nombre[],int i){
 	system("pause");
 	FILE *arcBackup=NULL;
 	if(i==1){
-		arcBackup=fopen("D:\\nombre.txt","w");	
+		arcBackup=fopen("D:\\Traductor\\nombre.txt","w");	
 	}else if(i==2){
 		arcBackup=fopen("C:\\Users\\RAMIRO BORJA F\\OneDrive - Escuela Politécnica del Ejército\\ESPE\\Estructuras De Datos\\Proyectos-Estructura-de-Datos-NRC-2480\\2do parcial\\nombre.txt","w");
 	}

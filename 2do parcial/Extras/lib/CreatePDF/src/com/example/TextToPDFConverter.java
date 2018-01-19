@@ -22,13 +22,13 @@ public class TextToPDFConverter {
     public static void main(String[] args) throws Exception {  
  
         // TODO Auto-generated method stub  
-        File file = new File("D:\\palabrasDiccionario.txt");
+        File file = new File("D:\\Traductor\\palabrasDiccionario.txt");
  
         if(file.getName().endsWith(".txt")){
  
             if(convertTextToPDF(file)){
                 JOptionPane.showMessageDialog(null, "Se ha generado su PDF","Creacion de PDF",JOptionPane.INFORMATION_MESSAGE);
-                File archivo = new File("D:\\Diccionario.pdf");
+                File archivo = new File("D:\\TraductorDiccionario.pdf");
                 Desktop app = Desktop.getDesktop();
                 app.open(archivo);
             }

@@ -6,12 +6,17 @@ int main(int argc, char** argv) {
 	bool flag=true,flagTraslate=true;
 	char palabra[25],palabraSpa[25],palabraEng[25];
 	char *opciones[]={"1) Traductor / Traslater.","2) Imagen.","3) Consulta PDF.","4) Codigo QR.","5) Ayuda o PULSE \"F1\".","6) Backup.","7) Base de Datos (Mongo).","8) Salir / Exit."};
-	char *opcionesTraductor[]={"1) Traducir.","2) Insertar palabra al diccionario.","3) Eliminar palabra del diccionario.","4) Volver al Menu Principal"};
-	char *opcionesBackup[]={"1) Crear Backup","2) Recuperar informacion","3) SALIR"};
+	char *opcionesTraductor[]={"1) Traducir.","2) Insertar palabra al diccionario.","3) Eliminar palabra del diccionario.","4) Volver al Menu Principal."};
+	char *opcionesBackup[]={"1) Crear Backup.","2) Recuperar informacion.","3) Volver al Menu Principal."};
 	Pila *objPalabra=new Pila();
 	Pila *palabrasBuscadas=new Pila();
 	char nombre[2000];
+	
+	
 	AltEnter();
+	CreateDirectory ("D:\\Traductor", NULL);
+	system("copy palabrasDiccionario.txt D:\\Traductor\\palabrasDiccionario.txt");
+	system("cls");
 	ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementBienvenida.exe"),NULL, NULL,SW_SHOWNORMAL);
 	objPalabra->generarPila();
 	do
@@ -75,6 +80,7 @@ int main(int argc, char** argv) {
 				}while(flagTraslate);
 				break;
 			case 2:
+				ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementImage.exe"),NULL, NULL,SW_SHOWNORMAL);
 				ShellExecute(NULL, TEXT("open"),TEXT("Extras\\image.exe"),NULL, NULL,SW_SHOWNORMAL);
 				break;
 			case 3:
@@ -96,6 +102,7 @@ int main(int argc, char** argv) {
 						case 1:
 							palabrasBuscadas->crearBackup(nombre,1);
 							palabrasBuscadas->crearBackup(nombre,2);
+							ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementBackup.exe"),NULL, NULL,SW_SHOWNORMAL);
 							break;
 						case 2:
 							
@@ -106,8 +113,9 @@ int main(int argc, char** argv) {
 				
 				break;
 			case 7:
+				ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementBDMongo.exe"),NULL, NULL,SW_SHOWNORMAL);
 				objPalabra->imprimir();
-				system("pause");
+				system("pause");				
 				break;
 			case 8:
 				printf("Gracias por utilizar el traductor.\n\n\n");
