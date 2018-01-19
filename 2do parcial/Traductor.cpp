@@ -1,7 +1,162 @@
 #include "PersonalLibrary.h"
 #include "Pila.h"
 
-int main(int argc, char** argv) {
+void menuMouse(){
+	int opcion,opcionTraductor;
+	bool flag=true,flagTraslate=true;
+	char palabra[25];
+	char *opciones[]={"1) Traductor / Traslater.","2) Imagen.","3) Consulta PDF.","4) Codigo QR.","5) Ayuda o PULSE \"F1\".","6) Backup.","7) Base de Datos (Mongo).","8) Salir / Exit."};
+	char *opcionesTraductor[]={"1) Traducir.","2) Insertar palabra al diccionario.","3) Eliminar palabra del diccionario.","4) Volver al Menu Principal"};
+	Pila *objPalabra=new Pila();
+	AltEnter();
+    system("cls");
+	gotoxy(10,2);
+		color(158);
+		printf("================================================");
+		color(11);
+		printf("\n\t\t\tMenu Principal\t\t\t\n\n");
+		//letras en amarillo
+		color(15); //letras en blanco
+		printf("\t\t1)Traductor / Translater.\n");
+		printf("\t\t2)Imagen.\n");
+		printf("\t\t3)Consulta PDF.\n");
+		printf("\t\t4)Codigo QR.\n");
+		printf("\t\t5)Ayuda o PULSE 'F1'\n");
+		printf("\t\t6)Backup.\n");
+		printf("\t\t7)Base de Datos (Mongo).\n");
+		printf("\t\t8)Salir / Exit.\n");
+		color(158);
+		gotoxy(10,15);
+		printf("================================================");
+		color(15);
+	
+	HANDLE paraEntrada = GetStdHandle(STD_INPUT_HANDLE);
+	INPUT_RECORD regEntrada;
+	DWORD evento;
+	COORD coordenadas;
+	SetConsoleMode(paraEntrada, ENABLE_PROCESSED_INPUT | ENABLE_MOUSE_INPUT);
+	while (1) {
+		ReadConsoleInput(paraEntrada, &regEntrada, 1, &evento);
+		if (regEntrada.EventType == MOUSE_EVENT)
+		{
+			if (regEntrada.Event.MouseEvent.dwButtonState == FROM_LEFT_1ST_BUTTON_PRESSED)
+			{
+				coordenadas.X = regEntrada.Event.MouseEvent.dwMousePosition.X;
+				coordenadas.Y = regEntrada.Event.MouseEvent.dwMousePosition.Y;
+				if (coordenadas.X >0 && coordenadas.X <= 50 && coordenadas.Y == 5)
+				{
+					system("cls");
+					do
+				{
+					opcionTraductor=menu("Traductor / Traslater.",opcionesTraductor,4);
+	//				system("cls");
+					switch(opcionTraductor)
+					{
+						case 1:
+							do
+							{
+								printf("Ingrese la palabra que desea traducir: ");
+								fflush(stdin);
+								gets(palabra);
+								objPalabra->buscar(palabra);
+							}while(validacionCaracter(palabra));
+								
+							break;
+						case 4:
+							flagTraslate=false;
+							break;
+					}
+					if(opcionTraductor!=4)
+					{
+						printf("Presione cualquier tecla para volver al menu . . .");
+						getch();
+					}
+				}while(flagTraslate);
+					system("pause");
+					system("cls");
+					menuMouse();
+					
+				}
+
+				if (coordenadas.X >0 && coordenadas.X <= 50 && coordenadas.Y == 6)
+				{
+				    system("cls");
+					ShellExecute(NULL, TEXT("open"),TEXT("Extras\\image.exe"),NULL, NULL,SW_SHOWNORMAL);
+					system("pause");
+					system("cls");
+					menuMouse();
+
+				}
+				if (coordenadas.X >0 && coordenadas.X <= 50 && coordenadas.Y == 7)//(coordenadas.X >0 && coordenadas.X <= 9 && coordenadas.Y == 3)
+				{
+					system("cls");
+					ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementPDF.exe"),NULL, NULL,SW_SHOWNORMAL);
+					system("start Extras\\CreatePDF.jar");
+					system("pause");
+					system("cls");
+					menuMouse();
+				}
+
+				if (coordenadas.X >0 && coordenadas.X <= 50 && coordenadas.Y == 8)
+				{
+					system("cls");
+					ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementQR.exe"),NULL, NULL,SW_SHOWNORMAL);
+					system("start Extras\\CreateCodigoQR.jar");	 //cada que ingrese una palabra generar el qr
+					system("pause");
+					system("cls");
+					menuMouse();
+				}
+
+				if (coordenadas.X >0 && coordenadas.X <= 50 && coordenadas.Y == 9)
+				{
+					system("cls");
+					ShellExecute(NULL, TEXT("open"),TEXT("Extras\\Ayuda-Hotel.chm"),NULL, NULL,SW_SHOWNORMAL);	
+					system("pause");
+					system("cls");
+				    menuMouse();
+					
+				}
+				if (coordenadas.X >0 && coordenadas.X <= 50 && coordenadas.Y == 10)
+				{
+				    system("cls");
+					printf("6");
+					system("pause");
+					system("cls");
+				    menuMouse();
+				}
+				if (coordenadas.X >0 && coordenadas.X <= 50 && coordenadas.Y == 11)
+				{
+				    system("cls");
+					printf("7");
+					system("pause");
+					system("cls");
+					menuMouse();
+				}
+				
+				if (coordenadas.X >0 && coordenadas.X <= 50 && coordenadas.Y == 12)
+				{
+				    system("cls");
+					printf("Gracias por utilizar el traductor.\n\n\n");
+					ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementExit.exe"),NULL, NULL,SW_SHOWNORMAL);
+					flag=false;
+					system("pause");
+					system("cls");
+					menuMouse();
+				}
+				if (coordenadas.X >0 && coordenadas.X <= 50 && coordenadas.Y == 9)
+				{
+				    system("cls");
+					printf("gracias por usar el programa madafaka!");
+					system("pause");
+					exit(0);
+				}
+			}
+		}
+	}
+}
+
+
+void cursor(){
 	int opcion,opcionTraductor,opcBack;
 	bool flag=true,flagTraslate=true;
 	char palabra[25],palabraSpa[25],palabraEng[25];
@@ -123,5 +278,10 @@ int main(int argc, char** argv) {
 			getch();
 		}
 	}while(flag);
+}
+
+	int main(int argc, char** argv) {
+		cursor();
+		menuMouse();
 	return 0;
 }
