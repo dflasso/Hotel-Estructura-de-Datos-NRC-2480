@@ -94,9 +94,10 @@ void Pila::buscar(char palabra[])
 {
 	Nodo *aux=palabras;
 	int contador=0;
-	FILE *archivoQR, *archivoAG;
+	FILE *archivoQR, *archivoAG,*archivoBD;
 	archivoQR=fopen("D:\\Traductor\\SoloPalabraQR.txt","w");
 	archivoAG=fopen("D:\\Traductor\\Agente.txt","w");
+	archivoBD=fopen("D:\\Traductor\\BD.txt","w");
 	while(aux!=NULL)
 	{
 		if(strcmp(palabra,aux->getEspaniol())==0)
@@ -105,16 +106,20 @@ void Pila::buscar(char palabra[])
 			printf(" =>\t%s\t\t\t%s\n\n",aux->getEspaniol(),aux->getIngles());
 			fprintf(archivoQR,"---------------------------------------------------\nPalabra Traducida:\nEspañol: %s - Ingles: %s\n---------------------------------------------------\n",aux->getEspaniol(),aux->getIngles());
 			fprintf(archivoAG,"Espaniol: %s.\nIngles: %s",aux->getEspaniol(),aux->getIngles());
+			fprintf(archivoBD,"%s;%s",aux->getEspaniol(),aux->getIngles());
 			fclose(archivoAG);
 			fclose(archivoQR);
+			fclose(archivoBD);
 			ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementPalabra.exe"),NULL, NULL,SW_SHOWNORMAL);
-			system("start Extras\\CreateCodigoQR.jar");
 			contador++;
 		}
 		aux=aux->getSiguienteDireccion();
 	}
 	if(contador==0)
 		printf("\nPalabra inexistente, por favor ingrese nuevemente la palabra a buscar.\n\n");
+	
+	system("start Extras\\CreateCodigoQR.jar");
+	system("start Extras\\BDMongo.jar");
 }
 void Pila::buscar(char palabra[],Pila *&palabrasBuscadas)
 {

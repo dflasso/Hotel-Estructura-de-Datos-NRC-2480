@@ -2,14 +2,24 @@
 #include "Pila.h"
 
 void menuMouse(){
-	int opcion,opcionTraductor;
+	int opcion,opcionTraductor,opcBack;
 	bool flag=true,flagTraslate=true;
-	char palabra[25];
+	char palabra[25],palabraSpa[25],palabraEng[25];
 	char *opciones[]={"1) Traductor / Traslater.","2) Imagen.","3) Consulta PDF.","4) Codigo QR.","5) Ayuda o PULSE \"F1\".","6) Backup.","7) Base de Datos (Mongo).","8) Salir / Exit."};
-	char *opcionesTraductor[]={"1) Traducir.","2) Insertar palabra al diccionario.","3) Eliminar palabra del diccionario.","4) Volver al Menu Principal"};
+	char *opcionesTraductor[]={"1) Traducir.","2) Insertar palabra al diccionario.","3) Imprimir palabras buscadas.","4) Volver al Menu Principal."};
+	char *opcionesBackup[]={"1) Crear Backup.","2) Recuperar informacion.","3) Volver al Menu Principal."};
 	Pila *objPalabra=new Pila();
+	Pila *palabrasBuscadas=new Pila();
+	char nombre[2000];
+
 	AltEnter();
-    system("cls");
+	CreateDirectory ("D:\\Traductor", NULL);
+	system("copy palabrasDiccionario.txt D:\\Traductor\\palabrasDiccionario.txt");
+	system("cls");
+	ShellExecute(NULL, TEXT("open"),TEXT("C:\\data\\DB\\mongod.exe"),NULL, NULL,SW_SHOWNORMAL);
+	ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementBienvenida.exe"),NULL, NULL,SW_SHOWNORMAL);
+	objPalabra->generarPila();
+	
 	gotoxy(10,2);
 		color(158);
 		printf("================================================");
@@ -118,21 +128,38 @@ void menuMouse(){
 				}
 				if (coordenadas.X >0 && coordenadas.X <= 50 && coordenadas.Y == 10)
 				{
-				    system("cls");
-					printf("6");
-					system("pause");
-					system("cls");
-				    menuMouse();
-				}
-				if (coordenadas.X >0 && coordenadas.X <= 50 && coordenadas.Y == 11)
-				{
-				    system("cls");
-					printf("7");
+				     system("cls");
+					int opcBack=1;
+				do{
+					opcBack=menu("RESPALDO DE INFORMACION",opcionesBackup,3);
+					switch(opcBack){
+						case 1:
+							palabrasBuscadas->crearBackup(nombre,1);
+							palabrasBuscadas->crearBackup(nombre,2);
+							ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementBackup.exe"),NULL, NULL,SW_SHOWNORMAL);
+							break;
+						case 2:
+							palabrasBuscadas->generarPila(0);
+							break;
+					}
+				}while(opcBack!=3);
+				
 					system("pause");
 					system("cls");
 					menuMouse();
 				}
-				
+				if (coordenadas.X >0 && coordenadas.X <= 50 && coordenadas.Y == 11)
+				{
+				     system("cls");
+					ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementBDMongo.exe"),NULL, NULL,SW_SHOWNORMAL);
+					system("start Extras\\MongoTXT.Tabla.jar");
+					imprimirTXT("D:\\Traductor\\BDConsole.txt");
+					//system("start C:\\Users\\RAMIRO BORJA F\\AppData\\Local\\MongoDBCompass.exe");
+					//ShellExecute(NULL, TEXT("open"),TEXT("C:\\Users\\RAMIRO BORJA F\\AppData\\Local\\MongoDBCompass.exe"),NULL, NULL,SW_SHOWNORMAL); tratar de sacar el GUI
+					system("pause");
+					system("cls");
+					menuMouse();
+				}
 				if (coordenadas.X >0 && coordenadas.X <= 50 && coordenadas.Y == 12)
 				{
 				    system("cls");
@@ -141,37 +168,30 @@ void menuMouse(){
 					flag=false;
 					system("pause");
 					system("cls");
-					menuMouse();
-				}
-				if (coordenadas.X >0 && coordenadas.X <= 50 && coordenadas.Y == 9)
-				{
-				    system("cls");
-					printf("gracias por usar el programa madafaka!");
-					system("pause");
 					exit(0);
 				}
+		
 			}
 		}
 	}
 }
-
 
 void cursor(){
 	int opcion,opcionTraductor,opcBack;
 	bool flag=true,flagTraslate=true;
 	char palabra[25],palabraSpa[25],palabraEng[25];
 	char *opciones[]={"1) Traductor / Traslater.","2) Imagen.","3) Consulta PDF.","4) Codigo QR.","5) Ayuda o PULSE \"F1\".","6) Backup.","7) Base de Datos (Mongo).","8) Salir / Exit."};
-	char *opcionesTraductor[]={"1) Traducir.","2) Insertar palabra al diccionario.","3)Imprimir palabras buscadas","4) Volver al Menu Principal."};
+	char *opcionesTraductor[]={"1) Traducir.","2) Insertar palabra al diccionario.","3) Imprimir palabras buscadas.","4) Volver al Menu Principal."};
 	char *opcionesBackup[]={"1) Crear Backup.","2) Recuperar informacion.","3) Volver al Menu Principal."};
 	Pila *objPalabra=new Pila();
 	Pila *palabrasBuscadas=new Pila();
 	char nombre[2000];
-	
-	
+		
 	AltEnter();
 	CreateDirectory ("D:\\Traductor", NULL);
 	system("copy palabrasDiccionario.txt D:\\Traductor\\palabrasDiccionario.txt");
 	system("cls");
+	ShellExecute(NULL, TEXT("open"),TEXT("C:\\data\\DB\\mongod.exe"),NULL, NULL,SW_SHOWNORMAL);
 	ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementBienvenida.exe"),NULL, NULL,SW_SHOWNORMAL);
 	objPalabra->generarPila();
 	do
@@ -263,8 +283,11 @@ void cursor(){
 				break;
 			case 7:
 				ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementBDMongo.exe"),NULL, NULL,SW_SHOWNORMAL);
-				objPalabra->imprimir();
-				system("pause");				
+				system("start Extras\\MongoTXT.Tabla.jar");
+				imprimirTXT("D:\\Traductor\\BDConsole.txt");
+				//system("start C:\\Users\\RAMIRO BORJA F\\AppData\\Local\\MongoDBCompass.exe");
+				//ShellExecute(NULL, TEXT("open"),TEXT("C:\\Users\\RAMIRO BORJA F\\AppData\\Local\\MongoDBCompass.exe"),NULL, NULL,SW_SHOWNORMAL); tratar de sacar el GUI
+				getch();
 				break;
 			case 8:
 				printf("Gracias por utilizar el traductor.\n\n\n");
@@ -280,8 +303,8 @@ void cursor(){
 	}while(flag);
 }
 
-	int main(int argc, char** argv) {
-		cursor();
-		menuMouse();
+int main(int argc, char** argv) {
+
+	menuMouse();
 	return 0;
 }

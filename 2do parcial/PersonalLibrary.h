@@ -125,3 +125,19 @@ bool validacionCaracter(char cadena[]){
 	return false;
 }
 
+void imprimirTXT(char txt[])
+{
+	int x=0,y=0;
+    char caracter[200];
+    system("color 0E");
+    FILE *INICIO;
+    INICIO=fopen(txt,"r");
+
+    while (!feof(INICIO))
+    {
+        fgets(caracter,130,INICIO);
+        gotoxy(x,y);
+		puts(caracter);
+        y++;
+    }
+}
