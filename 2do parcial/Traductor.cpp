@@ -6,7 +6,7 @@ int main(int argc, char** argv) {
 	bool flag=true,flagTraslate=true;
 	char palabra[25],palabraSpa[25],palabraEng[25];
 	char *opciones[]={"1) Traductor / Traslater.","2) Imagen.","3) Consulta PDF.","4) Codigo QR.","5) Ayuda o PULSE \"F1\".","6) Backup.","7) Base de Datos (Mongo).","8) Salir / Exit."};
-	char *opcionesTraductor[]={"1) Traducir.","2) Insertar palabra al diccionario.","3) Eliminar palabra del diccionario.","4) Volver al Menu Principal."};
+	char *opcionesTraductor[]={"1) Traducir.","2) Insertar palabra al diccionario.","3)Imprimir palabras buscadas","4) Volver al Menu Principal."};
 	char *opcionesBackup[]={"1) Crear Backup.","2) Recuperar informacion.","3) Volver al Menu Principal."};
 	Pila *objPalabra=new Pila();
 	Pila *palabrasBuscadas=new Pila();
@@ -60,14 +60,8 @@ int main(int argc, char** argv) {
 							objPalabra->pushNew(palabraSpa,palabraEng);
 							break;
 						case 3:
-							/*do
-							{
-								printf("Ingrese la palabra que desea eliminar: ");
-								fflush(stdin);
-								gets(palabra);
-								objPalabra->popPalabra(palabra); corregir el eliminar
-							}while(validacionCaracter(palabra));
-							break;*/
+							palabrasBuscadas->imprimir();
+							break;
 						case 4:
 							flagTraslate=false;
 							break;
@@ -105,7 +99,7 @@ int main(int argc, char** argv) {
 							ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementBackup.exe"),NULL, NULL,SW_SHOWNORMAL);
 							break;
 						case 2:
-							
+							palabrasBuscadas->generarPila(0);
 							break;
 					}
 				}while(opcBack!=3);

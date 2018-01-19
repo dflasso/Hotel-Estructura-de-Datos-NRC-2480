@@ -13,6 +13,7 @@ class Pila{
 		void setPalabras(Nodo*);
 		Nodo* getPalabras();
 		void generarPila();
+		void generarPila(int i);
 		void push(char []);
 		void pushNew(char [],char []);
 		void pushNew(char [],char[],int );
@@ -60,6 +61,15 @@ void Pila::push(char linea[])
 
 void Pila::generarPila(){
 	FILE *archivoPalabras=fopen("D:\\Traductor\\palabrasDiccionario.txt","r");
+	char linea[50];
+	while(!feof(archivoPalabras)){
+		fscanf(archivoPalabras,"%s",linea);
+		push(linea);
+	}
+	fclose(archivoPalabras);
+}
+void Pila::generarPila(int i){
+	FILE *archivoPalabras=fopen("D:\\Traductor\\Backup.txt","r");
 	char linea[50];
 	while(!feof(archivoPalabras)){
 		fscanf(archivoPalabras,"%s",linea);
@@ -189,11 +199,11 @@ void Pila::nombreBakcup(char nombre[],int i)
     char output[128];
     char direcion[2000];
     if(i==1){
-    	strcpy(direcion,"rename D:\\Traductor\\nombre.txt ");	
+    	strcpy(direcion,"rename D:\\Traductor\\Backup.txt ");	
 	}else if(i==2){
 		strcpy(direcion,"rename C:\\Users\\RAMIRO BORJA F\\OneDrive - Escuela Politécnica del Ejército\\ESPE\\Estructuras De Datos\\Proyectos-Estructura-de-Datos-NRC-2480\\2do parcial\\nombre.txt ");
 	}
-    strftime(output,128,"fecha:%d-%m-%y-hora%H-%M-%S",tlocal);
+    strftime(output,128,"fecha%d-%m-%y-hora%H-%M-%S",tlocal);
     strcpy(nombre,"Backup(");
     strcat(nombre,output);
 	strcat(nombre,").txt");
@@ -205,11 +215,9 @@ void Pila::nombreBakcup(char nombre[],int i)
 void Pila::crearBackup(char nombre[],int i){
 	Nodo *nuevo=palabras;
 	nombreBakcup(nombre,i);
-	printf("%s\n",nombre);
-	system("pause");
 	FILE *arcBackup=NULL;
 	if(i==1){
-		arcBackup=fopen("D:\\Traductor\\nombre.txt","w");	
+		arcBackup=fopen("D:\\Traductor\\Backup.txt","w");	
 	}else if(i==2){
 		arcBackup=fopen("C:\\Users\\RAMIRO BORJA F\\OneDrive - Escuela Politécnica del Ejército\\ESPE\\Estructuras De Datos\\Proyectos-Estructura-de-Datos-NRC-2480\\2do parcial\\nombre.txt","w");
 	}
@@ -222,6 +230,9 @@ void Pila::crearBackup(char nombre[],int i){
 	}
 	printf("%d",contadorNodo);
 	fclose(arcBackup);
-	system(nombre);
+	if(i==2){
+		system(nombre);
+	}
+	
 }
 
