@@ -87,7 +87,6 @@ void Pila::imprimir()
 		printf(" =>\t%s\t\t\t%s\n",nuevo->getEspaniol(),nuevo->getIngles());
 		nuevo=nuevo->getSiguienteDireccion();
 	}
-	printf("%d",contadorNodo);
 }
 
 void Pila::buscar(char palabra[])
@@ -203,12 +202,7 @@ void Pila::nombreBakcup(char nombre[],int i)
     struct tm *tlocal = localtime(&tiempo);
     char output[128];
     char direcion[2000];
-    if(i==1){
-    	strcpy(direcion,"rename D:\\Traductor\\Backup.txt ");	
-	}else if(i==2){
-		strcpy(direcion,"rename C:\\Users\\RAMIRO BORJA F\\OneDrive - Escuela Politécnica del Ejército\\ESPE\\Estructuras De Datos\\Proyectos-Estructura-de-Datos-NRC-2480\\2do parcial\\nombre.txt ");
-	}
-    strftime(output,128,"fecha%d-%m-%y-hora%H-%M-%S",tlocal);
+    strftime(output,128,"fecha_%d_%m_%y_hora_%H_%M_%S",tlocal);
     strcpy(nombre,"Backup(");
     strcat(nombre,output);
 	strcat(nombre,").txt");
@@ -219,25 +213,22 @@ void Pila::nombreBakcup(char nombre[],int i)
 
 void Pila::crearBackup(char nombre[],int i){
 	Nodo *nuevo=palabras;
-	nombreBakcup(nombre,i);
 	FILE *arcBackup=NULL;
 	if(i==1){
 		arcBackup=fopen("D:\\Traductor\\Backup.txt","w");	
 	}else if(i==2){
-		arcBackup=fopen("C:\\Users\\RAMIRO BORJA F\\OneDrive - Escuela Politécnica del Ejército\\ESPE\\Estructuras De Datos\\Proyectos-Estructura-de-Datos-NRC-2480\\2do parcial\\nombre.txt","w");
+		arcBackup=fopen("Backup.txt","w");
 	}
-	
 	//INGRESO DE DATOS DE LA PILAS
 	while(nuevo!=NULL)
 	{
 		fprintf(arcBackup,"%s;%s\n",nuevo->getEspaniol(),nuevo->getIngles());
 		nuevo=nuevo->getSiguienteDireccion();
 	}
-	printf("%d",contadorNodo);
 	fclose(arcBackup);
 	if(i==2){
-		system(nombre);
+		rename("Backup.txt",nombre);
 	}
-	
+	system("pause");
 }
 
