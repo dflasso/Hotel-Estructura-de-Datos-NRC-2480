@@ -23,6 +23,7 @@ public class AppMongoConnection {
 
 	public static void main(String[] args) throws IOException {
 		AppMongoConnection Obj = new AppMongoConnection();
+		
 		//Obj.InsertarTabla();
 		Obj.DesplegarBD();		
 	}
@@ -31,7 +32,7 @@ public class AppMongoConnection {
 	{
 		AppMongoConnection Obj = new AppMongoConnection();
 		BasicDBObject documento=new BasicDBObject();
-		File file=new File("D:\\Traductor\\BD.txt");
+		File file=new File("C:\\Traductor\\BD.txt");
 		String linea,espaniol = null,ingles= null;
 		BufferedReader br=new BufferedReader(new FileReader(file));
 		while((linea=br.readLine())!=null)
@@ -59,7 +60,7 @@ public class AppMongoConnection {
 	public void DesplegarBD()throws IOException
 	{
 		AppMongoConnection Obj = new AppMongoConnection();
-		File file=new File("D:\\Traductor\\BDConsole.txt");
+		File file=new File("C:\\Traductor\\BDConsole.txt");
 		FileWriter fw;
 		BufferedWriter bw;
 		fw=new FileWriter(file);
@@ -75,12 +76,12 @@ public class AppMongoConnection {
 		Obj.cursor=Obj.tabla.find();
 		while(Obj.cursor.hasNext())
 		{
-			//try{
+			try{
 				bw.write(Obj.cursor.next().toString());
 				bw.append("\r\n"); //Salto de linea en un archivo.
-/*			}catch(IOException ex){
+			}catch(IOException ex){
 				System.out.println(ex);
-			}*/
+			}
 		}
 		bw.close();
 		fw.close();

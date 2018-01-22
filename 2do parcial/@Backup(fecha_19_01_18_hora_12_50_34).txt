@@ -1,2 +1,0 @@
-edificio;building
-carro;car

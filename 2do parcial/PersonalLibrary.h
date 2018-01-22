@@ -83,7 +83,7 @@ int menu(char *titulo, char *opciones[], int numero)
 				repite=false;
 			break;
 			case 0:
-				ShellExecute(NULL, TEXT("open"),TEXT("Extras\\Ayuda-hotel.chm"),NULL, NULL,SW_SHOWNORMAL);
+				ShellExecute(NULL, TEXT("open"),TEXT("Extras\\Ayuda.chm"),NULL, NULL,SW_SHOWNORMAL);
 			break;
 		}
 	}while(repite);

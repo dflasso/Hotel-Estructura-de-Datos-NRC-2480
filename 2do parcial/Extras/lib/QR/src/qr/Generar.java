@@ -12,7 +12,7 @@ public class Generar {
             String name;
             obj.setData(nom);// datos en donde va a ir el qr
             obj.setModuleSize(5.0f);//tama�o de la imagen en double\
-            name="D:\\Traductor\\Qr "+i+".jpeg";
+            name="C:\\Traductor\\Qr "+i+".jpeg";
             obj.renderBarcode(name);//destino
             i++;
             return true;

@@ -12,7 +12,7 @@ public class AppQR {
 
 	public static void main(String[] args) throws IOException {
 		Generar codigo = new Generar();
-        String qr = "", cadena, archivo = "D:\\Traductor\\SoloPalabraQR.txt";
+        String qr = "", cadena, archivo = "C:\\Traductor\\SoloPalabraQR.txt";
         try 
         {
             FileReader f = new FileReader(archivo);
@@ -31,7 +31,7 @@ public class AppQR {
         {
             int i = 1;
             String name;
-            name="D:\\Traductor\\Qr "+i+".jpeg";
+            name="C:\\Traductor\\Qr "+i+".jpeg";
             JOptionPane.showMessageDialog(null, "Se ha generado su imagen QR","Creacion de QR",JOptionPane.INFORMATION_MESSAGE);
             File file = new File(name);
             Desktop app = Desktop.getDesktop();//para abrir la imagen

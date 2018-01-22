@@ -18,6 +18,7 @@ class Pila{
 		void pushNew(char [],char []);
 		void pushNew(char [],char[],int );
 		void popPalabra(char []);
+		void pop();
 		void buscar(char []);
 		void buscar(char palabra[],Pila *&palabrasBuscadas);
 		void imprimir();
@@ -60,7 +61,7 @@ void Pila::push(char linea[])
 }
 
 void Pila::generarPila(){
-	FILE *archivoPalabras=fopen("D:\\Traductor\\palabrasDiccionario.txt","r");
+	FILE *archivoPalabras=fopen("C:\\Traductor\\palabrasDiccionario.txt","r");
 	char linea[50];
 	while(!feof(archivoPalabras)){
 		fscanf(archivoPalabras,"%s",linea);
@@ -69,7 +70,7 @@ void Pila::generarPila(){
 	fclose(archivoPalabras);
 }
 void Pila::generarPila(int i){
-	FILE *archivoPalabras=fopen("D:\\Traductor\\Backup.txt","r");
+	FILE *archivoPalabras=fopen("C:\\Traductor\\Backup.txt","r");
 	char linea[50];
 	while(!feof(archivoPalabras)){
 		fscanf(archivoPalabras,"%s",linea);
@@ -94,9 +95,9 @@ void Pila::buscar(char palabra[])
 	Nodo *aux=palabras;
 	int contador=0;
 	FILE *archivoQR, *archivoAG,*archivoBD;
-	archivoQR=fopen("D:\\Traductor\\SoloPalabraQR.txt","w");
-	archivoAG=fopen("D:\\Traductor\\Agente.txt","w");
-	archivoBD=fopen("D:\\Traductor\\BD.txt","w");
+	archivoQR=fopen("C:\\Traductor\\SoloPalabraQR.txt","w");
+	archivoAG=fopen("C:\\Traductor\\Agente.txt","w");
+	archivoBD=fopen("C:\\Traductor\\BD.txt","w");
 	while(aux!=NULL)
 	{
 		if(strcmp(palabra,aux->getEspaniol())==0)
@@ -104,11 +105,13 @@ void Pila::buscar(char palabra[])
 			printf("\n\tEspa%col\t\t\tIngles\n\n",164);
 			printf(" =>\t%s\t\t\t%s\n\n",aux->getEspaniol(),aux->getIngles());
 			fprintf(archivoQR,"---------------------------------------------------\nPalabra Traducida:\nEspañol: %s - Ingles: %s\n---------------------------------------------------\n",aux->getEspaniol(),aux->getIngles());
-			fprintf(archivoAG,"Espaniol: %s.\nIngles: %s",aux->getEspaniol(),aux->getIngles());
+			fprintf(archivoAG,"Espaniol: %s.\nIngles: %s.",aux->getEspaniol(),aux->getIngles());
 			fprintf(archivoBD,"%s;%s",aux->getEspaniol(),aux->getIngles());
 			fclose(archivoAG);
 			fclose(archivoQR);
 			fclose(archivoBD);
+			system("start Extras\\CreateCodigoQR.jar");
+			system("start Extras\\BDMongo.jar");
 			ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementPalabra.exe"),NULL, NULL,SW_SHOWNORMAL);
 			contador++;
 		}
@@ -117,8 +120,7 @@ void Pila::buscar(char palabra[])
 	if(contador==0)
 		printf("\nPalabra inexistente, por favor ingrese nuevemente la palabra a buscar.\n\n");
 	
-	system("start Extras\\CreateCodigoQR.jar");
-	system("start Extras\\BDMongo.jar");
+	
 }
 void Pila::buscar(char palabra[],Pila *&palabrasBuscadas)
 {
@@ -158,7 +160,7 @@ void Pila::pushNew(char palabraEspaniol[],char palabrasIngles[],int i)
 void Pila::pushNew(char palabraEspaniol[],char palabrasIngles[])
 {
 	Nodo *nuevo=new Nodo();
-	FILE *archivoPalabras=fopen("D:\\Traductor\\palabrasDiccionario.txt","a+");
+	FILE *archivoPalabras=fopen("C:\\Traductor\\palabrasDiccionario.txt","a+");
 	nuevo->setEspaniol(palabraEspaniol);
 	nuevo->setIngles(palabrasIngles);
 	if(contadorNodo==0)
@@ -186,14 +188,23 @@ void Pila::popPalabra(char palabra[])
 	{
 		if(strcmp(palabra,aux->getEspaniol())==0)
 		{
-			aux=NULL;
-			contadorNodo--;
+			printf("\nUsted acaba de eliminar (%s) del diccionario.\n\n",aux->getEspaniol());
+			getch();
+			aux=aux->getSiguienteDireccion();
+			delete aux;
+			palabras=aux;
 			contador++;
 		}
 		aux=aux->getSiguienteDireccion();
 	}
 	if(contador==0)
 		printf("\nPalabra inexistente, por favor ingrese nuevemente la palabra a buscar.\n\n");
+}
+
+void Pila::pop()
+{
+	palabras=NULL;
+	printf("\nUsted acaba de eliminar todas las palabras del diccionario.\n\n");	
 }
 
 void Pila::nombreBakcup(char nombre[],int i)
@@ -203,7 +214,7 @@ void Pila::nombreBakcup(char nombre[],int i)
     char output[128];
     char direcion[2000];
     strftime(output,128,"fecha_%d_%m_%y_hora_%H_%M_%S",tlocal);
-    strcpy(nombre,"Backup(");
+        strcpy(nombre,"Backup(");
     strcat(nombre,output);
 	strcat(nombre,").txt");
     printf("%s\n",nombre);
@@ -215,7 +226,7 @@ void Pila::crearBackup(char nombre[],int i){
 	Nodo *nuevo=palabras;
 	FILE *arcBackup=NULL;
 	if(i==1){
-		arcBackup=fopen("D:\\Traductor\\Backup.txt","w");	
+		arcBackup=fopen("C:\\Traductor\\Backup.txt","w");	
 	}else if(i==2){
 		arcBackup=fopen("Backup.txt","w");
 	}
@@ -229,6 +240,5 @@ void Pila::crearBackup(char nombre[],int i){
 	if(i==2){
 		rename("Backup.txt",nombre);
 	}
-	system("pause");
 }
 
