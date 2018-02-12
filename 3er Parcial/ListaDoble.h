@@ -29,7 +29,7 @@ void ListaDoble::impresionArchivos()
 	archivoDB=fopen("C:\\JuegoSnake\\DB.txt","w");
 	
 	Aux=lista;
-	printf("Jugador %s.\n\n",jugador);
+	printf("Jugador: %s.\n\n",jugador);
 	fprintf(archivoPDF,"Jugador: %s\n\n",jugador);
 	fprintf(archivoQR,"Jugador: %s.\n\n",jugador);
 	if(Aux == NULL)
@@ -65,7 +65,7 @@ void ListaDoble::impresion()
 	Nodo* Aux=new Nodo();
 	
 	Aux=lista;
-	printf("Jugador %s.\n\n",jugador);
+	printf("Jugador: %s.\n\n",jugador);
 
 	if(Aux == NULL)
 	  	printf("Usted ha finalizado el juego sin haber comido ningun numero.\n\n");
