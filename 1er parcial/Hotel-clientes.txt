@@ -1,0 +1,8 @@
+	Clientes reservados en el presente fiscal 
+
+En este archivo se encuentra los datos de clientes Hospedados en el presente 
+**Nombre y apellido
+**celular
+**mail
+**Cedula de Identidad (CI)
+**Cuartos reservados con sus precios y fechas
