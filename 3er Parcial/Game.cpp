@@ -62,8 +62,9 @@ void introGame(){
 	printf("\n\t\t\t\t|| BUENA SUERTE!!!                               ||");
 	printf("\n\t\t\t\t--------------------------------------------------");
 	printf("\n\n\t\t\t\tCARGANDO...\n\n\t\t\t\t");
+	
 	for(int i=0;i<50;i++){
-		Sleep(300);
+		Sleep(125);
 		printf("%c",175);
 	}
 }
@@ -72,7 +73,7 @@ int main(int argc, char** argv) {
 	bool flag=true,flagGame=true;
 	int opcion,opcionJuego;
 	const char *opciones[]={"1) Juego.","2) Imagen.","3) Consulta PDF.","4) Codigo QR.","5) Ayuda o PULSE \"F1\".","6) Backup.","7) Base de Datos (Mongo).","8) Salir / Exit."};
-	const char *opcionesJuego[]={"1) Comenzar juego.","2) Ver su ultimo puntaje.","3)Comenzar con el juego guardado","4) Volver al Menu Principal."}; //poner lista de puntajes
+	const char *opcionesJuego[]={"1) Comenzar juego.","2) Comenzar con el juego guardado.","3) Ver su ultimo puntaje.","4) Volver al Menu Principal."}; //poner lista de puntajes
 	ListaDoble *ObjJuego=new ListaDoble;
 	
 	AltEnter();
@@ -104,19 +105,26 @@ int main(int argc, char** argv) {
 							system("start Extras\\CreateCodigoQR.jar");
 							system("start Extras\\DBMongoInsert.jar");
 							break;
+							
 						case 2:
-							ObjJuego->impresion();
-							system("pause");
-							break;
-						case 3:
 							introGame();
 							color(15);
 							printf("\n\n\t\t\t\t");
 							ObjJuego->juegoTetris(1);
 							break;
+							
+						case 3:
+							ObjJuego->impresion();
+							break;
+							
 						case 4:
 							flagGame=false;
 							break;
+					}
+					if(opcionJuego!=4)
+					{
+ 						printf("Presione cualquier tecla para volver al menu . . .");
+ 						getch();
 					}
 				}while(flagGame);
 				break;
@@ -137,7 +145,9 @@ int main(int argc, char** argv) {
 				break;
 			case 6:
 				ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementBackup.exe"),NULL, NULL,SW_SHOWNORMAL);
-				//backup
+				//ObjJuego->(nombre,2);
+				//ObjJuego->crearBackup(nombre,1);
+				printf("Presione cualquier tecla para volver al menu principal. . .");
 				break;
 			case 7:
 				ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementDBMongo.exe"),NULL, NULL,SW_SHOWNORMAL);

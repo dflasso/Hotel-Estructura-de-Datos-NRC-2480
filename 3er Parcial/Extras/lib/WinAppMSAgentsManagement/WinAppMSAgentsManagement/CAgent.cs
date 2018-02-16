@@ -167,7 +167,7 @@ namespace WinAppMSAgentsManagement
         {
             mMSAgent.Characters[mName].Balloon.Style = 7;
             mMSAgent.Characters[mName].Play("Greet");
-            mMSAgent.Characters[mName].Speak("Bienvenido al juego del Snake.", null);
+            mMSAgent.Characters[mName].Speak("Bienvenido al juego.", null);
             Thread.Sleep(10000);
             Application.Exit();
         }

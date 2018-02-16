@@ -54,7 +54,7 @@ void ListaDoble::impresionArchivos()
     }
 	else
     {
-	    printf("\t\tNumeros comidos.\n\n ==> ");
+	    printf("\t\tLista de Numeros.\n\n ==> ");
 	    fprintf(archivoPDF,"\t\tNumeros comidos.\n\n ==> ");
 	    fprintf(archivoQR,"\t\tNumeros comidos.\n\n ==> ");
 		while(Aux != NULL)
@@ -64,11 +64,11 @@ void ListaDoble::impresionArchivos()
 	        fprintf(archivoQR,"%d, ",Aux->getNumero());
 	        Aux=Aux->getSiguienteDireccion();
 	    }
-		printf("\b\b. \n\nSu Puntaje es: %d\n\n",contadorNodo);
-		fprintf(archivoPDF,"\b\b\b. \n\nSu Puntaje es: %d\n\n----------------------------------------------------\n",contadorNodo);	
-		fprintf(archivoQR,"\b\b\b. \n\nSu Puntaje es: %d",contadorNodo);
+		printf("\b\b. \n\nSu Puntaje es: %d\n\n",puntaje);
+		fprintf(archivoPDF,"\b\b\b. \n\nSu Puntaje es: %d\n\n----------------------------------------------------\n",puntaje);	
+		fprintf(archivoQR,"\b\b\b. \n\nSu Puntaje es: %d",puntaje);
 	}
-	fprintf(archivoDB,"%s;%d",jugador,contadorNodo);
+	fprintf(archivoDB,"%s;%d",jugador,puntaje);
 	fclose(archivoPDF);
 	fclose(archivoQR);
 	fclose(archivoDB);
@@ -85,7 +85,7 @@ void ListaDoble::impresion()
 	  	printf("Usted ha finalizado el juego sin haber comido ningun numero.\n\n");
 	else
     {
-	    printf("\t\tNumeros no comidos.\n\n ==> ");
+	    printf("\t\tLista de Numeros\n\n ==> ");
 		while(Aux != NULL)
 		{
 	        printf("%d, ",Aux->getNumero());
@@ -244,8 +244,8 @@ void ListaDoble::generarLista()
 {
 	Nodo* Aux=new Nodo();
 	int numero,i;
-	const char *opciones[]={"nivel 1","nivel 2","nivel 3"};
-	int selec=menu("ESCOGA EL NIVEL",opciones,3);
+	const char *opciones[]={"1) Nivel 1.","2) Nivel 2.","3) Nivel 3."};
+	int selec=menu("-- Elija el Nivel --",opciones,3);
 	if(selec==2){
 		selec++;
 	}else if(selec==3){
@@ -295,8 +295,7 @@ void margen()
 	color(15); 
 }
 
-
-void ListaDoble::juegoSnake()
+/*void ListaDoble::juegoSnake()
 {
 	bool primera=true;
 	char tecla=0;
@@ -365,7 +364,7 @@ void ListaDoble::juegoSnake()
 	}while(tecla!=TECLA_ENTER);
 	system("cls");
 	impresionArchivos();
-}
+}*/
 
 void ListaDoble::listaTetris(int posicion,int numero)
 {
@@ -405,69 +404,7 @@ void ListaDoble::listaTetris(int posicion,int numero)
 				contadorNodo++;
 			}
 			break;
-		
-		case 2:
-			break;
-			
-		case 3:
-			break;
-			
-		case 4:
-			break;
-			
-		case 5:
-			break;
-			
-		/*case 1:
-			break;
-			
-		case 1:
-			break;
-			
-		case 1:
-			break;
-			
-		case 1:
-			break;	*/	
 	}
-	/*while(Nuevo!=NULL)
-	{
-		if(numero==Nuevo->getNumero())
-		{
-			cont++;
-			break;
-		}
-		Nuevo=Nuevo->getSiguienteDireccion();
-	}
-	if(cont>0)
-	{
-		if(contadorNodo==1&&posicion==1)
-		{
-			delete lista;
-			lista=NULL;
-			contadorNodo--;
-		}
-		else
-		{
-			if(posicion==1)
-			{
-				Nuevo=Nuevo->getSiguienteDireccion();
-				Nuevo->setAnteriorDireccion(NULL);
-				lista=Nuevo;
-				contadorNodo--;			
-			}
-			else
-			{
-				if(contadorNodo==posicion)
-				{
-					Nuevo=Nuevo->getAnteriorDireccion();
-					Nuevo->setSiguienteDireccion(NULL);
-					contadorNodo--;							
-				}
-			}
-		}
-	}
-	//else meter segun la posicion*/
 }
 
 int ListaDoble::posicionAIndice(int x){
@@ -508,15 +445,21 @@ void ListaDoble::deleteNumber(int indice,int numero){
 	Actual=lista;
 	while(Actual!=NULL){
 		if(indice==cont){
-			if(Actual->getNumero()==numero){//borra el numero 
+			if(Actual->getNumero()==numero)//borra el numero 
+			{
+				contadorNodo--;
 				puntaje++;
 				deleteNodo(Actual);
 				siguienteNumero(numero,Actual);
-			}else{
+			}
+			else
+			{
 				insertarAlFinal(numero);
 			}
 			Actual=NULL;
-		}else{
+		}
+		else
+		{
 			Actual=Actual->getSiguienteDireccion();
 		}
 		cont++;
@@ -531,19 +474,16 @@ void ListaDoble::push(char linea[])
 	palabraAux=strtok(linea,";");
 	insertarAlFinal(atoi(palabraAux));
 	while(palabraAux != NULL)
-    {
-	  //palabraAux=strtok(linea,";");			
-	  printf("\n%s\n",palabraAux);
-      system("pause");
+    {		
       insertarAlFinal(atoi(palabraAux));
-     // palabraAux=strtok(linea,";");
       palabraAux = strtok(NULL, " ");
       palabraAux=strtok(palabraAux,";");
     }    
 }
 
-void ListaDoble::generarListaBackup(){
-	FILE *archivoPalabras=fopen("C:\\Users\\USUARIO\\Desktop\\proyectos estructuras\\Proyectos-Estructura-de-Datos-NRC-2480\\3er Parcial\\Extras\\Backup.txt","r");
+void ListaDoble::generarListaBackup()
+{
+	FILE *archivoPalabras=fopen("Extras\\Backup.txt","r");
 	char linea[50];
 	while(!feof(archivoPalabras)){
 		fscanf(archivoPalabras,"%s",linea);
@@ -573,16 +513,22 @@ void ListaDoble::juegoTetris(int j)
 		fflush(stdin);
 	}while(validacionCaracter(jugador));
 	
-	if(j==0){
+	if(j==0)
+	{
 		generarLista();	
-	}else if(j==1){
-		generarListaBackup();
 	}
+	else 
+		if(j==1)
+		{	
+			generarListaBackup();
+		}
 	
 	do
 	{
 		system("cls");
 		margen();
+		if(contadorNodo==13)
+			tecla='s';	
 		gotoxy(0,0);
 		printf("\t\t\t::::::::::::::::::::Juego del Tetris::::::::::::::::");
 		if(primera)
@@ -601,7 +547,9 @@ void ListaDoble::juegoTetris(int j)
 		gotoxy(x,y);
 		numbers(numero,x,y);
 		color(15);
-		tecla=getch();	
+		tecla=getch();
+		if(contadorNodo==13)
+			tecla='s';	
 		switch(tecla)
 		{
 			case TECLA_ABAJO:
@@ -611,30 +559,31 @@ void ListaDoble::juegoTetris(int j)
 					y=4;
 					primera=true;
 				}
-					
 				break;
 			case TECLA_DERECHA:
 				x+=6;
-				if(x>=100)
-					x=10;
+				if(x>=92)
+					x=8;
 				break;
 			case TECLA_IZQUIERDA:
 				x-=6;
 				if(x<=2)
-					x=94;
+					x=92;
 				break;
 			case 's': case 'S':
-				gotoxy(4,45);
-				printf("Su juego sera guardado. Usted Regresara al menu principal...   ");
+				gotoxy(3,43);
+				printf("Su juego se esta guardando, presione una tecla para continuar.");
+				getch();
 				crearBackup(nombre,2);
 				crearBackup(nombre,1);
 				tecla=TECLA_ENTER;
-				system("pause");
 				break;
 		}
-	}while(tecla!=TECLA_ENTER || contadorNodo==11 ||contadorNodo==0);
+		if(contadorNodo==13)
+			tecla=TECLA_ENTER;
+	}while(tecla!=TECLA_ENTER);
 	system("cls");
-	//impresionArchivos();
+	impresionArchivos();
 }
 
 void ListaDoble::nombreBakcup(char nombre[],int i)
@@ -655,9 +604,9 @@ void ListaDoble::crearBackup(char nombre[],int i){
 	nuevo=lista;
 	FILE *arcBackup=NULL;
 	if(i==1){
-		arcBackup=fopen("C:\\Users\\USUARIO\\Desktop\\proyectos estructuras\\Proyectos-Estructura-de-Datos-NRC-2480\\3er Parcial\\Extras\\Backup.txt","w");	
+		arcBackup=fopen("Extras\\Backup.txt","w");	
 	}else if(i==2){
-		arcBackup=fopen("C:\\Users\\USUARIO\\Desktop\\proyectos estructuras\\Proyectos-Estructura-de-Datos-NRC-2480\\3er Parcial\\Extras\\Backup.txt","w");
+		arcBackup=fopen("Extras\\Backup.txt","w");
 	}
 	//INGRESO DE DATOS DE LA PILAS
 	while(nuevo!=NULL)
@@ -668,7 +617,7 @@ void ListaDoble::crearBackup(char nombre[],int i){
 	fclose(arcBackup);
 	if(i==2){
 		nombreBakcup(nombre,2);
-		rename("C:\\Users\\USUARIO\\Desktop\\proyectos estructuras\\Proyectos-Estructura-de-Datos-NRC-2480\\3er Parcial\\Extras\\Backup.txt",nombre);
+		rename("Extras\\Backup.txt",nombre);
 	}
 }
 
