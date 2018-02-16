@@ -34,7 +34,7 @@ void color(int x)
 	SetConsoleTextAttribute(GetStdHandle (STD_OUTPUT_HANDLE),x);
 }
 
-int menu(char *titulo, char *opciones[], int numero)
+int menu(const char *titulo,const char *opciones[], int numero)
 {
 
 	bool repite=true;
@@ -141,8 +141,110 @@ bool validacionCaracter(char cadena[]){
 	return false;
 }
 
-void numbers(int numero)
+void numbers(int numero,int x,int y)
 {
+	switch(numero){
+		case 0:
+				color(1);
+				gotoxy(x,y++);
+				printf(" %c%c%c \n",219,219,219);gotoxy(x,y++);
+				printf("%c   %c\n",219,219);gotoxy(x,y++);
+				printf("%c   %c\n",219,219);gotoxy(x,y++);
+				printf("%c   %c\n",219,219);gotoxy(x,y++);
+				printf(" %c%c%c ",219,219,219);
+				break;
+			
+			case 1:
+				color(2);
+				gotoxy(x,y++);
+				printf(" %c%c  \n",219,219);gotoxy(x,y++);
+				printf("%c %c  \n",219,219);gotoxy(x,y++);
+				printf("  %c   \n",219);gotoxy(x,y++);
+				printf("  %c   \n",219);gotoxy(x,y++);
+				printf("%c%c%c%c%c",220,220,219,220,220,220,220);gotoxy(x,y++);
+				break;
+			
+				
+			case 2:
+				color(3);
+				gotoxy(x,y++);
+				printf(" %c%c%c \n",219,219,219);gotoxy(x,y++);
+				printf("%c   %c\n",219,219);gotoxy(x,y++);
+				printf("   %c \n",219);gotoxy(x,y++);
+				printf(" %c%c  \n",220,219);gotoxy(x,y++);
+				printf("%c%c%c%c%c",219,220,220,220,220,220,220);gotoxy(x,y++);
+				break;
+			
+				
+			case 3:
+				color(4);
+				gotoxy(x,y++);
+				printf(" %c%c%c \n",219,219,219);gotoxy(x,y++);
+				printf("%c   %c\n",219,219);gotoxy(x,y++);
+				printf("   %c \n",219);gotoxy(x,y++);
+				printf("%c   %c\n",219,219);gotoxy(x,y++);
+				printf(" %c%c%c ",219,219,219);gotoxy(x,y++);
+				break;
+		
+			case 4:
+				color(6);
+				gotoxy(x,y++);
+				printf("   %c%c\n",219,219);gotoxy(x,y++);
+				printf("  %c %c\n",219,219);gotoxy(x,y++);
+				printf(" %c  %c\n",219,219);gotoxy(x,y++);
+				printf("%c%c%c%c%c\n",219,220,220,220,219);gotoxy(x,y++);
+				printf("    %c\n",219);gotoxy(x,y++);
+				break;
 	
+			case 5:
+				color(7);
+				gotoxy(x,y++);
+				printf(" %c%c%c \n",219,219,219);gotoxy(x,y++);
+				printf(" %c   \n",219);gotoxy(x,y++);
+				printf(" %c%c%c \n",219,219,220);gotoxy(x,y++);
+				printf("   %c \n",219);gotoxy(x,y++);
+				printf(" %c%c  ",219,219);gotoxy(x,y++);
+				break;
+				
+			case 6:
+				color(12);
+				gotoxy(x,y++);
+				printf("  %c%c \n",220,219);gotoxy(x,y++);
+				printf(" %c   \n",219);gotoxy(x,y++);
+				printf("%c%c%c%c\n",219,220,220,220);gotoxy(x,y++);
+				printf("%c   %c\n",219,219);gotoxy(x,y++);
+				printf(" %c%c%c ",219,219,219);gotoxy(x,y++);
+				break;
+				
+			case 7:
+				color(9);
+				gotoxy(x,y++);
+			    printf("%c%c%c%c%c\n",220,220,220,220,220,220,220);gotoxy(x,y++);
+				printf("    %c\n",219);gotoxy(x,y++);
+				printf("   %c\n",219);gotoxy(x,y++);
+				printf("  %c\n",219);gotoxy(x,y++);
+				printf(" %c   ",219);gotoxy(x,y++);
+				break;		
+				
+			case 8:
+				color(10);
+				gotoxy(x,y++);
+				printf(" %c%c%c \n",219,219,219);gotoxy(x,y++);
+				printf("%c   %c\n",219,219);gotoxy(x,y++);
+				printf(" %c%c%c \n",219,219,219);gotoxy(x,y++);
+				printf("%c   %c\n",219,219);gotoxy(x,y++);
+				printf(" %c%c%c ",219,219,219);gotoxy(x,y++);
+			    break;
+				
+			case 9:
+				color(11);
+				gotoxy(x,y++);
+				printf(" %c%c%c \n",219,219,219);gotoxy(x,y++);
+				printf("%c   %c\n",219,219);gotoxy(x,y++);
+				printf("%c%c%c%c%c\n",219,220,220,220,219);gotoxy(x,y++);
+				printf("    %c\n",219);gotoxy(x,y++);
+				printf(" %c%c%c ",220,220,219);gotoxy(x,y++);
+			    break;
+		}
 }
 

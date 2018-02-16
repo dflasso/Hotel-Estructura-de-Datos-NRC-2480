@@ -13,6 +13,7 @@ class ListaDoble
 		{
 			lista=NULL;
 			contadorNodo=0;
+			puntaje=0;
 		}
 		void insertarAlFinal(int);
 		void impresionArchivos();
@@ -22,6 +23,10 @@ class ListaDoble
 		void listaTetris(int,int);
 		void juegoSnake();
 		void juegoTetris();
+		int posicionAIndice(int x);
+		void deleteNumber(int,int );
+		void siguienteNumero(int,Nodo * );
+		void deleteNodo(Nodo *Actual);
 		
 };
 
@@ -98,6 +103,7 @@ void ListaDoble::impresionLista()
 		switch(Aux->getNumero())
 		{
 			case 0:
+				color(1);
 				gotoxy(x,y++);
 				printf(" %c%c%c \n",219,219,219);gotoxy(x,y++);
 				printf("%c   %c\n",219,219);gotoxy(x,y++);
@@ -107,6 +113,7 @@ void ListaDoble::impresionLista()
 				break;
 			
 			case 1:
+				color(2);
 				gotoxy(x,y++);
 				printf(" %c%c  \n",219,219);gotoxy(x,y++);
 				printf("%c %c  \n",219,219);gotoxy(x,y++);
@@ -117,6 +124,7 @@ void ListaDoble::impresionLista()
 			
 				
 			case 2:
+				color(3);
 				gotoxy(x,y++);
 				printf(" %c%c%c \n",219,219,219);gotoxy(x,y++);
 				printf("%c   %c\n",219,219);gotoxy(x,y++);
@@ -127,6 +135,7 @@ void ListaDoble::impresionLista()
 			
 				
 			case 3:
+				color(4);
 				gotoxy(x,y++);
 				printf(" %c%c%c \n",219,219,219);gotoxy(x,y++);
 				printf("%c   %c\n",219,219);gotoxy(x,y++);
@@ -136,6 +145,7 @@ void ListaDoble::impresionLista()
 				break;
 		
 			case 4:
+				color(6);
 				gotoxy(x,y++);
 				printf("   %c%c\n",219,219);gotoxy(x,y++);
 				printf("  %c %c\n",219,219);gotoxy(x,y++);
@@ -145,6 +155,7 @@ void ListaDoble::impresionLista()
 				break;
 	
 			case 5:
+				color(7);
 				gotoxy(x,y++);
 				printf(" %c%c%c \n",219,219,219);gotoxy(x,y++);
 				printf(" %c   \n",219);gotoxy(x,y++);
@@ -154,6 +165,7 @@ void ListaDoble::impresionLista()
 				break;
 				
 			case 6:
+				color(12);
 				gotoxy(x,y++);
 				printf("  %c%c \n",220,219);gotoxy(x,y++);
 				printf(" %c   \n",219);gotoxy(x,y++);
@@ -163,6 +175,7 @@ void ListaDoble::impresionLista()
 				break;
 				
 			case 7:
+				color(9);
 				gotoxy(x,y++);
 			    printf("%c%c%c%c%c\n",220,220,220,220,220,220,220);gotoxy(x,y++);
 				printf("    %c\n",219);gotoxy(x,y++);
@@ -172,6 +185,7 @@ void ListaDoble::impresionLista()
 				break;		
 				
 			case 8:
+				color(10);
 				gotoxy(x,y++);
 				printf(" %c%c%c \n",219,219,219);gotoxy(x,y++);
 				printf("%c   %c\n",219,219);gotoxy(x,y++);
@@ -181,6 +195,7 @@ void ListaDoble::impresionLista()
 			    break;
 				
 			case 9:
+				color(11);
 				gotoxy(x,y++);
 				printf(" %c%c%c \n",219,219,219);gotoxy(x,y++);
 				printf("%c   %c\n",219,219);gotoxy(x,y++);
@@ -445,11 +460,64 @@ void ListaDoble::listaTetris(int posicion,int numero)
 	//else meter segun la posicion*/
 }
 
+int ListaDoble::posicionAIndice(int x){
+	return (x-8)/6;
+}
+void ListaDoble::deleteNodo(Nodo *Actual){
+	Nodo* Siguiente=new Nodo();
+	Nodo* Anterior=new Nodo();
+	if(Actual->getAnteriorDireccion()!=NULL&&Actual->getSiguienteDireccion()!=NULL){
+		Anterior=Actual->getAnteriorDireccion();
+		Siguiente=Actual->getSiguienteDireccion();
+		Anterior->setSiguienteDireccion(Siguiente);
+		Siguiente->setAnteriorDireccion(Anterior);
+		delete(Actual);
+	}else if(Actual->getAnteriorDireccion()==NULL){
+		lista=Actual->getSiguienteDireccion();
+		delete(Actual);
+	}else if(Actual->getSiguienteDireccion()==NULL){
+		Anterior=Actual->getAnteriorDireccion();
+		Anterior->setSiguienteDireccion(NULL);
+		delete(Actual);
+	}
+}
+
+void ListaDoble::siguienteNumero(int numero,Nodo *aux){
+	if(aux==NULL||(aux->getNumero()!=(numero+1))){
+		return ;
+	}else{
+		if(aux->getNumero()==(numero+1)){
+			puntaje++;
+			deleteNodo(aux);
+		}
+	}
+}
+void ListaDoble::deleteNumber(int indice,int numero){
+	int cont=0;
+	Nodo* Actual=new Nodo();
+	Actual=lista;
+	while(Actual!=NULL){
+		if(indice==cont){
+			if(Actual->getNumero()==numero){//borra el numero 
+				puntaje++;
+				deleteNodo(Actual);
+				siguienteNumero(numero,Actual);
+			}else{
+				insertarAlFinal(numero);
+			}
+			Actual=NULL;
+		}else{
+			Actual=Actual->getSiguienteDireccion();
+		}
+		cont++;
+	}
+}
+
 void ListaDoble::juegoTetris()
 {
 	bool primera=true;
 	char tecla=0;
-	int x=34,y=4;
+	int x=32,y=4;
 	int col,fil;
 	int numero;
 	
@@ -473,12 +541,13 @@ void ListaDoble::juegoTetris()
 		printf("\t\t\t::::::::::::::::::::Juego del Tetris::::::::::::::::");
 		if(primera)
 		{
-			col=aleatorio(3);
-			fil=aleatorio(2);
 			numero=aleatorio(1);			
 			primera=false;	
+			gotoxy(4,45);
+			printf("puntaje %d",puntaje);
+			system("pause");
 		}
-		if((x==10)&&(y==34)) /// aqui mandar cuando encuentre el numero
+		if((x==10)&&(y==33)) /// aqui mandar cuando encuentre el numero
 		{
 			listaTetris(1,numero);
 			numero=aleatorio(1);
@@ -486,16 +555,19 @@ void ListaDoble::juegoTetris()
 		}
 		impresionLista();
 		gotoxy(x,y);
-		printf("%d",numero); //Posicion del caracter	
-		tecla=getch();
-		if(y==34)
-			printf("\n\n\nbuscar numero de las cordenadas x=%d  y y=%d",x,y);
+		numbers(numero,x,y);
+		color(15);
+		tecla=getch();	
 		switch(tecla)
 		{
 			case TECLA_ABAJO:
 				y++;
-				if(y>=35)
-					y--;
+				if(y>=28){
+					deleteNumber(posicionAIndice(x),numero);
+					y=4;
+					primera=true;
+				}
+					
 				break;
 			case TECLA_DERECHA:
 				x+=6;
@@ -506,6 +578,12 @@ void ListaDoble::juegoTetris()
 				x-=6;
 				if(x<=2)
 					x=94;
+				break;
+			case 's': case 'S':
+				gotoxy(4,45);
+				printf("Su juego sera guardado. Usted Regresara al menu principal...   ");
+				tecla=TECLA_ENTER;
+				system("pause");
 				break;
 		}
 	}while(tecla!=TECLA_ENTER || contadorNodo==11 ||contadorNodo==0);
