@@ -19,7 +19,7 @@ class ListaDoble
 		void impresion();
 		void impresionLista();
 		void generarLista();
-		void eliminar(int,int);
+		void listaTetris(int,int);
 		void juegoSnake();
 		void juegoTetris();
 		
@@ -342,11 +342,70 @@ void ListaDoble::juegoSnake()
 	impresionArchivos();
 }
 
-void ListaDoble::eliminar(int posicion,int numero)
+void ListaDoble::listaTetris(int posicion,int numero)
 {
+	Nodo *Aux=new Nodo();
+	Nodo *Actual=new Nodo();
 	Nodo *Nuevo=lista;
 	int cont;
+	
 	while(Nuevo!=NULL)
+	{
+		if(numero==Nuevo->getNumero())
+		{
+			cont++;
+			break;
+		}
+		Nuevo=Nuevo->getSiguienteDireccion();
+	}
+	
+	switch(posicion)
+	{
+		case 1:
+			if(cont>0)
+			{
+				Nuevo=Nuevo->getSiguienteDireccion();
+				Nuevo->setAnteriorDireccion(NULL);
+				lista=Nuevo;
+				contadorNodo--;	
+			}
+			else
+			{
+
+				Aux->setNumero(numero);
+				Aux->setSiguienteDireccion(lista);
+				Aux->setAnteriorDireccion(NULL);
+				Actual->setAnteriorDireccion(Aux);	
+				lista=Aux;
+				contadorNodo++;
+			}
+			break;
+		
+		case 2:
+			break;
+			
+		case 3:
+			break;
+			
+		case 4:
+			break;
+			
+		case 5:
+			break;
+			
+		/*case 1:
+			break;
+			
+		case 1:
+			break;
+			
+		case 1:
+			break;
+			
+		case 1:
+			break;	*/	
+	}
+	/*while(Nuevo!=NULL)
 	{
 		if(numero==Nuevo->getNumero())
 		{
@@ -357,7 +416,7 @@ void ListaDoble::eliminar(int posicion,int numero)
 	}
 	if(cont>0)
 	{
-		if(contadorNodo==1)
+		if(contadorNodo==1&&posicion==1)
 		{
 			delete lista;
 			lista=NULL;
@@ -372,15 +431,25 @@ void ListaDoble::eliminar(int posicion,int numero)
 				lista=Nuevo;
 				contadorNodo--;			
 			}
+			else
+			{
+				if(contadorNodo==posicion)
+				{
+					Nuevo=Nuevo->getAnteriorDireccion();
+					Nuevo->setSiguienteDireccion(NULL);
+					contadorNodo--;							
+				}
+			}
 		}
 	}
+	//else meter segun la posicion*/
 }
 
 void ListaDoble::juegoTetris()
 {
 	bool primera=true;
 	char tecla=0;
-	int x=36,y=4;
+	int x=34,y=4;
 	int col,fil;
 	int numero;
 	
@@ -411,9 +480,9 @@ void ListaDoble::juegoTetris()
 		}
 		if((x==10)&&(y==34)) /// aqui mandar cuando encuentre el numero
 		{
-			eliminar(1,numero);
+			listaTetris(1,numero);
 			numero=aleatorio(1);
-			x=36;y=4;	
+			x=34;y=4;	
 		}
 		impresionLista();
 		gotoxy(x,y);
@@ -436,7 +505,7 @@ void ListaDoble::juegoTetris()
 			case TECLA_IZQUIERDA:
 				x-=6;
 				if(x<=2)
-					x=99;
+					x=94;
 				break;
 		}
 	}while(tecla!=TECLA_ENTER || contadorNodo==11 ||contadorNodo==0);
