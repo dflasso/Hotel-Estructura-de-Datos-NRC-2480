@@ -77,7 +77,7 @@ int main(int argc, char** argv) {
 	
 	AltEnter();
 	CreateDirectory ("C:\\JuegoSnake", NULL);
-	//ShellExecute(NULL, TEXT("open"),TEXT("C:\\data\\DB\\mongod.exe"),NULL, NULL,SW_SHOWNORMAL);
+	ShellExecute(NULL, TEXT("open"),TEXT("C:\\data\\DB\\mongod.exe"),NULL, NULL,SW_SHOWNORMAL);
 	
 	do
 	{
@@ -87,7 +87,7 @@ int main(int argc, char** argv) {
 		switch(opcion)
 		{
 			case 1:
-			//	ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementBienvenida.exe"),NULL, NULL,SW_SHOWNORMAL);
+				ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementBienvenida.exe"),NULL, NULL,SW_SHOWNORMAL);
 				do
 				{
 					flagGame=true;
@@ -99,15 +99,20 @@ int main(int argc, char** argv) {
 							introGame();
 							color(15);
 							printf("\n\n\t\t\t\t");
-							ObjJuego->juegoTetris();
-						//	ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementQR.exe"),NULL, NULL,SW_SHOWNORMAL);
-						//	system("start Extras\\CreateCodigoQR.jar");
-						//	system("start Extras\\DBMongoInsert.jar");
+							ObjJuego->juegoTetris(0);
+							ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementQR.exe"),NULL, NULL,SW_SHOWNORMAL);
+							system("start Extras\\CreateCodigoQR.jar");
+							system("start Extras\\DBMongoInsert.jar");
 							break;
 						case 2:
 							ObjJuego->impresion();
+							system("pause");
 							break;
 						case 3:
+							introGame();
+							color(15);
+							printf("\n\n\t\t\t\t");
+							ObjJuego->juegoTetris(1);
 							break;
 						case 4:
 							flagGame=false;
@@ -116,37 +121,37 @@ int main(int argc, char** argv) {
 				}while(flagGame);
 				break;
 			case 2:
-			//	ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementImage.exe"),NULL, NULL,SW_SHOWNORMAL);
-			//	ShellExecute(NULL, TEXT("open"),TEXT("Extras\\image.exe"),NULL, NULL,SW_SHOWNORMAL);
+				ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementImage.exe"),NULL, NULL,SW_SHOWNORMAL);
+				ShellExecute(NULL, TEXT("open"),TEXT("Extras\\image.exe"),NULL, NULL,SW_SHOWNORMAL);
 				break;
 			case 3:
-			//	ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementPDF.exe"),NULL, NULL,SW_SHOWNORMAL);
+				ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementPDF.exe"),NULL, NULL,SW_SHOWNORMAL);
 				system("start Extras\\CreatePDF.jar");
 				break;
 			case 4:
-			//	ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementQR.exe"),NULL, NULL,SW_SHOWNORMAL);
+				ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementQR.exe"),NULL, NULL,SW_SHOWNORMAL);
 				system("start Extras\\CreateCodigoQR.jar");
 				break;
 			case 5:
-			//	ShellExecute(NULL, TEXT("open"),TEXT("Extras\\Ayuda.chm"),NULL, NULL,SW_SHOWNORMAL);		
+				ShellExecute(NULL, TEXT("open"),TEXT("Extras\\Ayuda.chm"),NULL, NULL,SW_SHOWNORMAL);		
 				break;
 			case 6:
-			//	ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementBackup.exe"),NULL, NULL,SW_SHOWNORMAL);
+				ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementBackup.exe"),NULL, NULL,SW_SHOWNORMAL);
 				//backup
 				break;
 			case 7:
-			/*	ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementDBMongo.exe"),NULL, NULL,SW_SHOWNORMAL);
+				ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementDBMongo.exe"),NULL, NULL,SW_SHOWNORMAL);
 				system("start Extras\\MongoTXT.Tabla.jar");
 				printf("\t\t\tBase de Datos \"Puntajes Snake\"\n\n");
 				imprimirTXT("C:\\JuegoSnake\\DBConsole.txt");
 				printf("Presione cualquier tecla para volver al menu principal. . .");
-				getch();*/
+				getch();
 				break;
 			case 8:
-			/*	ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementExit.exe"),NULL, NULL,SW_SHOWNORMAL);
+				ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementExit.exe"),NULL, NULL,SW_SHOWNORMAL);
 				color(13);
 				printf("\t\t%c%c Gracias por utilizar el Programa %c%c\n\n",245,245,245,245);
-				color(15);*/
+				color(15);
 				flag=false;
 				break;
 		}

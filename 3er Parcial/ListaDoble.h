@@ -22,12 +22,16 @@ class ListaDoble
 		void generarLista();
 		void listaTetris(int,int);
 		void juegoSnake();
-		void juegoTetris();
+		void juegoTetris(int );
 		int posicionAIndice(int x);
 		void deleteNumber(int,int );
 		void siguienteNumero(int,Nodo * );
 		void deleteNodo(Nodo *Actual);
-		
+		void guardar();
+		void nombreBakcup(char [],int);
+		void crearBackup(char [],int );
+		void generarListaBackup();
+		void push(char linea[]);
 };
 
 void ListaDoble::impresionArchivos()
@@ -81,13 +85,13 @@ void ListaDoble::impresion()
 	  	printf("Usted ha finalizado el juego sin haber comido ningun numero.\n\n");
 	else
     {
-	    printf("\t\tNumeros comidos.\n\n ==> ");
+	    printf("\t\tNumeros no comidos.\n\n ==> ");
 		while(Aux != NULL)
 		{
 	        printf("%d, ",Aux->getNumero());
 	        Aux=Aux->getSiguienteDireccion();
 	    }
-		printf("\b\b. \n\nSu Puntaje es: %d\n\n",contadorNodo);	
+		printf("\b\b. \n\nSu Puntaje es: %d\n\n",puntaje);	
 	}
 }
 
@@ -240,9 +244,15 @@ void ListaDoble::generarLista()
 {
 	Nodo* Aux=new Nodo();
 	int numero,i;
-	
+	const char *opciones[]={"nivel 1","nivel 2","nivel 3"};
+	int selec=menu("ESCOGA EL NIVEL",opciones,3);
+	if(selec==2){
+		selec++;
+	}else if(selec==3){
+		selec+=2;
+	}
 	srand(time(NULL));
-	for(i=0;i<5;i++)
+	for(i=0;i<4+selec;i++)
 	{
 		numero=rand()%10;
 		insertarAlFinal(numero);
@@ -513,14 +523,45 @@ void ListaDoble::deleteNumber(int indice,int numero){
 	}
 }
 
-void ListaDoble::juegoTetris()
+
+void ListaDoble::push(char linea[])
+{
+	Nodo *nuevo=new Nodo();
+	char *palabraAux;
+	palabraAux=strtok(linea,";");
+	insertarAlFinal(atoi(palabraAux));
+	while(palabraAux != NULL)
+    {
+	  //palabraAux=strtok(linea,";");			
+	  printf("\n%s\n",palabraAux);
+      system("pause");
+      insertarAlFinal(atoi(palabraAux));
+     // palabraAux=strtok(linea,";");
+      palabraAux = strtok(NULL, " ");
+      palabraAux=strtok(palabraAux,";");
+    }    
+}
+
+void ListaDoble::generarListaBackup(){
+	FILE *archivoPalabras=fopen("C:\\Users\\USUARIO\\Desktop\\proyectos estructuras\\Proyectos-Estructura-de-Datos-NRC-2480\\3er Parcial\\Extras\\Backup.txt","r");
+	char linea[50];
+	while(!feof(archivoPalabras)){
+		fscanf(archivoPalabras,"%s",linea);
+		push(linea);
+	}
+	fclose(archivoPalabras);
+}
+
+
+void ListaDoble::juegoTetris(int j)
 {
 	bool primera=true;
 	char tecla=0;
 	int x=32,y=4;
 	int col,fil;
 	int numero;
-	
+	char nombre[200];
+	int i=0;
 	srand(time(NULL));
 	lista=NULL;
 	contadorNodo=puntaje=0;
@@ -531,7 +572,12 @@ void ListaDoble::juegoTetris()
 		gets(jugador);
 		fflush(stdin);
 	}while(validacionCaracter(jugador));
-	generarLista();
+	
+	if(j==0){
+		generarLista();	
+	}else if(j==1){
+		generarListaBackup();
+	}
 	
 	do
 	{
@@ -544,8 +590,6 @@ void ListaDoble::juegoTetris()
 			numero=aleatorio(1);			
 			primera=false;	
 			gotoxy(4,45);
-			printf("puntaje %d",puntaje);
-			system("pause");
 		}
 		if((x==10)&&(y==33)) /// aqui mandar cuando encuentre el numero
 		{
@@ -582,6 +626,8 @@ void ListaDoble::juegoTetris()
 			case 's': case 'S':
 				gotoxy(4,45);
 				printf("Su juego sera guardado. Usted Regresara al menu principal...   ");
+				crearBackup(nombre,2);
+				crearBackup(nombre,1);
 				tecla=TECLA_ENTER;
 				system("pause");
 				break;
@@ -591,5 +637,39 @@ void ListaDoble::juegoTetris()
 	//impresionArchivos();
 }
 
+void ListaDoble::nombreBakcup(char nombre[],int i)
+{
+	time_t tiempo = time(0);
+    struct tm *tlocal = localtime(&tiempo);
+    char output[128];
+    char direcion[2000];
+    strftime(output,128,"fecha_%d_%m_%y_hora_%H_%M_%S",tlocal);
+        strcpy(nombre,"Backup(");
+    strcat(nombre,output);
+	strcat(nombre,").txt");
+
+}
+
+void ListaDoble::crearBackup(char nombre[],int i){
+	Nodo *nuevo=new Nodo();
+	nuevo=lista;
+	FILE *arcBackup=NULL;
+	if(i==1){
+		arcBackup=fopen("C:\\Users\\USUARIO\\Desktop\\proyectos estructuras\\Proyectos-Estructura-de-Datos-NRC-2480\\3er Parcial\\Extras\\Backup.txt","w");	
+	}else if(i==2){
+		arcBackup=fopen("C:\\Users\\USUARIO\\Desktop\\proyectos estructuras\\Proyectos-Estructura-de-Datos-NRC-2480\\3er Parcial\\Extras\\Backup.txt","w");
+	}
+	//INGRESO DE DATOS DE LA PILAS
+	while(nuevo!=NULL)
+	{
+		fprintf(arcBackup,"%d;",nuevo->getNumero());
+		nuevo=nuevo->getSiguienteDireccion();
+	}
+	fclose(arcBackup);
+	if(i==2){
+		nombreBakcup(nombre,2);
+		rename("C:\\Users\\USUARIO\\Desktop\\proyectos estructuras\\Proyectos-Estructura-de-Datos-NRC-2480\\3er Parcial\\Extras\\Backup.txt",nombre);
+	}
+}
 
 
