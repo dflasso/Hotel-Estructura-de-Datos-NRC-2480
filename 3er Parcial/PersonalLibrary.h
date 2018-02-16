@@ -140,3 +140,9 @@ bool validacionCaracter(char cadena[]){
 	}	
 	return false;
 }
+
+void numbers(int numero)
+{
+	
+}
+

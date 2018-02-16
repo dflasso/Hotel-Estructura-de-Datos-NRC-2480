@@ -65,7 +65,7 @@ int main(int argc, char** argv) {
 					switch(opcionJuego)
 					{
 						case 1:
-							ObjJuego->juego();
+							ObjJuego->juegoTetris();
 							ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementQR.exe"),NULL, NULL,SW_SHOWNORMAL);
 							system("start Extras\\CreateCodigoQR.jar");
 							system("start Extras\\DBMongoInsert.jar");
