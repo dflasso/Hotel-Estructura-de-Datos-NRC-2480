@@ -36,7 +36,10 @@
 								
 #include "PersonalLibrary.h"
 #include "ListaDoble.h"
-
+/**
+* Explica como funciona el programa y como se
+* se juega
+*/
 void introGame(){
 	system("cls");
 	color(10);
@@ -69,56 +72,63 @@ void introGame(){
 	}
 }
 
+
 int main(int argc, char** argv) {
-	bool flag=true,flagGame=true;
-	int opcion,opcionJuego;
+	bool flag=true,flagGame=true;// variables boleanas para volvel al menu
+	int opcion,opcionJuego; // las opciones escogidas por el usuario
+	//arreglo de opciones menu principal
 	const char *opciones[]={"1) Juego.","2) Imagen.","3) Consulta PDF.","4) Codigo QR.","5) Ayuda o PULSE \"F1\".","6) Backup.","7) Base de Datos (Mongo).","8) Salir / Exit."};
+	//arreglo de opciones del juego 
 	const char *opcionesJuego[]={"1) Comenzar juego.","2) Comenzar con el juego guardado.","3) Ver su ultimo puntaje.","4) Volver al Menu Principal."}; //poner lista de puntajes
+	//Clase que contiene los metodo del juego
 	ListaDoble *ObjJuego=new ListaDoble;
 	
-	AltEnter();
-	CreateDirectory ("C:\\JuegoSnake", NULL);
-	ShellExecute(NULL, TEXT("open"),TEXT("C:\\data\\DB\\mongod.exe"),NULL, NULL,SW_SHOWNORMAL);
+	AltEnter(); // funcion que agranda la pantalla 
+	CreateDirectory ("C:\\JuegoSnake", NULL); // crea la carpeta JuegoSnake
+	
+	ShellExecute(NULL, TEXT("open"),TEXT("C:\\data\\DB\\mongod.exe"),NULL, NULL,SW_SHOWNORMAL); //ejecuta la base de datos mongo
 	
 	do
 	{
 		flag=true;
-		opcion=menu("Menu Principal",opciones,8);
-		system("cls");
+		opcion=menu("Menu Principal",opciones,8); //despliega el menu principal
+		system("cls"); // borra la pantalla 
 		switch(opcion)
 		{
 			case 1:
+				//ejecuta el agente
 				ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementBienvenida.exe"),NULL, NULL,SW_SHOWNORMAL);
 				do
 				{
 					flagGame=true;
-					opcionJuego=menu("Juego",opcionesJuego,4);
+					opcionJuego=menu("Juego",opcionesJuego,4); // imprime menu del juego, retorna la opcion escogida
 					system("cls");
 					switch(opcionJuego)
 					{
 						case 1:
-							introGame();
-							color(15);
+							introGame(); // imprime reglas y funcionalidad del juego
+							color(15); 
 							printf("\n\n\t\t\t\t");
-							ObjJuego->juegoTetris(0);
-							ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementQR.exe"),NULL, NULL,SW_SHOWNORMAL);
-							system("start Extras\\CreateCodigoQR.jar");
-							system("start Extras\\DBMongoInsert.jar");
+							ObjJuego->juegoTetris(0); // metodo que comienza el juego
+							ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementQR.exe"),NULL, NULL,SW_SHOWNORMAL); //ejecuta el agente
+							system("start Extras\\CreateCodigoQR.jar"); // crea el codigo QR del juego terminado (puntaje)
+							system("start Extras\\DBMongoInsert.jar"); // inserta el puntaje en la base de datos mongo
 							break;
 							
 						case 2:
 							introGame();
 							color(15);
 							printf("\n\n\t\t\t\t");
-							ObjJuego->juegoTetris(1);
+							// al enviar como parametro (1) se recupera el ultimo juego
+							ObjJuego->juegoTetris(1); // utilizando el backup recupera la informacion del ultimo juego
 							break;
 							
 						case 3:
-							ObjJuego->impresion();
+							ObjJuego->impresion(); // imprime puntaje y numeros no eliminados
 							break;
 							
 						case 4:
-							flagGame=false;
+							flagGame=false; // bandera para salir al menu principal
 							break;
 					}
 					if(opcionJuego!=4)
@@ -129,6 +139,7 @@ int main(int argc, char** argv) {
 				}while(flagGame);
 				break;
 			case 2:
+				//ejecuta una imagen 
 				ShellExecute(NULL, TEXT("open"),TEXT("Extras\\WinAppMSAgentsManagementImage.exe"),NULL, NULL,SW_SHOWNORMAL);
 				ShellExecute(NULL, TEXT("open"),TEXT("Extras\\image.exe"),NULL, NULL,SW_SHOWNORMAL);
 				break;
